@@ -27,7 +27,7 @@ const Index = () => {
       <Sidebar active={view === "detail" ? "projects" : view} onNavigate={handleNav} />
       <div className="flex-1 flex flex-col min-w-0 gap-3">
         <Topbar title={titleMap[view].t} subtitle={titleMap[view].s} />
-        <main className="flex-1 overflow-x-hidden rounded-[2rem] shadow-sm border border-orange-100/60 bg-amber-50">
+        <main className="flex-1 overflow-x-hidden rounded-[2rem] shadow-sm border border-orange-100/60 bg-slate-200">
             <motion.div
               key={view + (selected?.id ?? "")}
               initial={{ opacity: 0, y: 8 }}
