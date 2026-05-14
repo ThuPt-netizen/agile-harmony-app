@@ -37,9 +37,9 @@ const Index = () => {
               {view === "dashboard" && <Dashboard onSelectProject={handleSelect} />}
               {view === "detail" && selected && <ProjectDetail project={selected} onBack={() => handleNav("dashboard")} />}
               {view === "performance" && <Performance />}
-              {view === "projects" && (
-                <div className="px-6 lg:px-10 py-8">
-                  <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
+               {view === "projects" && (
+                 <div className="px-6 lg:px-10 py-8 bg-slate-200">
+                   <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
                     {projects.map((p, i) => <ProjectCard key={p.id} project={p} index={i} onClick={() => handleSelect(p)} />)}
                   </div>
                 </div>
