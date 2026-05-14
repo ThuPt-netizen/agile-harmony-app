@@ -1,4 +1,4 @@
-import { LayoutDashboard, FolderKanban, BarChart3, Settings, ShieldCheck, Users, ChevronDown } from "lucide-react";
+import { LayoutDashboard, FolderKanban, BarChart3, Settings, ShieldCheck, Users, UsersRound, ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import navisoftLogo from "@/assets/navisoft-logo.png";
@@ -16,10 +16,11 @@ const items = [
 
 const adminChildren = [
   { key: "users", label: "Quản lý NSD", icon: Users },
+  { key: "user-groups", label: "Quản lý nhóm NSD", icon: UsersRound },
 ];
 
 export function Sidebar({ active, onNavigate }: Props) {
-  const [adminOpen, setAdminOpen] = useState(active === "users");
+  const [adminOpen, setAdminOpen] = useState(active === "users" || active === "user-groups");
   return (
     <aside className="hidden lg:flex w-64 flex-col bg-white shadow-sm border border-orange-100 rounded-[2rem] sticky top-3 h-[calc(100vh-1.5rem)] relative overflow-hidden">
       <div className="absolute -top-20 -right-20 h-72 w-72 rounded-full bg-[#FE9D58]/10 blur-3xl pointer-events-none" />
