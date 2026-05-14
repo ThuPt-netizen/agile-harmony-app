@@ -3,7 +3,7 @@ import { Search, Bell } from "lucide-react";
 export function Topbar({ title, subtitle }: { title: string; subtitle?: string }) {
   return (
     <header className="sticky top-3 z-20 bg-white/90 backdrop-blur-lg border border-orange-100 rounded-[2rem] shadow-sm">
-      <div className="flex items-center justify-between px-6 lg:px-10 py-4 bg-slate-200">
+      <div className="flex items-center justify-between px-6 lg:px-10 py-4 bg-amber-50">
         <div>
           <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] mb-1 text-slate-500">
             <span className="font-semibold text-yellow-500">NAVISOFT</span>

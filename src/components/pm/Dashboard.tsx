@@ -28,7 +28,7 @@ export function Dashboard({ onSelectProject }: Props) {
   const usedBudget = projects.reduce((s, p) => s + p.budgetUsed, 0);
 
   return (
-    <div className="px-6 lg:px-10 py-8 space-y-8 bg-slate-200">
+    <div className="px-6 lg:px-10 py-8 space-y-8 bg-amber-50">
       {/* Hero strip */}
       <motion.section
         initial={{ opacity: 0, y: 8 }}
