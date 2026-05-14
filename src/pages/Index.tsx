@@ -5,6 +5,7 @@ import { Topbar } from "@/components/pm/Topbar";
 import { Dashboard } from "@/components/pm/Dashboard";
 import { ProjectDetail } from "@/components/pm/ProjectDetail";
 import { Performance } from "@/components/pm/Performance";
+import { UserManagement } from "@/components/pm/UserManagement";
 import { Project, projects } from "@/lib/mockData";
 import { ProjectCard } from "@/components/pm/ProjectCard";
 
@@ -20,6 +21,7 @@ const Index = () => {
     projects: { t: "Danh mục dự án", s: "Projects" },
     performance: { t: "Đánh giá hiệu suất", s: "Performance" },
     detail: { t: selected?.name ?? "", s: "Project · " + (selected?.code ?? "") },
+    users: { t: "Quản lý Người sử dụng", s: "Quản trị hệ thống" },
   };
 
   return (
@@ -37,6 +39,7 @@ const Index = () => {
               {view === "dashboard" && <Dashboard onSelectProject={handleSelect} />}
               {view === "detail" && selected && <ProjectDetail project={selected} onBack={() => handleNav("dashboard")} />}
               {view === "performance" && <Performance />}
+              {view === "users" && <UserManagement />}
                {view === "projects" && (
                  <div className="px-6 lg:px-10 py-8 bg-slate-200">
                    <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">

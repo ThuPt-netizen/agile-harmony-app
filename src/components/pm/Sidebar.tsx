@@ -1,4 +1,5 @@
-import { LayoutDashboard, FolderKanban, BarChart3, Settings } from "lucide-react";
+import { LayoutDashboard, FolderKanban, BarChart3, Settings, ShieldCheck, Users, ChevronDown } from "lucide-react";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
 import navisoftLogo from "@/assets/navisoft-logo.png";
 
@@ -13,7 +14,12 @@ const items = [
   { key: "performance", label: "Hiệu suất", icon: BarChart3 },
 ];
 
+const adminChildren = [
+  { key: "users", label: "Quản lý NSD", icon: Users },
+];
+
 export function Sidebar({ active, onNavigate }: Props) {
+  const [adminOpen, setAdminOpen] = useState(active === "users");
   return (
     <aside className="hidden lg:flex w-64 flex-col bg-white shadow-sm border border-orange-100 rounded-[2rem] sticky top-3 h-[calc(100vh-1.5rem)] relative overflow-hidden">
       <div className="absolute -top-20 -right-20 h-72 w-72 rounded-full bg-[#FE9D58]/10 blur-3xl pointer-events-none" />
@@ -51,6 +57,39 @@ export function Sidebar({ active, onNavigate }: Props) {
             </button>
           );
         })}
+
+        <div className="pt-3 px-3 pb-2 text-[10px] uppercase tracking-[0.2em] text-gray-400">Hệ thống</div>
+        <button
+          onClick={() => setAdminOpen((v) => !v)}
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm text-gray-600 hover:bg-gray-50 hover:text-[#1F2937] transition-all"
+        >
+          <ShieldCheck className="h-4 w-4" />
+          <span className="font-medium">Quản trị hệ thống</span>
+          <ChevronDown className={cn("ml-auto h-4 w-4 transition-transform", adminOpen && "rotate-180")} />
+        </button>
+        {adminOpen && (
+          <div className="ml-3 pl-3 border-l border-gray-100 space-y-1">
+            {adminChildren.map((c) => {
+              const Icon = c.icon;
+              const isActive = active === c.key;
+              return (
+                <button
+                  key={c.key}
+                  onClick={() => onNavigate(c.key)}
+                  className={cn(
+                    "w-full flex items-center gap-3 px-3 py-2 rounded-2xl text-sm transition-all",
+                    isActive
+                      ? "bg-[#FE9D58] text-white shadow-lg shadow-orange-500/25"
+                      : "text-gray-600 hover:bg-gray-50 hover:text-[#1F2937]"
+                  )}
+                >
+                  <Icon className="h-4 w-4" strokeWidth={isActive ? 2.5 : 2} />
+                  <span className="font-medium">{c.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        )}
       </nav>
 
       <div className="relative p-4 border-t border-gray-100">
