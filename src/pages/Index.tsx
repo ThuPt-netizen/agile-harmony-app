@@ -7,6 +7,7 @@ import { ProjectDetail } from "@/components/pm/ProjectDetail";
 import { Performance } from "@/components/pm/Performance";
 import { UserManagement } from "@/components/pm/UserManagement";
 import { UserGroupManagement } from "@/components/pm/UserGroupManagement";
+import { PermissionManagement } from "@/components/pm/PermissionManagement";
 import { Project, projects } from "@/lib/mockData";
 import { ProjectCard } from "@/components/pm/ProjectCard";
 
@@ -24,6 +25,7 @@ const Index = () => {
     detail: { t: selected?.name ?? "", s: "Project · " + (selected?.code ?? "") },
     users: { t: "Quản lý Người sử dụng", s: "Quản trị hệ thống" },
     "user-groups": { t: "Quản lý nhóm người dùng", s: "Quản trị hệ thống" },
+    permissions: { t: "Quản lý phân quyền", s: "Quản trị hệ thống" },
   };
 
   return (
@@ -43,6 +45,7 @@ const Index = () => {
               {view === "performance" && <Performance />}
               {view === "users" && <UserManagement />}
               {view === "user-groups" && <UserGroupManagement />}
+              {view === "permissions" && <PermissionManagement />}
                {view === "projects" && (
                  <div className="px-6 lg:px-10 py-8 bg-slate-200">
                    <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
