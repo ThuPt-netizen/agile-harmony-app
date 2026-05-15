@@ -197,8 +197,8 @@ export function PermissionManagement() {
             <Button className="h-9 bg-[#0B6FB8] hover:bg-[#095a96] text-white">
               <Search className="h-4 w-4 mr-1.5" /> Tìm kiếm
             </Button>
-            <Button className="h-9 bg-[#FE9D58] hover:bg-[#ea580c] text-white">
-              <Plus className="h-4 w-4 mr-1.5" /> Thêm mới
+            <Button className="h-9 bg-[#FE9D58] hover:bg-[#ea580c] text-white transition-all shadow-md hover:shadow-lg active:scale-95">
+              <Plus className="h-4 w-4 mr-1.5" /> Lưu quyền
             </Button>
           </div>
         </div>
