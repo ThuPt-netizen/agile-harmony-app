@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { Search, Plus, RotateCcw } from "lucide-react";
+import { Search, Plus, RotateCcw, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -88,6 +88,11 @@ export function PermissionManagement() {
   const [dataRows, setDataRows] = useState<DataRow[]>(seedData);
   const [selectedFunc, setSelectedFunc] = useState<Set<string>>(new Set());
   const [selectedData, setSelectedData] = useState<Set<string>>(new Set());
+
+  // pagination
+  const [pageFunc, setPageFunc] = useState(1);
+  const [pageData, setPageData] = useState(1);
+  const pageSize = 10;
 
   const filteredFunc = useMemo(() => funcRows.filter(r =>
     (filterLoai === "all" || r.loai === filterLoai) &&
@@ -336,6 +341,13 @@ export function PermissionManagement() {
                     </TableCell>
                   </TableRow>
                 )}
+                <PagerRow
+                  colSpan={9}
+                  page={pageFunc}
+                  setPage={setPageFunc}
+                  total={filteredFunc.length}
+                  pageSize={pageSize}
+                />
               </TableBody>
             </Table>
           ) : (
@@ -399,6 +411,13 @@ export function PermissionManagement() {
                     </TableCell>
                   </TableRow>
                 )}
+                <PagerRow
+                  colSpan={10}
+                  page={pageData}
+                  setPage={setPageData}
+                  total={filteredData.length}
+                  pageSize={pageSize}
+                />
               </TableBody>
             </Table>
           )}
@@ -419,5 +438,65 @@ export function PermissionManagement() {
         </div>
       </div>
     </div>
+  );
+}
+
+function PagerRow({
+  colSpan,
+  page,
+  setPage,
+  total,
+  pageSize,
+}: {
+  colSpan: number;
+  page: number;
+  setPage: (p: number) => void;
+  total: number;
+  pageSize: number;
+}) {
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  const current = Math.min(page, totalPages);
+  const shown = Math.min(total, current * pageSize);
+  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+  return (
+    <TableRow className="hover:bg-transparent bg-slate-50">
+      <TableCell colSpan={colSpan} className="py-2.5">
+        <div className="flex items-center justify-between text-xs text-gray-600">
+          <div>
+            Hiển thị <span className="font-medium text-[#1F2937]">{shown}</span> / <span className="font-medium text-[#1F2937]">{total}</span> bản ghi
+          </div>
+          <div className="flex items-center gap-1">
+            <button
+              onClick={() => setPage(Math.max(1, current - 1))}
+              disabled={current === 1}
+              className="h-7 w-7 inline-flex items-center justify-center rounded-md border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <ChevronLeft className="h-3.5 w-3.5" />
+            </button>
+            {pages.map((p) => (
+              <button
+                key={p}
+                onClick={() => setPage(p)}
+                className={cn(
+                  "h-7 min-w-[28px] px-2 inline-flex items-center justify-center rounded-md border text-xs font-medium transition-colors",
+                  p === current
+                    ? "bg-[#0B6FB8] border-[#0B6FB8] text-white"
+                    : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
+                )}
+              >
+                {p}
+              </button>
+            ))}
+            <button
+              onClick={() => setPage(Math.min(totalPages, current + 1))}
+              disabled={current === totalPages}
+              className="h-7 w-7 inline-flex items-center justify-center rounded-md border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <ChevronRight className="h-3.5 w-3.5" />
+            </button>
+          </div>
+        </div>
+      </TableCell>
+    </TableRow>
   );
 }
