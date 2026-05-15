@@ -422,20 +422,6 @@ export function PermissionManagement() {
             </Table>
           )}
         </div>
-
-        {/* Footer actions */}
-        <div className="flex items-center justify-between px-4 py-3 border-t border-gray-200 bg-slate-50">
-          <div className="text-xs text-gray-600">
-            Áp dụng cho nhóm:{" "}
-            <span className="font-medium text-[#1F2937]">
-              {groupCode || groupName || "— Chưa chọn —"}
-            </span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" className="h-9">Hủy</Button>
-            <Button className="h-9 bg-[#0B6FB8] hover:bg-[#095a96] text-white">Lưu phân quyền</Button>
-          </div>
-        </div>
       </div>
     </div>
   );
