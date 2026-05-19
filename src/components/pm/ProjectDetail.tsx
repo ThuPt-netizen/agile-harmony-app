@@ -12,7 +12,7 @@ const tooltipStyle = {
   fontSize: 12,
 };
 
-export function ProjectDetail({ project, onBack }: { project: Project; onBack: () => void }) {
+export function ProjectDetail({ project, onBack, onAdmin }: { project: Project; onBack: () => void; onAdmin?: () => void }) {
   const s = statusMeta[project.status];
   const budgetPct = Math.round((project.budgetUsed / project.budget) * 100);
   const resourcePct = Math.round((project.resourceUsed / project.resourceTotal) * 100);
@@ -43,7 +43,7 @@ export function ProjectDetail({ project, onBack }: { project: Project; onBack: (
         <button onClick={onBack} className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors">
           <ArrowLeft className="h-3.5 w-3.5" /> Quay lại danh mục
         </button>
-        <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-white bg-gradient-to-r from-orange-500 to-rose-500 hover:brightness-110 shadow-sm shadow-orange-500/30 transition-all">
+        <button onClick={onAdmin} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-white bg-gradient-to-r from-orange-500 to-rose-500 hover:brightness-110 shadow-sm shadow-orange-500/30 transition-all">
           <Settings className="h-3.5 w-3.5" /> Quản trị
         </button>
       </div>

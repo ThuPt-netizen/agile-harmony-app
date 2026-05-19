@@ -44,7 +44,7 @@ const Index = () => {
               transition={{ duration: 0.25 }}
             >
               {view === "dashboard" && <Dashboard onSelectProject={handleSelect} />}
-              {view === "detail" && selected && <ProjectDetail project={selected} onBack={() => handleNav("dashboard")} />}
+              {view === "detail" && selected && <ProjectDetail project={selected} onBack={() => handleNav("dashboard")} onAdmin={() => setView("project-admin")} />}
               {view === "performance" && <Performance />}
               {view === "users" && <UserManagement />}
               {view === "user-groups" && <UserGroupManagement />}
