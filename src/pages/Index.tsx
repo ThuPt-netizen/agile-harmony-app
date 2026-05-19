@@ -8,8 +8,10 @@ import { Performance } from "@/components/pm/Performance";
 import { UserManagement } from "@/components/pm/UserManagement";
 import { UserGroupManagement } from "@/components/pm/UserGroupManagement";
 import { PermissionManagement } from "@/components/pm/PermissionManagement";
+import { ProjectAdmin } from "@/components/pm/ProjectAdmin";
 import { Project, projects } from "@/lib/mockData";
 import { ProjectCard } from "@/components/pm/ProjectCard";
+import { Settings } from "lucide-react";
 
 const Index = () => {
   const [view, setView] = useState<string>("dashboard");
@@ -26,6 +28,7 @@ const Index = () => {
     users: { t: "Quản lý Người sử dụng", s: "Quản trị hệ thống" },
     "user-groups": { t: "Quản lý nhóm người dùng", s: "Quản trị hệ thống" },
     permissions: { t: "Quản lý phân quyền", s: "Quản trị hệ thống" },
+    "project-admin": { t: "Danh sách dự án", s: "Quản trị dự án" },
   };
 
   return (
@@ -46,8 +49,17 @@ const Index = () => {
               {view === "users" && <UserManagement />}
               {view === "user-groups" && <UserGroupManagement />}
               {view === "permissions" && <PermissionManagement />}
+              {view === "project-admin" && <ProjectAdmin />}
                {view === "projects" && (
                  <div className="px-6 lg:px-10 py-8 bg-slate-200">
+                   <div className="flex justify-end mb-4">
+                     <button
+                       onClick={() => handleNav("project-admin")}
+                       className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-medium text-white bg-gradient-to-r from-orange-500 to-rose-500 hover:brightness-110 shadow-sm shadow-orange-500/30 transition-all"
+                     >
+                       <Settings className="h-3.5 w-3.5" /> Quản trị
+                     </button>
+                   </div>
                    <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
                     {projects.map((p, i) => <ProjectCard key={p.id} project={p} index={i} onClick={() => handleSelect(p)} />)}
                   </div>
