@@ -33,7 +33,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex w-full bg-slate-100 p-3 gap-3">
-      <Sidebar active={view === "detail" ? "projects" : view} onNavigate={handleNav} />
+      <Sidebar active={(view === "detail" || view === "project-admin") ? "projects" : view} onNavigate={handleNav} />
       <div className="flex-1 flex flex-col min-w-0 gap-3">
         <Topbar title={titleMap[view].t} subtitle={titleMap[view].s} />
         <main className="flex-1 overflow-x-hidden rounded-[2rem] shadow-sm border border-orange-100/60 bg-slate-200">
