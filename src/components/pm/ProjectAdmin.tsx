@@ -370,39 +370,6 @@ function RowActions({ onDelete, onView }: { onDelete: () => void; onView?: () =>
   );
 }
 
-function ViewProjectModal({ project, onClose }: { project: ProjectRow; onClose: () => void }) {
-  const items: [string, string][] = [
-    ["Mã dự án", project.code],
-    ["Tên dự án", project.name],
-    ["Loại dự án", project.type],
-    ["Ngày mở dự án", project.openDate || "-"],
-    ["Ngày đóng dự án", project.closeDate || "-"],
-    ["Trạng thái", project.status],
-    ["Diễn giải", project.note || "-"],
-  ];
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4" onClick={onClose}>
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl p-6 space-y-4" onClick={(e) => e.stopPropagation()}>
-        <div className="flex items-center justify-between">
-          <h3 className="font-display text-lg font-semibold text-[#1F2937]">Xem chi tiết dự án</h3>
-          <span className="text-xs px-2 py-1 rounded-full bg-emerald-50 text-emerald-700">Chỉ xem</span>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {items.map(([k, v]) => (
-            <div key={k} className="rounded-lg border border-gray-100 bg-gray-50/60 px-3 py-2">
-              <div className="text-[11px] uppercase tracking-wider text-gray-500">{k}</div>
-              <div className="text-sm font-medium text-gray-800 mt-0.5 break-words">{v}</div>
-            </div>
-          ))}
-        </div>
-        <div className="flex justify-end">
-          <Button onClick={onClose} className="h-9 bg-[#FE9D58] hover:bg-[#ea580c] text-white">Đóng</Button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function DataGrid({ headers, rows, renderRow, emptyText }: { headers: string[]; rows: any[]; renderRow: (r: any, i: number) => React.ReactNode; emptyText: string }) {
   const [page, setPage] = useState(1);
   const pageSize = 10;
