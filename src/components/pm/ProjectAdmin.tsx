@@ -185,15 +185,21 @@ function GeneralTab({ mode }: { mode: Mode }) {
       {mode === "create" ? (
         <Field label="Tổng số bug chưa xử lý"><Input type="number" className="h-9" /></Field>
       ) : (
-        <div />
+        <Field label="Diễn giải">
+          <textarea rows={1} className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm min-h-9" placeholder="Nhập diễn giải..." />
+        </Field>
       )}
 
       {/* Row 5 */}
       <Field label="Nguồn lực - Kế hoạch"><Input type="number" className="h-9" /></Field>
       <Field label="Nguồn lực - Thực tế"><Input type="number" className="h-9" /></Field>
-      <Field label="Diễn giải">
-        <textarea rows={1} className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm min-h-9" placeholder="Nhập diễn giải..." />
-      </Field>
+      {mode === "create" ? (
+        <Field label="Diễn giải">
+          <textarea rows={1} className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm min-h-9" placeholder="Nhập diễn giải..." />
+        </Field>
+      ) : (
+        <div />
+      )}
     </div>
   );
 }
