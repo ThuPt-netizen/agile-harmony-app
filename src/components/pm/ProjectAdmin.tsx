@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Plus, Search, Save, Trash2, Pencil, ChevronLeft, ChevronRight } from "lucide-react";
+import { Plus, Search, Save, Trash2, Pencil, Eye, ChevronLeft, ChevronRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,13 @@ const statusList = ["Khởi tạo", "Đang thực hiện", "Tạm dừng", "Hoà
 
 interface Member { id: number; name: string; dept: string; role: string; allocation: number; }
 interface Milestone { id: number; name: string; type: string; deliveryDate: string; replanDate: string; replanCount: number; status: string; note: string; }
+interface ProjectRow { id: number; code: string; name: string; type: string; openDate: string; closeDate: string; status: string; note: string; }
+
+const sampleProjects: ProjectRow[] = [
+  { id: 1, code: "PRJ-001", name: "Hệ thống ERP nội bộ", type: "Phát triển", openDate: "2025-01-10", closeDate: "2025-12-30", status: "Đang thực hiện", note: "Triển khai phân hệ HR" },
+  { id: 2, code: "PRJ-002", name: "Bảo trì Cổng TT", type: "Bảo trì", openDate: "2025-03-01", closeDate: "2026-03-01", status: "Đang thực hiện", note: "Hợp đồng năm" },
+  { id: 3, code: "PRJ-003", name: "Nghiên cứu AI Agent", type: "Nghiên cứu", openDate: "2025-05-15", closeDate: "", status: "Khởi tạo", note: "PoC giai đoạn 1" },
+];
 
 export function ProjectAdmin() {
   const [mode, setMode] = useState<Mode>("search");
@@ -30,6 +37,12 @@ export function ProjectAdmin() {
   // milestones
   const [milestones, setMilestones] = useState<Milestone[]>([]);
   const [msForm, setMsForm] = useState<Milestone>({ id: 0, name: "", type: "", deliveryDate: "", replanDate: "", replanCount: 0, status: "", note: "" });
+
+  // project list datagrid
+  const [projects, setProjects] = useState<ProjectRow[]>(sampleProjects);
+  const [viewProject, setViewProject] = useState<ProjectRow | null>(null);
+
+  const removeProject = (id: number) => setProjects(projects.filter(p => p.id !== id));
 
   const switchMode = (m: Mode) => { setMode(m); setActiveTab("general"); };
 
@@ -143,6 +156,39 @@ export function ProjectAdmin() {
           )}
         </div>
       </motion.div>
+
+      {/* Project list datagrid */}
+      <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="rounded-2xl bg-white border border-orange-100 shadow-sm p-5 space-y-3">
+        <div className="flex items-center justify-between">
+          <h3 className="font-display text-base font-semibold text-[#1F2937]">Danh sách bản ghi</h3>
+          <span className="text-xs text-muted-foreground">Kết quả tìm kiếm / thêm mới</span>
+        </div>
+        <DataGrid
+          headers={["STT", "Mã dự án", "Tên dự án", "Loại dự án", "Ngày mở dự án", "Ngày đóng dự án", "Trạng thái", "Diễn giải", "Chức năng"]}
+          rows={projects}
+          renderRow={(p: ProjectRow, i: number) => (
+            <>
+              <td className="px-4 py-2.5 text-sm">{i + 1}</td>
+              <td className="px-4 py-2.5 text-sm font-mono">{p.code}</td>
+              <td className="px-4 py-2.5 text-sm font-medium">{p.name}</td>
+              <td className="px-4 py-2.5 text-sm">{p.type}</td>
+              <td className="px-4 py-2.5 text-sm font-mono">{p.openDate}</td>
+              <td className="px-4 py-2.5 text-sm font-mono">{p.closeDate || "-"}</td>
+              <td className="px-4 py-2.5 text-sm">{p.status}</td>
+              <td className="px-4 py-2.5 text-sm text-muted-foreground max-w-[220px] truncate" title={p.note}>{p.note}</td>
+              <td className="px-4 py-2.5 text-sm">
+                <RowActions
+                  onView={() => setViewProject(p)}
+                  onDelete={() => removeProject(p.id)}
+                />
+              </td>
+            </>
+          )}
+          emptyText="Chưa có bản ghi nào."
+        />
+      </motion.div>
+
+      {viewProject && <ViewProjectModal project={viewProject} onClose={() => setViewProject(null)} />}
     </div>
   );
 }
