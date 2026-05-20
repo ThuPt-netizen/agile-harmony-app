@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-type Mode = "search" | "create";
+type Mode = "search" | "create" | "view";
 
 const projectTypes = ["Phát triển", "Bảo trì", "Nghiên cứu"];
 const statusList = ["Khởi tạo", "Đang thực hiện", "Tạm dừng", "Hoàn thành", "Đóng"];
@@ -40,15 +40,24 @@ export function ProjectAdmin() {
 
   // project list datagrid
   const [projects, setProjects] = useState<ProjectRow[]>(sampleProjects);
-  const [viewProject, setViewProject] = useState<ProjectRow | null>(null);
 
   const removeProject = (id: number) => setProjects(projects.filter(p => p.id !== id));
 
+  const viewProjectRow = (p: ProjectRow) => {
+    setMode("view");
+    setActiveTab("general");
+    setCode(p.code);
+    setName(p.name);
+    setType(p.type);
+  };
+
   const switchMode = (m: Mode) => { setMode(m); setActiveTab("general"); };
 
-  const tabs = mode === "create"
-    ? [{ k: "general", l: "Thông tin chung" }, { k: "members", l: "Nhân sự dự án" }, { k: "milestones", l: "Milestone dự án" }]
-    : [{ k: "general", l: "Thông tin chung" }];
+  const tabs = mode === "search"
+    ? [{ k: "general", l: "Thông tin chung" }]
+    : [{ k: "general", l: "Thông tin chung" }, { k: "members", l: "Nhân sự dự án" }, { k: "milestones", l: "Milestone dự án" }];
+
+  const readOnly = mode === "view";
 
   const addMember = () => {
     if (!mForm.name.trim()) return;
@@ -99,25 +108,30 @@ export function ProjectAdmin() {
             {toolbarBtn(Trash2, "Xóa", () => {}, false, "danger")}
           </div>
         </div>
+        {mode === "view" && (
+          <div className="mt-3 text-xs px-3 py-2 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-100 inline-flex items-center gap-2">
+            <Eye className="h-3.5 w-3.5" /> Đang ở chế độ xem chi tiết — chỉ đọc. Bấm "Tìm kiếm" hoặc "Thêm mới" để thoát.
+          </div>
+        )}
       </motion.div>
 
       {/* Search bar */}
       <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }} className="rounded-2xl bg-white border border-orange-100 shadow-sm p-5">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <Field label="Mã dự án">
-            <Input value={code} onChange={(e) => setCode(e.target.value)} placeholder="VD: PRJ-001" className="h-9" />
+            <Input value={code} onChange={(e) => setCode(e.target.value)} placeholder="VD: PRJ-001" className="h-9" disabled={readOnly} />
           </Field>
           <Field label="Tên dự án">
-            <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Nhập tên dự án" className="h-9" />
+            <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Nhập tên dự án" className="h-9" disabled={readOnly} />
           </Field>
           <Field label="Loại dự án">
-            <select value={type} onChange={(e) => setType(e.target.value)} className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm">
+            <select value={type} onChange={(e) => setType(e.target.value)} className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm disabled:opacity-60" disabled={readOnly}>
               <option value="">-- Tất cả --</option>
               {projectTypes.map(t => <option key={t} value={t}>{t}</option>)}
             </select>
           </Field>
           <div className="flex items-end">
-            <Button className="h-9 w-full bg-[#FE9D58] hover:bg-[#ea580c] text-white shadow-md">
+            <Button className="h-9 w-full bg-[#FE9D58] hover:bg-[#ea580c] text-white shadow-md" disabled={readOnly}>
               <Search className="h-4 w-4 mr-1.5" /> Tìm kiếm
             </Button>
           </div>
@@ -146,7 +160,7 @@ export function ProjectAdmin() {
           })}
         </div>
 
-        <div className="p-6">
+        <fieldset disabled={readOnly} className={cn("p-6", readOnly && "opacity-90")}>
           {activeTab === "general" && <GeneralTab mode={mode} />}
           {activeTab === "members" && (
             <MembersTab form={mForm} setForm={setMForm} members={members} onAdd={addMember} onRemove={removeMember} />
@@ -154,7 +168,7 @@ export function ProjectAdmin() {
           {activeTab === "milestones" && (
             <MilestonesTab form={msForm} setForm={setMsForm} milestones={milestones} onAdd={addMilestone} onRemove={removeMilestone} />
           )}
-        </div>
+        </fieldset>
       </motion.div>
 
       {/* Project list datagrid */}
@@ -178,7 +192,7 @@ export function ProjectAdmin() {
               <td className="px-4 py-2.5 text-sm text-muted-foreground max-w-[220px] truncate" title={p.note}>{p.note}</td>
               <td className="px-4 py-2.5 text-sm">
                 <RowActions
-                  onView={() => setViewProject(p)}
+                  onView={() => viewProjectRow(p)}
                   onDelete={() => removeProject(p.id)}
                 />
               </td>
@@ -187,8 +201,6 @@ export function ProjectAdmin() {
           emptyText="Chưa có bản ghi nào."
         />
       </motion.div>
-
-      {viewProject && <ViewProjectModal project={viewProject} onClose={() => setViewProject(null)} />}
     </div>
   );
 }
@@ -354,39 +366,6 @@ function RowActions({ onDelete, onView }: { onDelete: () => void; onView?: () =>
           <Eye className="h-3.5 w-3.5" />
         </button>
       )}
-    </div>
-  );
-}
-
-function ViewProjectModal({ project, onClose }: { project: ProjectRow; onClose: () => void }) {
-  const items: [string, string][] = [
-    ["Mã dự án", project.code],
-    ["Tên dự án", project.name],
-    ["Loại dự án", project.type],
-    ["Ngày mở dự án", project.openDate || "-"],
-    ["Ngày đóng dự án", project.closeDate || "-"],
-    ["Trạng thái", project.status],
-    ["Diễn giải", project.note || "-"],
-  ];
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4" onClick={onClose}>
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl p-6 space-y-4" onClick={(e) => e.stopPropagation()}>
-        <div className="flex items-center justify-between">
-          <h3 className="font-display text-lg font-semibold text-[#1F2937]">Xem chi tiết dự án</h3>
-          <span className="text-xs px-2 py-1 rounded-full bg-emerald-50 text-emerald-700">Chỉ xem</span>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {items.map(([k, v]) => (
-            <div key={k} className="rounded-lg border border-gray-100 bg-gray-50/60 px-3 py-2">
-              <div className="text-[11px] uppercase tracking-wider text-gray-500">{k}</div>
-              <div className="text-sm font-medium text-gray-800 mt-0.5 break-words">{v}</div>
-            </div>
-          ))}
-        </div>
-        <div className="flex justify-end">
-          <Button onClick={onClose} className="h-9 bg-[#FE9D58] hover:bg-[#ea580c] text-white">Đóng</Button>
-        </div>
-      </div>
     </div>
   );
 }
