@@ -21,7 +21,7 @@ interface UserRow {
   id: string;
   account: string;
   name: string;
-  group: string;
+  group: string[];
   status: Status;
   createdAt: string;
 }
@@ -35,12 +35,12 @@ const statusMeta: Record<Status, { label: string; cls: string }> = {
 };
 
 const seed: UserRow[] = [
-  { id: "1", account: "thupt", name: "Phạm Thu Hà", group: "Quản trị viên", status: "active", createdAt: "2025-01-12" },
-  { id: "2", account: "buingocanh", name: "Bùi Ngọc Anh", group: "Quản lý dự án", status: "active", createdAt: "2025-02-04" },
-  { id: "3", account: "lequocbao", name: "Lê Quốc Bảo", group: "Nhân viên", status: "inactive", createdAt: "2025-03-22" },
-  { id: "4", account: "vumailinh", name: "Vũ Mai Linh", group: "Quản lý dự án", status: "active", createdAt: "2025-04-18" },
-  { id: "5", account: "hoangtk", name: "Hoàng Trung Kiên", group: "Nhân viên", status: "locked", createdAt: "2025-05-09" },
-  { id: "6", account: "dovanson", name: "Đỗ Văn Sơn", group: "Khách", status: "inactive", createdAt: "2025-06-01" },
+  { id: "1", account: "thupt", name: "Phạm Thu Hà", group: ["Quản trị viên", "Quản lý dự án"], status: "active", createdAt: "2025-01-12" },
+  { id: "2", account: "buingocanh", name: "Bùi Ngọc Anh", group: ["Quản lý dự án"], status: "active", createdAt: "2025-02-04" },
+  { id: "3", account: "lequocbao", name: "Lê Quốc Bảo", group: ["Nhân viên"], status: "inactive", createdAt: "2025-03-22" },
+  { id: "4", account: "vumailinh", name: "Vũ Mai Linh", group: ["Quản lý dự án"], status: "active", createdAt: "2025-04-18" },
+  { id: "5", account: "hoangtk", name: "Hoàng Trung Kiên", group: ["Nhân viên"], status: "locked", createdAt: "2025-05-09" },
+  { id: "6", account: "dovanson", name: "Đỗ Văn Sơn", group: ["Khách"], status: "inactive", createdAt: "2025-06-01" },
 ];
 
 const headerCls = "bg-[#0B6FB8] text-white px-5 py-3 flex items-center justify-between rounded-t-lg";
@@ -60,7 +60,7 @@ export function UserManagement() {
   const filtered = rows.filter((r) =>
     (!qAccount || r.account.toLowerCase().includes(qAccount.toLowerCase())) &&
     (qStatus === "all" || r.status === qStatus) &&
-    (qGroup === "all" || r.group === qGroup)
+    (qGroup === "all" || r.group.includes(qGroup))
   );
 
   return (
@@ -125,7 +125,11 @@ export function UserManagement() {
                 <TableCell className="text-center text-slate-500">{i + 1}</TableCell>
                 <TableCell className="font-medium text-slate-800">{r.account}</TableCell>
                 <TableCell>{r.name}</TableCell>
-                <TableCell>{r.group}</TableCell>
+                <TableCell>
+                  <div className="flex flex-col gap-0.5">
+                    {r.group.map((g) => <span key={g}>{g}</span>)}
+                  </div>
+                </TableCell>
                 <TableCell>
                   <span className={cn("inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium", statusMeta[r.status].cls)}>
                     {statusMeta[r.status].label}
@@ -274,7 +278,7 @@ export function UserManagement() {
           <div className="p-6 space-y-3">
             {groups.map((g) => (
               <label key={g} className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-slate-50 cursor-pointer">
-                <Checkbox defaultChecked={openGroup?.group === g} />
+                <Checkbox defaultChecked={openGroup?.group.includes(g)} />
                 <span className="text-sm text-slate-700">{g}</span>
               </label>
             ))}
