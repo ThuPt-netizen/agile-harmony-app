@@ -81,7 +81,7 @@ export function Dashboard({ onSelectProject }: Props) {
         <div className="rounded-xl border border-border bg-card p-6">
           <div className="flex items-start justify-between mb-5">
             <div>
-              <h3 className="font-display text-lg font-semibold">Tiến độ theo thời gian</h3>
+              <h3 className="font-display text-lg font-semibold">Số ngày thực hiện </h3>
               <p className="text-xs text-muted-foreground mt-0.5">Số ngày đã thực hiện / tổng số ngày kế hoạch theo dự án</p>
             </div>
             <div className="flex items-center gap-3 text-[11px]">
