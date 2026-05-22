@@ -206,14 +206,6 @@ export function UserManagement() {
           <div className="p-6 space-y-4">
             <FormRow label="Tài khoản"><Input defaultValue={openEdit?.account} disabled /></FormRow>
             <FormRow label="Tên NSD"><Input defaultValue={openEdit?.name} /></FormRow>
-            <FormRow label="Gán nhóm NSD">
-              <Select defaultValue={openEdit?.group}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
-                <SelectContent>
-                  {groups.map((g) => <SelectItem key={g} value={g}>{g}</SelectItem>)}
-                </SelectContent>
-              </Select>
-            </FormRow>
             <FormRow label="Trạng thái">
               <Select defaultValue={openEdit?.status}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
