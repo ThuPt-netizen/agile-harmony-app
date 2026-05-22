@@ -44,7 +44,7 @@ export function Dashboard({ onSelectProject }: Props) {
               Cập nhật trực tiếp · 06.05.2026
             </div>
             <h2 className="font-display text-2xl lg:text-3xl font-semibold tracking-tight text-balance leading-[1.05] text-gray-950">
-              Thống kê tổng hợp: <br /><span className="text-info text-red-600">20 dự án</span> đang vận hành.
+              Thống kê tổng hợp: <br /><span className="text-info text-slate-50">20 dự án</span> đang vận hành.
             </h2>
             <p className="mt-2 text-sm text-background/70 max-w-xl whitespace-pre-line text-slate-950">
               Nguồn lực sử dụng trung bình đạt {avgProgress}% so với kế hoạch.{"\n"}1 dự án cần can thiệp ngay từ ban điều hành.
