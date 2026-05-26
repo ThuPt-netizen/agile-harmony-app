@@ -366,8 +366,8 @@ export function PermissionManagement() {
                   <TableHead className={cn(headerCls, "text-white")}>Mã chức năng</TableHead>
                   <TableHead className={cn(headerCls, "text-white")}>Tên trường dữ liệu</TableHead>
                   <TableHead className={cn(headerCls, "text-white")}>Mô tả</TableHead>
-                  <TableHead className={cn(headerCls, "text-white text-center w-20")}>Truy vấn</TableHead>
-                  <TableHead className={cn(headerCls, "text-white text-center w-20")}>Thêm</TableHead>
+                  <TableHead className={cn(headerCls, "text-white text-center w-20")}>Thêm mới</TableHead>
+                  <TableHead className={cn(headerCls, "text-white text-center w-20")}>Xem</TableHead>
                   <TableHead className={cn(headerCls, "text-white text-center w-20")}>Sửa</TableHead>
                   <TableHead className={cn(headerCls, "text-white text-center w-20")}>Xóa</TableHead>
                 </TableRow>
