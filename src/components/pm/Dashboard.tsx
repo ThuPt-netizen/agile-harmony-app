@@ -132,7 +132,7 @@ export function Dashboard({ onSelectProject }: Props) {
           <h3 className="font-display text-lg font-semibold">Phân bổ theo phòng ban</h3>
           <p className="text-xs text-muted-foreground mt-0.5 mb-4">Kế hoạch vs thực tế (%)</p>
           <ResponsiveContainer width="100%" height={260}>
-            <BarChart data={departmentAllocation} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
+            <BarChart data={departmentAllocation} margin={{ top: 5, right: 5, left: -20, bottom: 0 }} barGap={1} barCategoryGap="20%">
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
               <XAxis dataKey="name" tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }} axisLine={false} tickLine={false} interval={0} />
               <YAxis tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} axisLine={false} tickLine={false} unit="%" />
