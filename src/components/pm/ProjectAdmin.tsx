@@ -24,6 +24,7 @@ const sampleProjects: ProjectRow[] = [
 export function ProjectAdmin() {
   const [mode, setMode] = useState<Mode>("search");
   const [activeTab, setActiveTab] = useState<"general" | "members" | "milestones">("general");
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
   // search filters
   const [code, setCode] = useState("");
@@ -42,6 +43,13 @@ export function ProjectAdmin() {
   const [projects, setProjects] = useState<ProjectRow[]>(sampleProjects);
 
   const removeProject = (id: number) => setProjects(projects.filter(p => p.id !== id));
+
+  const toggleSelect = (id: number) =>
+    setSelectedIds((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
+  const toggleSelectAll = () => {
+    if (selectedIds.length === projects.length) setSelectedIds([]);
+    else setSelectedIds(projects.map((p) => p.id));
+  };
 
   const viewProjectRow = (p: ProjectRow) => {
     setMode("view");
@@ -178,11 +186,29 @@ export function ProjectAdmin() {
           <span className="text-xs text-muted-foreground">Kết quả tìm kiếm / thêm mới</span>
         </div>
         <DataGrid
-          headers={["STT", "Mã dự án", "Tên dự án", "Loại dự án", "Ngày mở dự án", "Ngày đóng dự án", "Trạng thái", "Diễn giải", "Chức năng"]}
+          headers={[
+            "STT",
+            <input
+              key="sel-all"
+              type="checkbox"
+              checked={projects.length > 0 && selectedIds.length === projects.length}
+              onChange={toggleSelectAll}
+              className="h-3.5 w-3.5 cursor-pointer accent-[#FE9D58]"
+            />,
+            "Mã dự án", "Tên dự án", "Loại dự án", "Ngày mở dự án", "Ngày đóng dự án", "Trạng thái", "Diễn giải", "Chức năng",
+          ]}
           rows={projects}
           renderRow={(p: ProjectRow, i: number) => (
             <>
               <td className="px-4 py-2.5 text-sm">{i + 1}</td>
+              <td className="px-4 py-2.5 text-sm">
+                <input
+                  type="checkbox"
+                  checked={selectedIds.includes(p.id)}
+                  onChange={() => toggleSelect(p.id)}
+                  className="h-3.5 w-3.5 cursor-pointer accent-[#FE9D58]"
+                />
+              </td>
               <td className="px-4 py-2.5 text-sm font-mono">{p.code}</td>
               <td className="px-4 py-2.5 text-sm font-medium">{p.name}</td>
               <td className="px-4 py-2.5 text-sm">{p.type}</td>
@@ -370,7 +396,7 @@ function RowActions({ onDelete, onView }: { onDelete: () => void; onView?: () =>
   );
 }
 
-function DataGrid({ headers, rows, renderRow, emptyText }: { headers: string[]; rows: any[]; renderRow: (r: any, i: number) => React.ReactNode; emptyText: string }) {
+function DataGrid({ headers, rows, renderRow, emptyText }: { headers: React.ReactNode[]; rows: any[]; renderRow: (r: any, i: number) => React.ReactNode; emptyText: string }) {
   const [page, setPage] = useState(1);
   const pageSize = 10;
   const total = rows.length;
@@ -383,8 +409,8 @@ function DataGrid({ headers, rows, renderRow, emptyText }: { headers: string[]; 
       <table className="w-full">
         <thead className="bg-gray-50">
           <tr>
-            {headers.map(h => (
-              <th key={h} className="px-4 py-2.5 text-left text-[11px] font-semibold uppercase tracking-wider text-gray-600">{h}</th>
+            {headers.map((h, idx) => (
+              <th key={idx} className="px-4 py-2.5 text-left text-[11px] font-semibold uppercase tracking-wider text-gray-600">{h}</th>
             ))}
           </tr>
         </thead>
