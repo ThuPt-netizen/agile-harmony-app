@@ -396,7 +396,7 @@ function RowActions({ onDelete, onView }: { onDelete: () => void; onView?: () =>
   );
 }
 
-function DataGrid({ headers, rows, renderRow, emptyText }: { headers: string[]; rows: any[]; renderRow: (r: any, i: number) => React.ReactNode; emptyText: string }) {
+function DataGrid({ headers, rows, renderRow, emptyText }: { headers: React.ReactNode[]; rows: any[]; renderRow: (r: any, i: number) => React.ReactNode; emptyText: string }) {
   const [page, setPage] = useState(1);
   const pageSize = 10;
   const total = rows.length;
@@ -409,8 +409,8 @@ function DataGrid({ headers, rows, renderRow, emptyText }: { headers: string[]; 
       <table className="w-full">
         <thead className="bg-gray-50">
           <tr>
-            {headers.map(h => (
-              <th key={h} className="px-4 py-2.5 text-left text-[11px] font-semibold uppercase tracking-wider text-gray-600">{h}</th>
+            {headers.map((h, idx) => (
+              <th key={idx} className="px-4 py-2.5 text-left text-[11px] font-semibold uppercase tracking-wider text-gray-600">{h}</th>
             ))}
           </tr>
         </thead>
