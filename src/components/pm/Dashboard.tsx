@@ -302,7 +302,7 @@ export function Dashboard({ onSelectProject }: Props) {
                     <div key={d.name} className="flex items-center gap-1.5 text-[11px]">
                       <span className="h-2 w-2 rounded-full" style={{ background: d.color }} />
                       <span className="font-mono">{d.name}</span>
-                      <span className="text-muted-foreground ml-auto">{d.value}</span>
+                      <span className="text-muted-foreground">{d.value}</span>
                     </div>
                   ))}
                 </div>
