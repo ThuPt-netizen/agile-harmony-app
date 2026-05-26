@@ -187,7 +187,6 @@ export function ProjectAdmin() {
         </div>
         <DataGrid
           headers={[
-            "STT",
             <input
               key="sel-all"
               type="checkbox"
@@ -195,12 +194,12 @@ export function ProjectAdmin() {
               onChange={toggleSelectAll}
               className="h-3.5 w-3.5 cursor-pointer accent-[#FE9D58]"
             />,
+            "STT",
             "Mã dự án", "Tên dự án", "Loại dự án", "Ngày mở dự án", "Ngày đóng dự án", "Trạng thái", "Diễn giải", "Chức năng",
           ]}
           rows={projects}
           renderRow={(p: ProjectRow, i: number) => (
             <>
-              <td className="px-4 py-2.5 text-sm">{i + 1}</td>
               <td className="px-4 py-2.5 text-sm">
                 <input
                   type="checkbox"
@@ -209,6 +208,7 @@ export function ProjectAdmin() {
                   className="h-3.5 w-3.5 cursor-pointer accent-[#FE9D58]"
                 />
               </td>
+              <td className="px-4 py-2.5 text-sm">{i + 1}</td>
               <td className="px-4 py-2.5 text-sm font-mono">{p.code}</td>
               <td className="px-4 py-2.5 text-sm font-medium">{p.name}</td>
               <td className="px-4 py-2.5 text-sm">{p.type}</td>
