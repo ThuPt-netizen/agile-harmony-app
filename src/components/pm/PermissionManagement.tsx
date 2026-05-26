@@ -366,10 +366,8 @@ export function PermissionManagement() {
                   <TableHead className={cn(headerCls, "text-white")}>Mã chức năng</TableHead>
                   <TableHead className={cn(headerCls, "text-white")}>Tên trường dữ liệu</TableHead>
                   <TableHead className={cn(headerCls, "text-white")}>Mô tả</TableHead>
-                  <TableHead className={cn(headerCls, "text-white text-center w-20")}>Thêm mới</TableHead>
                   <TableHead className={cn(headerCls, "text-white text-center w-20")}>Xem</TableHead>
                   <TableHead className={cn(headerCls, "text-white text-center w-20")}>Sửa</TableHead>
-                  <TableHead className={cn(headerCls, "text-white text-center w-20")}>Xóa</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -391,28 +389,22 @@ export function PermissionManagement() {
                     <TableCell className="text-sm font-mono text-gray-800">{r.truong}</TableCell>
                     <TableCell className="text-sm text-gray-700">{r.moTa}</TableCell>
                     <TableCell className="text-center">
-                      <Checkbox checked={r.truyVan} onCheckedChange={(v) => togglePerm(r.id, "truyVan", !!v)} />
-                    </TableCell>
-                    <TableCell className="text-center">
                       <Checkbox checked={r.them} onCheckedChange={(v) => togglePerm(r.id, "them", !!v)} />
                     </TableCell>
                     <TableCell className="text-center">
                       <Checkbox checked={r.sua} onCheckedChange={(v) => togglePerm(r.id, "sua", !!v)} />
                     </TableCell>
-                    <TableCell className="text-center">
-                      <Checkbox checked={r.xoa} onCheckedChange={(v) => togglePerm(r.id, "xoa", !!v)} />
-                    </TableCell>
                   </TableRow>
                 ))}
                 {filteredData.length === 0 && (
                   <TableRow>
-                    <TableCell colSpan={10} className="text-center text-sm text-gray-500 py-8">
+                    <TableCell colSpan={8} className="text-center text-sm text-gray-500 py-8">
                       Không có dữ liệu phù hợp
                     </TableCell>
                   </TableRow>
                 )}
                 <PagerRow
-                  colSpan={10}
+                  colSpan={8}
                   page={pageData}
                   setPage={setPageData}
                   total={filteredData.length}
