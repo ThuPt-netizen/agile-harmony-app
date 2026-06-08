@@ -1,4 +1,4 @@
-import { LayoutDashboard, FolderKanban, BarChart3, Settings, ShieldCheck, Users, UsersRound, KeyRound, ChevronDown } from "lucide-react";
+import { LayoutDashboard, FolderKanban, BarChart3, Settings, ShieldCheck, Users, UsersRound, KeyRound, ChevronDown, Upload, UserCog, ClipboardList, Wallet } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import navisoftLogo from "@/assets/navisoft-logo.png";
@@ -20,9 +20,18 @@ const adminChildren = [
   { key: "permissions", label: "Quản lý phân quyền", icon: KeyRound },
 ];
 
+const importChildren = [
+  { key: "import-resource-plan", label: "Import nguồn lực-kế hoạch", icon: UserCog },
+  { key: "import-actual-plan", label: "Import thực tế-kế hoạch", icon: ClipboardList },
+  { key: "import-finance", label: "Import nguồn lực tài chính", icon: Wallet },
+];
+
 export function Sidebar({ active, onNavigate }: Props) {
   const [adminOpen, setAdminOpen] = useState(
     active === "users" || active === "user-groups" || active === "permissions"
+  );
+  const [importOpen, setImportOpen] = useState(
+    active.startsWith("import-")
   );
   return (
     <aside className="hidden lg:flex w-64 flex-col bg-white shadow-sm border border-orange-100 rounded-[2rem] sticky top-3 h-[calc(100vh-1.5rem)] relative overflow-hidden">
@@ -89,6 +98,38 @@ export function Sidebar({ active, onNavigate }: Props) {
                 >
                   <Icon className="h-4 w-4" strokeWidth={isActive ? 2.5 : 2} />
                   <span className="font-medium">{c.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        <button
+          onClick={() => setImportOpen((v) => !v)}
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm text-gray-600 hover:bg-gray-50 hover:text-[#1F2937] transition-all"
+        >
+          <Upload className="h-4 w-4" />
+          <span className="font-medium">Import dữ liệu</span>
+          <ChevronDown className={cn("ml-auto h-4 w-4 transition-transform", importOpen && "rotate-180")} />
+        </button>
+        {importOpen && (
+          <div className="ml-3 pl-3 border-l border-gray-100 space-y-1">
+            {importChildren.map((c) => {
+              const Icon = c.icon;
+              const isActive = active === c.key;
+              return (
+                <button
+                  key={c.key}
+                  onClick={() => onNavigate(c.key)}
+                  className={cn(
+                    "w-full flex items-center gap-3 px-3 py-2 rounded-2xl text-sm transition-all text-left",
+                    isActive
+                      ? "bg-[#FE9D58] text-white shadow-lg shadow-orange-500/25"
+                      : "text-gray-600 hover:bg-gray-50 hover:text-[#1F2937]"
+                  )}
+                >
+                  <Icon className="h-4 w-4 shrink-0" strokeWidth={isActive ? 2.5 : 2} />
+                  <span className="font-medium text-[13px] leading-tight">{c.label}</span>
                 </button>
               );
             })}
