@@ -51,14 +51,12 @@ const peopleNames = [
 ];
 const usernames = ["AnNTT","anhvth","Baclv","bacnd","BangTT","ChiNK","dangtq","Dongpv","Dungnq","Duynt","Giangbh","hainn","HangLT","hanhvh","HieuDT","Hieuvq","Hoabt","HoaTTT","hocdq","Hoandv","Hoangth","huvdd"];
 
-function seedRow(idx: number) {
-  // generate distribution per column
-  const vals = allCols.map((_, ci) => {
+function seedRow(idx: number): number[] {
+  const vals: number[] = allCols.map((_, ci) => {
     const r = Math.sin(idx * 13.7 + ci * 5.3) * 10000;
     const v = Math.abs(r) % 1;
     return v > 0.78 ? Number((Math.round(v * 100) / 100).toFixed(2)) : 0;
   });
-  // ensure at least one non-zero
   if (vals.every(v => v === 0)) vals[idx % vals.length] = 1;
   return vals;
 }
