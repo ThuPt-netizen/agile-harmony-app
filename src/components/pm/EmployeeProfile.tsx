@@ -1,4 +1,4 @@
-import { ChevronLeft, Mail, Phone, IdCard, Briefcase, Wallet, AlertTriangle, Trophy, FileText, ClipboardCheck, Database, FileIcon } from "lucide-react";
+import { ChevronLeft, Mail, Phone, IdCard, Briefcase, Wallet, AlertTriangle, Trophy, FileText, ClipboardCheck, Database, FileIcon, Pencil } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
@@ -43,7 +43,7 @@ export function EmployeeProfile() {
 
       <div className="grid grid-cols-12 gap-5">
         {/* Left sidebar */}
-        <aside className="col-span-12 lg:col-span-3">
+        <aside className="col-span-12 lg:col-span-3 lg:sticky lg:top-3 lg:self-start lg:max-h-[calc(100vh-1.5rem)] lg:overflow-y-auto">
           <div className="bg-white rounded-2xl border border-gray-200 p-5 shadow-sm">
             <div className="flex flex-col items-center text-center">
               <div className="h-28 w-28 rounded-full overflow-hidden ring-4 ring-orange-100 bg-orange-50">
@@ -87,9 +87,14 @@ export function EmployeeProfile() {
         {/* Main */}
         <section className="col-span-12 lg:col-span-9 space-y-5">
           <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
-            <div className="pb-4 border-b border-gray-100">
-              <h2 className="text-[22px] font-bold text-blue-600">Thông tin cá nhân</h2>
-              <p className="text-[12px] text-gray-500 mt-1">Các thông tin cá nhân, liên hệ, học vấn và lịch sử làm việc</p>
+            <div className="pb-4 border-b border-gray-100 flex items-start justify-between gap-4">
+              <div>
+                <h2 className="text-[22px] font-bold text-blue-600">Thông tin cá nhân</h2>
+                <p className="text-[12px] text-gray-500 mt-1">Các thông tin cá nhân, liên hệ, học vấn và lịch sử làm việc</p>
+              </div>
+              <button className="shrink-0 inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg text-[13px] font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors shadow-sm">
+                <Pencil className="h-3.5 w-3.5" /> Chỉnh sửa
+              </button>
             </div>
 
             <div className="mt-5">
