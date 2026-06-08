@@ -11,6 +11,7 @@ import { PermissionManagement } from "@/components/pm/PermissionManagement";
 import { ProjectAdmin } from "@/components/pm/ProjectAdmin";
 import { ImportData } from "@/components/pm/ImportData";
 import { EmployeeProfile } from "@/components/pm/EmployeeProfile";
+import { HrUserGroups } from "@/components/pm/HrUserGroups";
 import { Project, projects } from "@/lib/mockData";
 import { ProjectCard } from "@/components/pm/ProjectCard";
 import { Settings } from "lucide-react";
@@ -35,6 +36,7 @@ const Index = () => {
     "import-actual-plan": { t: "Import thực tế - kế hoạch", s: "Import dữ liệu" },
     "import-finance": { t: "Import nguồn lực tài chính", s: "Import dữ liệu" },
     "hr-profile": { t: "Thông tin cá nhân", s: "Quản lý nhân sự" },
+    "hr-user-groups": { t: "Quản lý nhóm NSD", s: "Quản lý nhân sự" },
   };
 
   return (
@@ -60,6 +62,7 @@ const Index = () => {
               {view === "import-actual-plan" && <ImportData variant="actual-plan" />}
               {view === "import-finance" && <ImportData variant="finance" />}
               {view === "hr-profile" && <EmployeeProfile />}
+              {view === "hr-user-groups" && <HrUserGroups />}
                {view === "projects" && (
                  <div className="px-6 lg:px-10 py-8 bg-slate-200">
                    <div className="flex justify-end mb-4">
