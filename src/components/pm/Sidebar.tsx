@@ -1,4 +1,4 @@
-import { LayoutDashboard, FolderKanban, BarChart3, Settings, ShieldCheck, Users, UsersRound, KeyRound, ChevronDown, Upload, UserCog, ClipboardList, Wallet, UserSquare2, IdCard } from "lucide-react";
+import { LayoutDashboard, FolderKanban, BarChart3, Settings, ShieldCheck, Users, UsersRound, KeyRound, ChevronDown, Upload, UserCog, ClipboardList, Wallet, IdCard } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import navisoftLogo from "@/assets/navisoft-logo.png";
