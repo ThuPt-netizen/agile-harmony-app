@@ -9,6 +9,7 @@ import { UserManagement } from "@/components/pm/UserManagement";
 import { UserGroupManagement } from "@/components/pm/UserGroupManagement";
 import { PermissionManagement } from "@/components/pm/PermissionManagement";
 import { ProjectAdmin } from "@/components/pm/ProjectAdmin";
+import { ImportData } from "@/components/pm/ImportData";
 import { Project, projects } from "@/lib/mockData";
 import { ProjectCard } from "@/components/pm/ProjectCard";
 import { Settings } from "lucide-react";
@@ -29,6 +30,9 @@ const Index = () => {
     "user-groups": { t: "Quản lý nhóm người dùng", s: "Quản trị hệ thống" },
     permissions: { t: "Quản lý phân quyền", s: "Quản trị hệ thống" },
     "project-admin": { t: "Danh sách dự án", s: "Quản trị dự án" },
+    "import-resource-plan": { t: "Import nguồn lực - kế hoạch", s: "Import dữ liệu" },
+    "import-actual-plan": { t: "Import thực tế - kế hoạch", s: "Import dữ liệu" },
+    "import-finance": { t: "Import nguồn lực tài chính", s: "Import dữ liệu" },
   };
 
   return (
@@ -50,6 +54,9 @@ const Index = () => {
               {view === "user-groups" && <UserGroupManagement />}
               {view === "permissions" && <PermissionManagement />}
               {view === "project-admin" && <ProjectAdmin />}
+              {view === "import-resource-plan" && <ImportData variant="resource-plan" />}
+              {view === "import-actual-plan" && <ImportData variant="actual-plan" />}
+              {view === "import-finance" && <ImportData variant="finance" />}
                {view === "projects" && (
                  <div className="px-6 lg:px-10 py-8 bg-slate-200">
                    <div className="flex justify-end mb-4">
