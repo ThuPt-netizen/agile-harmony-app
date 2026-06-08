@@ -108,7 +108,7 @@ export function ImportData({ variant }: Props) {
           <button onClick={() => setSearched(true)} className="h-10 px-4 rounded-lg text-sm font-medium text-white bg-gradient-to-r from-orange-500 to-rose-500 hover:brightness-110 shadow-sm shadow-orange-500/30 flex items-center gap-2">
             <Search className="h-4 w-4" /> Tìm kiếm
           </button>
-          <button onClick={() => setOpenImport(true)} className="h-10 px-4 rounded-lg text-sm font-medium text-white bg-[#1F2937] hover:bg-black flex items-center gap-2">
+          <button onClick={() => setOpenImport(true)} className="h-10 px-4 rounded-lg text-sm font-medium text-white flex items-center gap-2 bg-blue-700">
             <Upload className="h-4 w-4" /> Import files
           </button>
         </div>
