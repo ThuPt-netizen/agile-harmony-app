@@ -138,7 +138,7 @@ export function ImportData({ variant }: Props) {
                 </tr>
                 <tr>
                   {allCols.map((c, i) => (
-                    <th key={i} className={`bg-white border-b border-r border-gray-200 px-2 py-1.5 text-[11px] font-medium text-gray-700 min-w-[110px] ${c.highlight ? "bg-red-500 text-white" : ""}`}>{c.code}</th>
+                    <th key={i} className={`border-b border-r border-gray-200 px-2 py-1.5 text-[11px] font-medium min-w-[110px] ${c.highlight ? "bg-slate-50 text-gray-700" : "bg-white text-gray-700"}`}>{c.code}</th>
                   ))}
                 </tr>
                 <tr>
@@ -291,7 +291,7 @@ function ImportPopup({ meta, onClose }: { meta: { title: string; templateName: s
                       </tr>
                       <tr>
                         {allCols.map((c, i) => (
-                          <th key={i} className={`bg-white border-b border-r border-gray-200 px-2 py-1.5 text-[11px] font-medium text-gray-700 min-w-[110px] ${c.highlight ? "bg-red-500 text-white" : ""}`}>{c.code}</th>
+                          <th key={i} className={`border-b border-r border-gray-200 px-2 py-1.5 text-[11px] font-medium min-w-[110px] ${c.highlight ? "bg-slate-50 text-gray-700" : "bg-white text-gray-700"}`}>{c.code}</th>
                         ))}
                       </tr>
                       <tr>
