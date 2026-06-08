@@ -128,9 +128,9 @@ export function ImportData({ variant }: Props) {
             <table className="min-w-full text-xs border-separate border-spacing-0">
               <thead className="sticky top-0 z-20">
                 <tr>
-                  <th className="bg-gray-50 border-b border-r border-gray-200 px-2 py-2 sticky left-0 z-30" rowSpan={3}>STT</th>
-                  <th className="bg-gray-50 border-b border-r border-gray-200 px-3 py-2 text-left sticky left-[44px] z-30" rowSpan={3}>Tên nhân sự</th>
-                  <th className="bg-gray-50 border-b border-r border-gray-200 px-3 py-2 text-left sticky left-[224px] z-30" rowSpan={3}>Username</th>
+                  <th className="bg-gray-50 border-b border-r border-gray-200 px-2 py-2 sticky left-0 z-30 w-[48px] min-w-[48px]" rowSpan={3}>STT</th>
+                  <th className="bg-gray-50 border-b border-r border-gray-200 px-3 py-2 text-left sticky left-[48px] z-30 w-[200px] min-w-[200px]" rowSpan={3}>Tên nhân sự</th>
+                  <th className="bg-gray-50 border-b border-r border-gray-200 px-3 py-2 text-left sticky left-[248px] z-30 w-[120px] min-w-[120px]" rowSpan={3}>Username</th>
                   {groups.map(g => (
                     <th key={g.name} colSpan={g.projects.length} className={`border-b border-r border-gray-200 px-2 py-1.5 font-semibold ${g.color}`}>{g.name}</th>
                   ))}
@@ -152,9 +152,9 @@ export function ImportData({ variant }: Props) {
                   const sum = r.values.reduce((a, b) => a + b, 0);
                   return (
                     <tr key={r.username} className="hover:bg-orange-50/40">
-                      <td className="bg-white border-b border-r border-gray-100 px-2 py-1.5 text-center sticky left-0 z-10">{r.stt}</td>
-                      <td className="bg-white border-b border-r border-gray-100 px-3 py-1.5 sticky left-[44px] z-10 whitespace-nowrap">{r.name}</td>
-                      <td className="bg-white border-b border-r border-gray-100 px-3 py-1.5 sticky left-[224px] z-10 text-gray-600">{r.username}</td>
+                      <td className="bg-white border-b border-r border-gray-100 px-2 py-1.5 text-center sticky left-0 z-10 w-[48px] min-w-[48px]">{r.stt}</td>
+                      <td className="bg-white border-b border-r border-gray-100 px-3 py-1.5 sticky left-[48px] z-10 whitespace-nowrap w-[200px] min-w-[200px]">{r.name}</td>
+                      <td className="bg-white border-b border-r border-gray-100 px-3 py-1.5 sticky left-[248px] z-10 text-gray-600 w-[120px] min-w-[120px]">{r.username}</td>
                       {r.values.map((v, ci) => (
                         <td key={ci} className={`border-b border-r border-gray-100 px-2 py-1.5 text-right tabular-nums ${v ? "text-gray-900" : "text-gray-300"}`}>
                           {v ? v.toFixed(v < 1 ? 4 : 3) : "-"}
@@ -280,9 +280,9 @@ function ImportPopup({ meta, onClose }: { meta: { title: string; templateName: s
                   <table className="min-w-full text-xs border-separate border-spacing-0">
                     <thead className="sticky top-0 z-20">
                       <tr>
-                        <th className="bg-gray-50 border-b border-r border-gray-200 px-2 py-2 sticky left-0 z-30" rowSpan={3}>STT</th>
-                        <th className="bg-gray-50 border-b border-r border-gray-200 px-3 py-2 sticky left-[44px] z-30" rowSpan={3}>Trạng thái</th>
-                        <th className="bg-gray-50 border-b border-r border-gray-200 px-3 py-2 sticky left-[156px] z-30" rowSpan={3}>Trạng thái import</th>
+                        <th className="bg-gray-50 border-b border-r border-gray-200 px-2 py-2 sticky left-0 z-30 w-[48px] min-w-[48px]" rowSpan={3}>STT</th>
+                        <th className="bg-gray-50 border-b border-r border-gray-200 px-3 py-2 sticky left-[48px] z-30 w-[120px] min-w-[120px]" rowSpan={3}>Trạng thái</th>
+                        <th className="bg-gray-50 border-b border-r border-gray-200 px-3 py-2 sticky left-[168px] z-30 w-[140px] min-w-[140px]" rowSpan={3}>Trạng thái import</th>
                         <th className="bg-gray-50 border-b border-r border-gray-200 px-3 py-2 text-left" rowSpan={3}>Tên nhân sự</th>
                         <th className="bg-gray-50 border-b border-r border-gray-200 px-3 py-2 text-left" rowSpan={3}>Username</th>
                         {groups.map(g => (
@@ -303,15 +303,15 @@ function ImportPopup({ meta, onClose }: { meta: { title: string; templateName: s
                     <tbody>
                       {filtered.map((r, i) => (
                         <tr key={r.username} className="hover:bg-orange-50/40">
-                          <td className="bg-white border-b border-r border-gray-100 px-2 py-1.5 text-center sticky left-0 z-10">{i + 1}</td>
-                          <td className="bg-white border-b border-r border-gray-100 px-3 py-1.5 sticky left-[44px] z-10">
+                          <td className="bg-white border-b border-r border-gray-100 px-2 py-1.5 text-center sticky left-0 z-10 w-[48px] min-w-[48px]">{i + 1}</td>
+                          <td className="bg-white border-b border-r border-gray-100 px-3 py-1.5 sticky left-[48px] z-10 w-[120px] min-w-[120px]">
                             {r.valid ? (
                               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-100 text-emerald-700"><CheckCircle2 className="h-3 w-3" /> Hợp lệ</span>
                             ) : (
                               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-rose-100 text-rose-700"><AlertCircle className="h-3 w-3" /> Không hợp lệ</span>
                             )}
                           </td>
-                          <td className="bg-white border-b border-r border-gray-100 px-3 py-1.5 sticky left-[156px] z-10">
+                          <td className="bg-white border-b border-r border-gray-100 px-3 py-1.5 sticky left-[168px] z-10 w-[140px] min-w-[140px]">
                             <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium ${r.imported ? "bg-sky-100 text-sky-700" : "bg-gray-100 text-gray-600"}`}>
                               {r.imported ? "Đã import" : "Chưa import"}
                             </span>
