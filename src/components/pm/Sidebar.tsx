@@ -27,9 +27,6 @@ const importChildren = [
   { key: "import-finance", label: "Import nguồn lực tài chính", icon: Wallet },
 ];
 
-const hrChildren = [
-  { key: "hr-profile", label: "Thông tin cá nhân", icon: IdCard },
-];
 
 export function Sidebar({ active, onNavigate }: Props) {
   const [adminOpen, setAdminOpen] = useState(
