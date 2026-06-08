@@ -1,4 +1,4 @@
-import { LayoutDashboard, FolderKanban, BarChart3, Settings, ShieldCheck, Users, UsersRound, KeyRound, ChevronDown, Upload, UserCog, ClipboardList, Wallet } from "lucide-react";
+import { LayoutDashboard, FolderKanban, BarChart3, Settings, ShieldCheck, Users, UsersRound, KeyRound, ChevronDown, Upload, UserCog, ClipboardList, Wallet, UserSquare2, IdCard } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import navisoftLogo from "@/assets/navisoft-logo.png";
@@ -26,6 +26,10 @@ const importChildren = [
   { key: "import-finance", label: "Import nguồn lực tài chính", icon: Wallet },
 ];
 
+const hrChildren = [
+  { key: "hr-profile", label: "Thông tin cá nhân", icon: IdCard },
+];
+
 export function Sidebar({ active, onNavigate }: Props) {
   const [adminOpen, setAdminOpen] = useState(
     active === "users" || active === "user-groups" || active === "permissions"
@@ -33,6 +37,7 @@ export function Sidebar({ active, onNavigate }: Props) {
   const [importOpen, setImportOpen] = useState(
     active.startsWith("import-")
   );
+  const [hrOpen, setHrOpen] = useState(active.startsWith("hr-"));
   return (
     <aside className="hidden lg:flex w-64 flex-col bg-white shadow-sm border border-orange-100 rounded-[2rem] sticky top-3 h-[calc(100vh-1.5rem)] relative overflow-hidden">
       <div className="absolute -top-20 -right-20 h-72 w-72 rounded-full bg-[#FE9D58]/10 blur-3xl pointer-events-none" />
@@ -115,6 +120,39 @@ export function Sidebar({ active, onNavigate }: Props) {
         {importOpen && (
           <div className="ml-3 pl-3 border-l border-gray-100 space-y-1">
             {importChildren.map((c) => {
+              const Icon = c.icon;
+              const isActive = active === c.key;
+              return (
+                <button
+                  key={c.key}
+                  onClick={() => onNavigate(c.key)}
+                  className={cn(
+                    "w-full flex items-center gap-3 px-3 py-2 rounded-2xl text-sm transition-all text-left",
+                    isActive
+                      ? "bg-[#FE9D58] text-white shadow-lg shadow-orange-500/25"
+                      : "text-gray-600 hover:bg-gray-50 hover:text-[#1F2937]"
+                  )}
+                >
+                  <Icon className="h-4 w-4 shrink-0" strokeWidth={isActive ? 2.5 : 2} />
+                  <span className="font-medium text-[13px] leading-tight">{c.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        <div className="pt-3 px-3 pb-2 text-[10px] uppercase tracking-[0.2em] text-gray-400">Nhân sự</div>
+        <button
+          onClick={() => setHrOpen((v) => !v)}
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm text-gray-600 hover:bg-gray-50 hover:text-[#1F2937] transition-all"
+        >
+          <UserSquare2 className="h-4 w-4" />
+          <span className="font-medium">Quản lý nhân sự</span>
+          <ChevronDown className={cn("ml-auto h-4 w-4 transition-transform", hrOpen && "rotate-180")} />
+        </button>
+        {hrOpen && (
+          <div className="ml-3 pl-3 border-l border-gray-100 space-y-1">
+            {hrChildren.map((c) => {
               const Icon = c.icon;
               const isActive = active === c.key;
               return (
