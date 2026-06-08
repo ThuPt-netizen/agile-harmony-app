@@ -12,6 +12,7 @@ const items = [
   { key: "dashboard", label: "Tổng quan", icon: LayoutDashboard },
   { key: "projects", label: "Dự án", icon: FolderKanban },
   { key: "performance", label: "Hiệu suất", icon: BarChart3 },
+  { key: "hr-profile", label: "Thông tin cá nhân", icon: IdCard },
 ];
 
 const adminChildren = [
