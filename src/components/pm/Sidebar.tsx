@@ -12,7 +12,6 @@ const items = [
   { key: "dashboard", label: "Tổng quan", icon: LayoutDashboard },
   { key: "projects", label: "Dự án", icon: FolderKanban },
   { key: "performance", label: "Hiệu suất", icon: BarChart3 },
-  { key: "hr-profile", label: "Thông tin cá nhân", icon: IdCard },
 ];
 
 const adminChildren = [
@@ -26,6 +25,7 @@ const importChildren = [
   { key: "import-actual-plan", label: "Import nguồn lực - thực tế", icon: ClipboardList },
   { key: "import-finance", label: "Import nguồn lực tài chính", icon: Wallet },
 ];
+
 
 
 export function Sidebar({ active, onNavigate }: Props) {
@@ -137,6 +137,20 @@ export function Sidebar({ active, onNavigate }: Props) {
             })}
           </div>
         )}
+
+        <div className="pt-3 px-3 pb-2 text-[10px] uppercase tracking-[0.2em] text-gray-400">Quản lý nhân sự</div>
+        <button
+          onClick={() => onNavigate("hr-profile")}
+          className={cn(
+            "w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm transition-all",
+            active === "hr-profile"
+              ? "bg-[#FE9D58] text-white shadow-lg shadow-orange-500/25"
+              : "text-gray-600 hover:bg-gray-50 hover:text-[#1F2937]"
+          )}
+        >
+          <IdCard className="h-4 w-4" strokeWidth={active === "hr-profile" ? 2.5 : 2} />
+          <span className="font-medium">Thông tin cá nhân</span>
+        </button>
       </nav>
 
       <div className="relative p-4 border-t border-gray-100">
