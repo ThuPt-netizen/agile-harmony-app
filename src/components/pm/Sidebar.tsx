@@ -137,39 +137,6 @@ export function Sidebar({ active, onNavigate }: Props) {
             })}
           </div>
         )}
-
-        <div className="pt-3 px-3 pb-2 text-[10px] uppercase tracking-[0.2em] text-gray-400">Nhân sự</div>
-        <button
-          onClick={() => setHrOpen((v) => !v)}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm text-gray-600 hover:bg-gray-50 hover:text-[#1F2937] transition-all"
-        >
-          <UserSquare2 className="h-4 w-4" />
-          <span className="font-medium">Quản lý nhân sự</span>
-          <ChevronDown className={cn("ml-auto h-4 w-4 transition-transform", hrOpen && "rotate-180")} />
-        </button>
-        {hrOpen && (
-          <div className="ml-3 pl-3 border-l border-gray-100 space-y-1">
-            {hrChildren.map((c) => {
-              const Icon = c.icon;
-              const isActive = active === c.key;
-              return (
-                <button
-                  key={c.key}
-                  onClick={() => onNavigate(c.key)}
-                  className={cn(
-                    "w-full flex items-center gap-3 px-3 py-2 rounded-2xl text-sm transition-all text-left",
-                    isActive
-                      ? "bg-[#FE9D58] text-white shadow-lg shadow-orange-500/25"
-                      : "text-gray-600 hover:bg-gray-50 hover:text-[#1F2937]"
-                  )}
-                >
-                  <Icon className="h-4 w-4 shrink-0" strokeWidth={isActive ? 2.5 : 2} />
-                  <span className="font-medium text-[13px] leading-tight">{c.label}</span>
-                </button>
-              );
-            })}
-          </div>
-        )}
       </nav>
 
       <div className="relative p-4 border-t border-gray-100">
