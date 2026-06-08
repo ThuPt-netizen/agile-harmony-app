@@ -1,4 +1,4 @@
-import { LayoutDashboard, FolderKanban, BarChart3, Settings, ShieldCheck, Users, UsersRound, KeyRound, ChevronDown, Upload, UserCog, ClipboardList, Wallet, IdCard } from "lucide-react";
+import { LayoutDashboard, FolderKanban, BarChart3, Settings, ShieldCheck, Users, UsersRound, KeyRound, ChevronDown, Upload, UserCog, ClipboardList, Wallet, IdCard, UserSquare2 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import navisoftLogo from "@/assets/navisoft-logo.png";
@@ -12,7 +12,6 @@ const items = [
   { key: "dashboard", label: "Tổng quan", icon: LayoutDashboard },
   { key: "projects", label: "Dự án", icon: FolderKanban },
   { key: "performance", label: "Hiệu suất", icon: BarChart3 },
-  { key: "hr-profile", label: "Thông tin cá nhân", icon: IdCard },
 ];
 
 const adminChildren = [
@@ -27,6 +26,10 @@ const importChildren = [
   { key: "import-finance", label: "Import nguồn lực tài chính", icon: Wallet },
 ];
 
+const hrChildren = [
+  { key: "hr-profile", label: "Thông tin cá nhân", icon: IdCard },
+];
+
 
 export function Sidebar({ active, onNavigate }: Props) {
   const [adminOpen, setAdminOpen] = useState(
@@ -34,6 +37,9 @@ export function Sidebar({ active, onNavigate }: Props) {
   );
   const [importOpen, setImportOpen] = useState(
     active.startsWith("import-")
+  );
+  const [hrOpen, setHrOpen] = useState(
+    active === "hr-profile"
   );
   return (
     <aside className="hidden lg:flex w-64 flex-col bg-white shadow-sm border border-orange-100 rounded-[2rem] sticky top-3 h-[calc(100vh-1.5rem)] relative overflow-hidden">
@@ -117,6 +123,39 @@ export function Sidebar({ active, onNavigate }: Props) {
         {importOpen && (
           <div className="ml-3 pl-3 border-l border-gray-100 space-y-1">
             {importChildren.map((c) => {
+              const Icon = c.icon;
+              const isActive = active === c.key;
+              return (
+                <button
+                  key={c.key}
+                  onClick={() => onNavigate(c.key)}
+                  className={cn(
+                    "w-full flex items-center gap-3 px-3 py-2 rounded-2xl text-sm transition-all text-left",
+                    isActive
+                      ? "bg-[#FE9D58] text-white shadow-lg shadow-orange-500/25"
+                      : "text-gray-600 hover:bg-gray-50 hover:text-[#1F2937]"
+                  )}
+                >
+                  <Icon className="h-4 w-4 shrink-0" strokeWidth={isActive ? 2.5 : 2} />
+                  <span className="font-medium text-[13px] leading-tight">{c.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        <div className="pt-3 px-3 pb-2 text-[10px] uppercase tracking-[0.2em] text-gray-400">Quản lý nhân sự</div>
+        <button
+          onClick={() => setHrOpen((v) => !v)}
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm text-gray-600 hover:bg-gray-50 hover:text-[#1F2937] transition-all"
+        >
+          <UserSquare2 className="h-4 w-4" />
+          <span className="font-medium">Nhân sự</span>
+          <ChevronDown className={cn("ml-auto h-4 w-4 transition-transform", hrOpen && "rotate-180")} />
+        </button>
+        {hrOpen && (
+          <div className="ml-3 pl-3 border-l border-gray-100 space-y-1">
+            {hrChildren.map((c) => {
               const Icon = c.icon;
               const isActive = active === c.key;
               return (
