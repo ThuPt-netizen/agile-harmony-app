@@ -22,7 +22,7 @@ const adminChildren = [
 
 const importChildren = [
   { key: "import-resource-plan", label: "Import nguồn lực-kế hoạch", icon: UserCog },
-  { key: "import-actual-plan", label: "Import thực tế-kế hoạch", icon: ClipboardList },
+  { key: "import-actual-plan", label: "Import nguồn lực - thực tế", icon: ClipboardList },
   { key: "import-finance", label: "Import nguồn lực tài chính", icon: Wallet },
 ];
 
