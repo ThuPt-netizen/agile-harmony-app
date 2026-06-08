@@ -57,7 +57,7 @@ function seedRow(idx: number): number[] {
     const v = Math.abs(r) % 1;
     return v > 0.78 ? Number((Math.round(v * 100) / 100).toFixed(2)) : 0 as number;
   });
-  if (vals.every(v => v === 0)) vals[idx % vals.length] = 1;
+  if (vals.every(v => v === 0)) (vals as number[])[idx % vals.length] = 1;
   return vals;
 }
 
