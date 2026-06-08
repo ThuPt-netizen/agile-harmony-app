@@ -10,7 +10,7 @@ interface Props {
 
 const variantMeta: Record<ImportVariant, { title: string; templateName: string; unit: string }> = {
   "resource-plan": { title: "Import nguồn lực - kế hoạch", templateName: "Template_NguonLuc_KeHoach.xlsx", unit: "FTE" },
-  "actual-plan": { title: "Import thực tế - kế hoạch", templateName: "Template_ThucTe_KeHoach.xlsx", unit: "Ngày công" },
+  "actual-plan": { title: "Import nguồn lực - thực tế", templateName: "Template_ThucTe_KeHoach.xlsx", unit: "Ngày công" },
   "finance": { title: "Import nguồn lực tài chính", templateName: "Template_NguonLuc_TaiChinh.xlsx", unit: "Triệu VND" },
 };
 
