@@ -47,6 +47,10 @@ interface Candidate {
   school: string;
   major: string;
   status: string;
+  iqScore: string;
+  iqStatus: string;
+  proScore: string;
+  proStatus: string;
 }
 
 const seed: Candidate[] = [
@@ -62,6 +66,10 @@ const seed: Candidate[] = [
     school: "Đại học Công nghệ Giao Thông vận tải",
     major: "Công nghệ thông tin",
     status: "Từ chối",
+    iqScore: "75",
+    iqStatus: "Không đạt",
+    proScore: "65",
+    proStatus: "Không đạt",
   },
   {
     id: "C002",
@@ -75,6 +83,10 @@ const seed: Candidate[] = [
     school: "Đại học Bách Khoa Hà Nội",
     major: "Kỹ Thuật phần mềm",
     status: "Đạt",
+    iqScore: "85",
+    iqStatus: "Đạt",
+    proScore: "82",
+    proStatus: "Đạt",
   },
   {
     id: "C003",
@@ -88,6 +100,10 @@ const seed: Candidate[] = [
     school: "Học viện Nông Nghiệp Việt Nam",
     major: "Công Nghệ thông tin",
     status: "Chờ phỏng vấn",
+    iqScore: "—",
+    iqStatus: "—",
+    proScore: "—",
+    proStatus: "—",
   },
 ];
 
@@ -303,6 +319,10 @@ export function HrCandidates() {
                 <th className="px-3 py-2 text-left font-medium">Trường học</th>
                 <th className="px-3 py-2 text-left font-medium">Ngành học</th>
                 <th className="px-3 py-2 text-left font-medium">Trạng thái</th>
+                <th className="px-3 py-2 text-left font-medium">Điểm test IQ</th>
+                <th className="px-3 py-2 text-left font-medium">Trạng thái test IQ</th>
+                <th className="px-3 py-2 text-left font-medium">Điểm test chuyên môn</th>
+                <th className="px-3 py-2 text-left font-medium">Trạng thái test chuyên môn</th>
               </tr>
             </thead>
             <tbody>
@@ -333,11 +353,41 @@ export function HrCandidates() {
                       {r.status}
                     </span>
                   </td>
+                  <td className="px-3 py-2 text-slate-600">{r.iqScore}</td>
+                  <td className="px-3 py-2">
+                    <span
+                      className={cn(
+                        "px-2 py-0.5 rounded-full text-xs ring-1",
+                        r.iqStatus === "Đạt"
+                          ? "bg-emerald-50 text-emerald-700 ring-emerald-200"
+                          : r.iqStatus === "Không đạt"
+                          ? "bg-rose-50 text-rose-700 ring-rose-200"
+                          : "bg-slate-50 text-slate-600 ring-slate-200"
+                      )}
+                    >
+                      {r.iqStatus}
+                    </span>
+                  </td>
+                  <td className="px-3 py-2 text-slate-600">{r.proScore}</td>
+                  <td className="px-3 py-2">
+                    <span
+                      className={cn(
+                        "px-2 py-0.5 rounded-full text-xs ring-1",
+                        r.proStatus === "Đạt"
+                          ? "bg-emerald-50 text-emerald-700 ring-emerald-200"
+                          : r.proStatus === "Không đạt"
+                          ? "bg-rose-50 text-rose-700 ring-rose-200"
+                          : "bg-slate-50 text-slate-600 ring-slate-200"
+                      )}
+                    >
+                      {r.proStatus}
+                    </span>
+                  </td>
                 </tr>
               ))}
               {filtered.length === 0 && (
                 <tr>
-                  <td colSpan={11} className="text-center py-10 text-slate-400">
+                  <td colSpan={15} className="text-center py-10 text-slate-400">
                     Không có dữ liệu
                   </td>
                 </tr>
