@@ -47,6 +47,10 @@ interface Candidate {
   school: string;
   major: string;
   status: string;
+  iqScore: string;
+  iqStatus: string;
+  proScore: string;
+  proStatus: string;
 }
 
 const seed: Candidate[] = [
@@ -62,6 +66,10 @@ const seed: Candidate[] = [
     school: "Đại học Công nghệ Giao Thông vận tải",
     major: "Công nghệ thông tin",
     status: "Từ chối",
+    iqScore: "75",
+    iqStatus: "Không đạt",
+    proScore: "65",
+    proStatus: "Không đạt",
   },
   {
     id: "C002",
@@ -75,6 +83,10 @@ const seed: Candidate[] = [
     school: "Đại học Bách Khoa Hà Nội",
     major: "Kỹ Thuật phần mềm",
     status: "Đạt",
+    iqScore: "85",
+    iqStatus: "Đạt",
+    proScore: "82",
+    proStatus: "Đạt",
   },
   {
     id: "C003",
@@ -88,6 +100,10 @@ const seed: Candidate[] = [
     school: "Học viện Nông Nghiệp Việt Nam",
     major: "Công Nghệ thông tin",
     status: "Chờ phỏng vấn",
+    iqScore: "—",
+    iqStatus: "—",
+    proScore: "—",
+    proStatus: "—",
   },
 ];
 
