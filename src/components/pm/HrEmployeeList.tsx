@@ -18,6 +18,12 @@ interface Emp {
   position: string;
   contract: string;
   startDate: string;
+  officialDate: string;
+  status: string;
+  phone: string;
+  workEmail: string;
+  personalEmail: string;
+  seniority: string;
 }
 
 const avatars = [
@@ -28,16 +34,16 @@ const avatars = [
 ];
 
 const seed: Emp[] = [
-  { id: "1", avatar: avatars[0], name: "Phạm Thị Huyền Trang", username: "Trangpth", group: "PERMISSION_DEFAULT", dob: "26/08/1995", gender: "Nữ", position: "Kinh doanh", contract: "", startDate: "12/03/2026" },
-  { id: "2", avatar: avatars[1], name: "Đỗ Khánh Linh", username: "linhdk", group: "PERMISSION_DEFAULT", dob: "23/06/2003", gender: "Nữ", position: "TTS", contract: "", startDate: "19/11/2025" },
-  { id: "3", avatar: avatars[2], name: "Phạm Thị Ngọc Ánh", username: "anhptn", group: "PERMISSION_DEFAULT", dob: "23/01/2003", gender: "Nữ", position: "TTS", contract: "", startDate: "11/11/2025" },
-  { id: "4", avatar: avatars[3], name: "Nguyễn Thị Thu Trang", username: "Trangntt", group: "PERMISSION_DEFAULT", dob: "29/06/2002", gender: "Nữ", position: "TTS", contract: "", startDate: "11/11/2025" },
-  { id: "5", avatar: avatars[4], name: "Lê Thị Lài", username: "Lailt", group: "PERMISSION_DEFAULT", dob: "25/06/1989", gender: "Nữ", position: "Kế toán trưởng", contract: "", startDate: "15/05/2011" },
-  { id: "6", avatar: avatars[5], name: "Nguyễn Quang Dũng", username: "dungnq55", group: "PERMISSION_DEFAULT", dob: "10/11/1980", gender: "Nam", position: "Kinh doanh", contract: "Hợp đồng không thời hạn", startDate: "15/07/2025" },
-  { id: "7", avatar: avatars[6], name: "Nguyễn Kim Chi", username: "ChiNK", group: "PERMISSION_DEFAULT", dob: "03/06/2003", gender: "Nữ", position: "Tester", contract: "Thử việc", startDate: "11/08/2025" },
-  { id: "8", avatar: avatars[7], name: "Dương Đức Huy", username: "huydd", group: "PERMISSION_DEFAULT", dob: "26/07/2001", gender: "Nam", position: "Coder", contract: "Hợp đồng 1 năm", startDate: "09/12/2024" },
-  { id: "9", avatar: avatars[8], name: "Bùi Hồng Giang", username: "Giangbh", group: "PERMISSION_DEFAULT", dob: "16/03/2002", gender: "Nữ", position: "Tester", contract: "Hợp đồng 1 năm", startDate: "05/09/2024" },
-  { id: "10", avatar: avatars[9], name: "Nguyễn Viết Quang Tùng", username: "tungnvq2", group: "PERMISSION_DEFAULT", dob: "05/02/2002", gender: "Nam", position: "Coder", contract: "Hợp đồng 1 năm", startDate: "04/09/2024" },
+  { id: "1", avatar: avatars[0], name: "Phạm Thị Huyền Trang", username: "Trangpth", group: "PERMISSION_DEFAULT", dob: "26/08/1995", gender: "Nữ", position: "Kinh doanh", contract: "", startDate: "12/03/2026", officialDate: "12/03/2026", status: "Bình thường", phone: "0988645338", workEmail: "Trangpth@navisoft.com.vn", personalEmail: "trangpth2608@gmail.com", seniority: "0 Năm 2 Tháng 23 Ngày" },
+  { id: "2", avatar: avatars[1], name: "Đỗ Khánh Linh", username: "linhdk", group: "PERMISSION_DEFAULT", dob: "23/06/2003", gender: "Nữ", position: "TTS", contract: "", startDate: "19/11/2025", officialDate: "", status: "Bình thường", phone: "0945935586", workEmail: "linhdk@navisoft.com.vn", personalEmail: "linhh.khxx@gmail.com", seniority: "0 Năm 6 Tháng 16 Ngày" },
+  { id: "3", avatar: avatars[2], name: "Phạm Thị Ngọc Ánh", username: "anhptn", group: "PERMISSION_DEFAULT", dob: "23/01/2003", gender: "Nữ", position: "TTS", contract: "", startDate: "11/11/2025", officialDate: "", status: "Bình thường", phone: "0374263032", workEmail: "anhptn@navisoft.com.vn", personalEmail: "ngocanhpt2312@gmail.com", seniority: "0 Năm 7 Tháng 6 Ngày" },
+  { id: "4", avatar: avatars[3], name: "Nguyễn Thị Thu Trang", username: "Trangntt", group: "PERMISSION_DEFAULT", dob: "29/06/2002", gender: "Nữ", position: "TTS", contract: "", startDate: "11/11/2025", officialDate: "", status: "Bình thường", phone: "0964824041", workEmail: "Trangntt@navisoft.com.vn", personalEmail: "thutrang4041@gmail.com", seniority: "0 Năm 7 Tháng 6 Ngày" },
+  { id: "5", avatar: avatars[4], name: "Lê Thị Lài", username: "Lailt", group: "PERMISSION_DEFAULT", dob: "25/06/1989", gender: "Nữ", position: "Kế toán trưởng", contract: "", startDate: "15/05/2011", officialDate: "15/05/2011", status: "Bình thường", phone: "0978528521", workEmail: "Lailt@navisoft.com.vn", personalEmail: "", seniority: "15 Năm 3 Tháng 8 Ngày" },
+  { id: "6", avatar: avatars[5], name: "Nguyễn Quang Dũng", username: "dungnq55", group: "PERMISSION_DEFAULT", dob: "10/11/1980", gender: "Nam", position: "Kinh doanh", contract: "Hợp đồng không thời hạn", startDate: "15/07/2025", officialDate: "15/07/2025", status: "Bình thường", phone: "0983.661.236", workEmail: "dungnq55@navisoft.com.vn", personalEmail: "dungnq55@fpt.com", seniority: "0 Năm 10 Tháng 23 Ngày" },
+  { id: "7", avatar: avatars[6], name: "Nguyễn Kim Chi", username: "ChiNK", group: "PERMISSION_DEFAULT", dob: "03/06/2003", gender: "Nữ", position: "Tester", contract: "Thử việc", startDate: "11/08/2025", officialDate: "01/11/2025", status: "Bình thường", phone: "0344121690", workEmail: "ChiNK@navisoft.com.vn", personalEmail: "Kimchilala2003@gmail.com", seniority: "0 Năm 10 Tháng 4 Ngày" },
+  { id: "8", avatar: avatars[7], name: "Dương Đức Huy", username: "huydd", group: "PERMISSION_DEFAULT", dob: "26/07/2001", gender: "Nam", position: "Coder", contract: "Hợp đồng 1 năm", startDate: "09/12/2024", officialDate: "09/12/2024", status: "Bình thường", phone: "0962763165", workEmail: "huydd@navisoft.com.vn", personalEmail: "HuyDD22@fpt.com", seniority: "1 Năm 6 Tháng 1 Ngày" },
+  { id: "9", avatar: avatars[8], name: "Bùi Hồng Giang", username: "Giangbh", group: "PERMISSION_DEFAULT", dob: "16/03/2002", gender: "Nữ", position: "Tester", contract: "Hợp đồng 1 năm", startDate: "05/09/2024", officialDate: "01/01/2025", status: "Bình thường", phone: "0965816346", workEmail: "Giangbh@navisoft.com.vn", personalEmail: "Giangbh5@fpt.com", seniority: "1 Năm 9 Tháng 6 Ngày" },
+  { id: "10", avatar: avatars[9], name: "Nguyễn Viết Quang Tùng", username: "tungnvq2", group: "PERMISSION_DEFAULT", dob: "05/02/2002", gender: "Nam", position: "Coder", contract: "Hợp đồng 1 năm", startDate: "04/09/2024", officialDate: "04/09/2024", status: "Bình thường", phone: "0966537482", workEmail: "tungnvq2@navisoft.com.vn", personalEmail: "tungnvq@fpt.com", seniority: "1 Năm 9 Tháng 7 Ngày" },
 ];
 
 export function HrEmployeeList() {
@@ -169,6 +175,12 @@ export function HrEmployeeList() {
                 <th className="px-3 py-3 font-medium">Vị trí làm việc</th>
                 <th className="px-3 py-3 font-medium">Hợp đồng</th>
                 <th className="px-3 py-3 font-medium whitespace-nowrap">Ngày bắt đầu làm việc</th>
+                <th className="px-3 py-3 font-medium whitespace-nowrap">Ngày chính thức</th>
+                <th className="px-3 py-3 font-medium">Trạng thái</th>
+                <th className="px-3 py-3 font-medium whitespace-nowrap">Số điện thoại</th>
+                <th className="px-3 py-3 font-medium whitespace-nowrap">Email công việc</th>
+                <th className="px-3 py-3 font-medium whitespace-nowrap">Email cá nhân</th>
+                <th className="px-3 py-3 font-medium whitespace-nowrap">Thâm niên</th>
               </tr>
             </thead>
             <tbody>
@@ -188,11 +200,17 @@ export function HrEmployeeList() {
                     <td className="px-3 py-2.5 text-slate-700">{r.position}</td>
                     <td className="px-3 py-2.5 text-slate-700">{r.contract || "—"}</td>
                     <td className="px-3 py-2.5 text-slate-700">{r.startDate}</td>
+                    <td className="px-3 py-2.5 text-slate-700 whitespace-nowrap">{r.officialDate || "—"}</td>
+                    <td className="px-3 py-2.5 text-slate-700 whitespace-nowrap">{r.status}</td>
+                    <td className="px-3 py-2.5 text-slate-700 whitespace-nowrap">{r.phone}</td>
+                    <td className="px-3 py-2.5 text-slate-700 whitespace-nowrap">{r.workEmail}</td>
+                    <td className="px-3 py-2.5 text-slate-700 whitespace-nowrap">{r.personalEmail || "—"}</td>
+                    <td className="px-3 py-2.5 text-slate-700 whitespace-nowrap">{r.seniority}</td>
                   </tr>
                 );
               })}
               {filtered.length === 0 && (
-                <tr><td colSpan={10} className="px-4 py-10 text-center text-slate-500">Không có dữ liệu</td></tr>
+                <tr><td colSpan={16} className="px-4 py-10 text-center text-slate-500">Không có dữ liệu</td></tr>
               )}
             </tbody>
           </table>
