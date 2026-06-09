@@ -1,4 +1,4 @@
-import { LayoutDashboard, FolderKanban, BarChart3, Settings, ShieldCheck, Users, UsersRound, KeyRound, ChevronDown, Upload, UserCog, ClipboardList, Wallet, IdCard, Contact } from "lucide-react";
+import { LayoutDashboard, FolderKanban, BarChart3, Settings, ShieldCheck, Users, UsersRound, KeyRound, ChevronDown, Upload, UserCog, ClipboardList, Wallet, IdCard, Contact, CalendarCheck } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import navisoftLogo from "@/assets/navisoft-logo.png";
@@ -174,6 +174,18 @@ export function Sidebar({ active, onNavigate }: Props) {
         >
           <Contact className="h-4 w-4" strokeWidth={active === "hr-employees" ? 2.5 : 2} />
           <span className="font-medium">Danh sách nhân sự</span>
+        </button>
+        <button
+          onClick={() => onNavigate("hr-attendance")}
+          className={cn(
+            "w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm transition-all",
+            active === "hr-attendance"
+              ? "bg-[#FE9D58] text-white shadow-lg shadow-orange-500/25"
+              : "text-gray-600 hover:bg-gray-50 hover:text-[#1F2937]"
+          )}
+        >
+          <CalendarCheck className="h-4 w-4" strokeWidth={active === "hr-attendance" ? 2.5 : 2} />
+          <span className="font-medium">Danh sách chấm công</span>
         </button>
       </nav>
 

@@ -13,6 +13,7 @@ import { ImportData } from "@/components/pm/ImportData";
 import { EmployeeProfile } from "@/components/pm/EmployeeProfile";
 import { HrUserGroups } from "@/components/pm/HrUserGroups";
 import { HrEmployeeList } from "@/components/pm/HrEmployeeList";
+import { HrAttendance } from "@/components/pm/HrAttendance";
 import { Project, projects } from "@/lib/mockData";
 import { ProjectCard } from "@/components/pm/ProjectCard";
 import { Settings } from "lucide-react";
@@ -39,6 +40,7 @@ const Index = () => {
     "hr-profile": { t: "Thông tin cá nhân", s: "Quản lý nhân sự" },
     "hr-user-groups": { t: "Quản lý nhóm NSD", s: "Quản lý nhân sự" },
     "hr-employees": { t: "Danh sách nhân sự", s: "Quản lý nhân sự" },
+    "hr-attendance": { t: "Danh sách chấm công", s: "Quản lý nhân sự" },
   };
 
   return (
@@ -66,6 +68,7 @@ const Index = () => {
               {view === "hr-profile" && <EmployeeProfile />}
               {view === "hr-user-groups" && <HrUserGroups />}
               {view === "hr-employees" && <HrEmployeeList />}
+              {view === "hr-attendance" && <HrAttendance />}
                {view === "projects" && (
                  <div className="px-6 lg:px-10 py-8 bg-slate-200">
                    <div className="flex justify-end mb-4">
