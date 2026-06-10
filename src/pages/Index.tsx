@@ -71,7 +71,7 @@ const Index = () => {
               {view === "import-resource-plan" && <ImportData variant="resource-plan" />}
               {view === "import-actual-plan" && <ImportData variant="actual-plan" />}
               {view === "import-finance" && <ImportData variant="finance" />}
-              {view === "hr-profile" && <EmployeeProfile />}
+              {view === "hr-profile" && <EmployeeProfile onBack={() => handleNav("hr-employees")} />}
               {view === "hr-user-groups" && <HrUserGroups />}
               {view === "hr-employees" && <HrEmployeeList />}
               {view === "hr-attendance" && <HrAttendance />}
