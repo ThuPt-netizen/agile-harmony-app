@@ -76,14 +76,14 @@ const tabMeta: Record<string, { title: string; subtitle: string }> = {
   mei: { title: "Thông tin mei", subtitle: "Thông tin mei của nhân sự theo dự án" },
 };
 
-export function EmployeeProfile() {
+export function EmployeeProfile({ onBack }: { onBack?: () => void }) {
   const [active, setActive] = useState("personal");
   const avatar = "https://api.dicebear.com/7.x/avataaars/svg?seed=PhamThiThu&backgroundColor=ffd5dc";
   const meta = tabMeta[active];
 
   return (
     <div className="px-6 lg:px-8 py-6 h-[calc(100vh-7rem)] flex flex-col">
-      <button className="flex items-center gap-1.5 text-[13px] text-blue-600 hover:text-blue-700 mb-4 font-medium shrink-0">
+      <button onClick={onBack} className="flex items-center gap-1.5 text-[13px] text-blue-600 hover:text-blue-700 mb-4 font-medium shrink-0">
         <ChevronLeft className="h-4 w-4" /> Trở về danh sách nhân sự
       </button>
 
