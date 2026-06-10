@@ -82,14 +82,14 @@ export function EmployeeProfile() {
   const meta = tabMeta[active];
 
   return (
-    <div className="px-6 lg:px-8 py-6">
-      <button className="flex items-center gap-1.5 text-[13px] text-blue-600 hover:text-blue-700 mb-4 font-medium">
+    <div className="px-6 lg:px-8 py-6 h-[calc(100vh-7rem)] flex flex-col">
+      <button className="flex items-center gap-1.5 text-[13px] text-blue-600 hover:text-blue-700 mb-4 font-medium shrink-0">
         <ChevronLeft className="h-4 w-4" /> Trở về danh sách nhân sự
       </button>
 
-      <div className="grid grid-cols-12 gap-5">
-        {/* Left sidebar */}
-        <aside className="col-span-12 lg:col-span-3 lg:sticky lg:top-3 lg:self-start lg:max-h-[calc(100vh-1.5rem)] lg:overflow-y-auto">
+      <div className="grid grid-cols-12 gap-5 flex-1 min-h-0">
+        {/* Left sidebar - fixed */}
+        <aside className="col-span-12 lg:col-span-3 lg:h-full lg:overflow-y-auto pr-1">
           <div className="bg-white rounded-2xl border border-gray-200 p-5 shadow-sm">
             <div className="flex flex-col items-center text-center">
               <div className="h-28 w-28 rounded-full overflow-hidden ring-4 ring-orange-100 bg-orange-50">
@@ -130,8 +130,8 @@ export function EmployeeProfile() {
           </nav>
         </aside>
 
-        {/* Main */}
-        <section className="col-span-12 lg:col-span-9 space-y-5">
+        {/* Main - scrollable */}
+        <section className="col-span-12 lg:col-span-9 space-y-5 lg:h-full lg:overflow-y-auto pr-1">
           <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
             <TabHeader
               title={meta.title}
