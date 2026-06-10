@@ -56,6 +56,7 @@ export function HrEmployeeList() {
   const [qGender, setQGender] = useState("all");
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [confirmQuit, setConfirmQuit] = useState(false);
+  const [addOpen, setAddOpen] = useState(false);
 
   const filtered = useMemo(() => rows.filter(r =>
     (!qName || r.name.toLowerCase().includes(qName.toLowerCase())) &&
@@ -105,6 +106,7 @@ export function HrEmployeeList() {
             label="Thêm"
             disabled={someChecked}
             primary
+            onClick={() => setAddOpen(true)}
           />
         </div>
       </div>
@@ -280,6 +282,66 @@ export function HrEmployeeList() {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Add employee dialog */}
+      <Dialog open={addOpen} onOpenChange={setAddOpen}>
+        <DialogContent className="p-0 overflow-hidden max-w-4xl max-h-[90vh] overflow-y-auto">
+          <div className="flex items-center justify-between px-5 py-3.5 bg-sky-50 border-b">
+            <DialogTitle className="text-base font-semibold">Thêm thông tin nhân sự</DialogTitle>
+            <DialogClose className="text-slate-400 hover:text-slate-600"><X className="h-4 w-4" /></DialogClose>
+          </div>
+          <div className="px-6 py-5 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+            <AddField label="Họ và tên" required />
+            <AddField label="Ngày sinh" required placeholder="dd/MM/yyyy" />
+            <AddSelect label="Giới tính" options={["Nam","Nữ"]} />
+            <AddSelect label="Vị trí làm việc" options={["Coder","Tester","Kinh doanh","TTS","Kế toán trưởng"]} />
+            <AddSelect label="Trạng thái" options={["Bình thường","Tạm nghỉ","Đã nghỉ"]} />
+            <AddField label="Ngày bắt đầu làm việc" required placeholder="dd/MM/yyyy" />
+            <AddField label="Ngày chính thức" placeholder="dd/MM/yyyy" />
+            <AddField label="Số điện thoại" required />
+            <AddField label="Email công việc" required />
+            <AddField label="Địa chỉ hiện tại" />
+            <AddField label="Hộ khẩu" />
+            <AddField label="CMT/CCCD" />
+            <AddField label="Ngày cấp" placeholder="dd/MM/yyyy" />
+            <AddField label="Nơi cấp" />
+            <AddField label="Email cá nhân" />
+            <AddField label="Trường học" />
+            <AddField label="Chuyên ngành" />
+            <AddField label="Ngày bắt đầu học" placeholder="dd/MM/yyyy" />
+            <AddField label="Ngày kết thúc học" placeholder="dd/MM/yyyy" />
+          </div>
+          <div className="px-6 py-4 border-t flex justify-end gap-2">
+            <button onClick={() => setAddOpen(false)} className="h-9 px-4 rounded-md border border-slate-300 text-sm text-slate-700 hover:bg-slate-50">Xác nhận</button>
+            <button onClick={() => setAddOpen(false)} className="h-9 px-4 rounded-md bg-sky-600 hover:bg-sky-700 text-sm text-white">Đóng</button>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}
+
+function AddField({ label, required, placeholder }: { label: string; required?: boolean; placeholder?: string }) {
+  return (
+    <div className="space-y-1.5">
+      <label className={cn("text-sm", required ? "text-red-500" : "text-slate-700")}>
+        {label}:
+      </label>
+      <Input placeholder={placeholder} className="bg-slate-50" />
+    </div>
+  );
+}
+
+function AddSelect({ label, options }: { label: string; options: string[] }) {
+  return (
+    <div className="space-y-1.5">
+      <label className="text-sm text-slate-700">{label}:</label>
+      <Select>
+        <SelectTrigger className="bg-slate-50"><SelectValue placeholder="" /></SelectTrigger>
+        <SelectContent>
+          {options.map(o => <SelectItem key={o} value={o}>{o}</SelectItem>)}
+        </SelectContent>
+      </Select>
     </div>
   );
 }
