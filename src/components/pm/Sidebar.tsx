@@ -1,4 +1,4 @@
-import { LayoutDashboard, FolderKanban, BarChart3, Settings, ShieldCheck, Users, UsersRound, KeyRound, ChevronDown, Upload, UserCog, ClipboardList, Wallet, IdCard, Contact, CalendarCheck, UserPlus2, Briefcase } from "lucide-react";
+import { LayoutDashboard, FolderKanban, BarChart3, Settings, ShieldCheck, Users, UsersRound, KeyRound, ChevronDown, Upload, UserCog, ClipboardList, Wallet, IdCard, Contact, CalendarCheck, UserPlus2, Briefcase, BarChart2 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import navisoftLogo from "@/assets/navisoft-logo.png";
@@ -210,6 +210,18 @@ export function Sidebar({ active, onNavigate }: Props) {
         >
           <Briefcase className="h-4 w-4" strokeWidth={active === "hr-projects" ? 2.5 : 2} />
           <span className="font-medium">Danh sách dự án</span>
+        </button>
+        <button
+          onClick={() => onNavigate("hr-mei-monthly")}
+          className={cn(
+            "w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm transition-all text-left",
+            active === "hr-mei-monthly"
+              ? "bg-[#FE9D58] text-white shadow-lg shadow-orange-500/25"
+              : "text-gray-600 hover:bg-gray-50 hover:text-[#1F2937]"
+          )}
+        >
+          <BarChart2 className="h-4 w-4 shrink-0" strokeWidth={active === "hr-mei-monthly" ? 2.5 : 2} />
+          <span className="font-medium text-[13px] leading-tight">Thống kê mei theo tháng</span>
         </button>
       </nav>
 
