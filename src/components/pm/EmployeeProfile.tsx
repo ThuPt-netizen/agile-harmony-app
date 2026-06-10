@@ -46,7 +46,7 @@ function TableHead({ cols }: { cols: string[] }) {
 function EmptyRow({ span }: { span: number }) {
   return (
     <tr>
-      <td colSpan={span} className="px-3 py-10 text-center">
+      <td colSpan={span} className="px-3 py-5 text-center">
         <span className="inline-block px-3 py-1.5 text-[12px] text-gray-500 bg-gray-50 border border-gray-200 rounded-md">Không có dữ liệu</span>
       </td>
     </tr>
@@ -221,7 +221,7 @@ export function EmployeeProfile() {
                 </thead>
                 <tbody>
                   <tr>
-                    <td colSpan={4} className="px-3 py-10 text-center">
+                    <td colSpan={4} className="px-3 py-5 text-center">
                       <span className="inline-block px-3 py-1.5 text-[12px] text-gray-500 bg-gray-50 border border-gray-200 rounded-md">Không có dữ liệu</span>
                     </td>
                   </tr>
