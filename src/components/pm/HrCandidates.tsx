@@ -470,25 +470,38 @@ export function HrCandidates() {
 
       {/* Transfer dialog */}
       <Dialog open={openTransfer} onOpenChange={setOpenTransfer}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-sky-700">
               Chuyển lên nhân sự - {activeRow?.name}
             </DialogTitle>
           </DialogHeader>
           <div className="grid grid-cols-2 gap-3 text-sm">
-            <FieldInput label="Họ và tên" defaultValue={activeRow?.name} />
-            <FieldInput label="Email công việc" placeholder="name@navisoft.vn" />
-            <FieldInput label="Số điện thoại" defaultValue={activeRow?.phone} />
-            <FieldInput label="Vị trí" defaultValue={activeRow?.position} />
-            <FieldInput label="Ngày bắt đầu" type="date" />
-            <FieldInput label="Loại hợp đồng" placeholder="Thử việc/Chính thức" />
+            <FieldInput label="Họ và tên" required defaultValue={activeRow?.name} />
+            <FieldInput label="Ngày sinh" type="date" required />
+            <FieldSelect label="Giới tính" options={["Nam", "Nữ", "Khác"]} placeholder=" " />
+            <FieldSelect label="Vị trí làm việc" options={["Lập trình viên", "Tester", "BA", "PM", "Thiết kế"]} placeholder=" " />
+            <FieldSelect label="Trạng thái" options={["Chưa phỏng vấn", "Đã phỏng vấn", "Đạt", "Không đạt"]} defaultValue="Chưa phỏng vấn" />
+            <FieldInput label="Ngày bắt đầu làm việc" type="date" required />
+            <FieldInput label="Ngày chính thức" type="date" />
+            <FieldInput label="Số điện thoại" required defaultValue={activeRow?.phone} />
+            <FieldInput label="Email công việc" required placeholder="name@navisoft.vn" />
+            <FieldInput label="Địa chỉ hiện tại" />
+            <FieldInput label="Hộ khẩu" />
+            <FieldInput label="CMT/CCCD" />
+            <FieldInput label="Ngày cấp" type="date" />
+            <FieldInput label="Nơi cấp" />
+            <FieldInput label="Email cá nhân" defaultValue={activeRow?.email} />
+            <FieldInput label="Trường học" defaultValue={activeRow?.school} />
+            <FieldInput label="Chuyên ngành" defaultValue={activeRow?.major} />
+            <FieldInput label="Ngày bắt đầu học" type="date" />
+            <FieldInput label="Ngày kết thúc học" type="date" />
           </div>
           <DialogFooter>
+            <Button variant="outline" onClick={() => setOpenTransfer(false)}>Xác nhận</Button>
             <Button className="bg-sky-600 hover:bg-sky-700 text-white" onClick={() => setOpenTransfer(false)}>
-              Xác nhận
+              Đóng
             </Button>
-            <Button variant="outline" onClick={() => setOpenTransfer(false)}>Đóng</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -538,6 +551,39 @@ function FieldInput({
         {required && " *"}
       </Label>
       <Input className="h-9" {...rest} />
+    </div>
+  );
+}
+
+function FieldSelect({
+  label,
+  required,
+  options,
+  placeholder,
+  defaultValue,
+}: {
+  label: string;
+  required?: boolean;
+  options: string[];
+  placeholder?: string;
+  defaultValue?: string;
+}) {
+  return (
+    <div className="space-y-1">
+      <Label className={cn("text-xs", required ? "text-rose-600" : "text-slate-600")}>
+        {label}
+        {required && " *"}
+      </Label>
+      <Select defaultValue={defaultValue}>
+        <SelectTrigger className="h-9">
+          <SelectValue placeholder={placeholder} />
+        </SelectTrigger>
+        <SelectContent>
+          {options.map((o) => (
+            <SelectItem key={o} value={o}>{o}</SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
     </div>
   );
 }
