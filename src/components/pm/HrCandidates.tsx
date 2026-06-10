@@ -555,6 +555,39 @@ function FieldInput({
   );
 }
 
+function FieldSelect({
+  label,
+  required,
+  options,
+  placeholder,
+  defaultValue,
+}: {
+  label: string;
+  required?: boolean;
+  options: string[];
+  placeholder?: string;
+  defaultValue?: string;
+}) {
+  return (
+    <div className="space-y-1">
+      <Label className={cn("text-xs", required ? "text-rose-600" : "text-slate-600")}>
+        {label}
+        {required && " *"}
+      </Label>
+      <Select defaultValue={defaultValue}>
+        <SelectTrigger className="h-9">
+          <SelectValue placeholder={placeholder} />
+        </SelectTrigger>
+        <SelectContent>
+          {options.map((o) => (
+            <SelectItem key={o} value={o}>{o}</SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
+  );
+}
+
 function CandidateFormDialog({
   open,
   onClose,
