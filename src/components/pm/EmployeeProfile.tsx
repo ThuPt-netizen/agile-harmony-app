@@ -131,8 +131,8 @@ export function EmployeeProfile() {
         </aside>
 
         {/* Main - scrollable */}
-        <section className="col-span-12 lg:col-span-9 space-y-5 lg:h-full lg:overflow-y-auto pr-1">
-          <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+        <section className="col-span-12 lg:col-span-9 lg:h-full lg:overflow-y-auto pr-1 flex flex-col">
+          <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm flex-1 min-h-full">
             <TabHeader
               title={meta.title}
               subtitle={meta.subtitle}
