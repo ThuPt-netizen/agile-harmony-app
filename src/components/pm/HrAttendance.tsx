@@ -274,11 +274,19 @@ function ImportAttendanceDialog({ open, onOpenChange }: { open: boolean; onOpenC
                   <th className="px-3 py-2 font-medium">Thứ</th>
                   <th className="px-3 py-2 font-medium">Check in</th>
                   <th className="px-3 py-2 font-medium">Check out</th>
+                  <th className="px-3 py-2 font-medium">Địa chỉ checkin</th>
+                  <th className="px-3 py-2 font-medium">Địa chỉ checkout</th>
+                  <th className="px-3 py-2 font-medium">Trạng thái</th>
+                  <th className="px-3 py-2 font-medium">Vào</th>
+                  <th className="px-3 py-2 font-medium">Ra</th>
+                  <th className="px-3 py-2 font-medium">Vi phạm</th>
+                  <th className="px-3 py-2 font-medium">Phạt</th>
+                  <th className="px-3 py-2 font-medium">Ghi chú</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td colSpan={8} className="text-center py-16 text-slate-500">
+                  <td colSpan={16} className="text-center py-16 text-slate-500">
                     {fileName ? "Chưa có dữ liệu" : "Đang tải..."}
                   </td>
                 </tr>
