@@ -82,14 +82,14 @@ export function EmployeeProfile() {
   const meta = tabMeta[active];
 
   return (
-    <div className="px-6 lg:px-8 py-6">
-      <button className="flex items-center gap-1.5 text-[13px] text-blue-600 hover:text-blue-700 mb-4 font-medium">
+    <div className="px-6 lg:px-8 py-6 h-[calc(100vh-7rem)] flex flex-col">
+      <button className="flex items-center gap-1.5 text-[13px] text-blue-600 hover:text-blue-700 mb-4 font-medium shrink-0">
         <ChevronLeft className="h-4 w-4" /> Trở về danh sách nhân sự
       </button>
 
-      <div className="grid grid-cols-12 gap-5 items-start">
-        {/* Left sidebar - sticky */}
-        <aside className="col-span-12 lg:col-span-3 lg:sticky lg:top-6 flex flex-col gap-4 lg:max-h-[calc(100vh-7rem)]">
+      <div className="grid grid-cols-12 gap-5 flex-1 min-h-0">
+        {/* Left sidebar - fixed */}
+        <aside className="col-span-12 lg:col-span-3 lg:h-full lg:overflow-y-auto pr-1 flex flex-col gap-4">
           <div className="bg-white rounded-2xl border border-gray-200 p-5 shadow-sm shrink-0">
             <div className="flex flex-col items-center text-center">
               <div className="h-28 w-28 rounded-full overflow-hidden ring-4 ring-orange-100 bg-orange-50">
@@ -105,7 +105,7 @@ export function EmployeeProfile() {
             </div>
           </div>
 
-          <nav className="bg-white rounded-2xl border border-gray-200 p-2 shadow-sm flex-1 min-h-0 overflow-y-auto">
+          <nav className="bg-white rounded-2xl border border-gray-200 p-2 shadow-sm flex-1 min-h-0">
             {navItems.map((it) => {
               const Icon = it.icon;
               const isActive = active === it.key;
@@ -130,9 +130,9 @@ export function EmployeeProfile() {
           </nav>
         </aside>
 
-        {/* Main - flows with page */}
-        <section className="col-span-12 lg:col-span-9 flex flex-col">
-          <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+        {/* Main - scrollable */}
+        <section className="col-span-12 lg:col-span-9 lg:h-full lg:overflow-y-auto pr-1 flex flex-col">
+          <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm flex-1 min-h-full">
             <TabHeader
               title={meta.title}
               subtitle={meta.subtitle}
