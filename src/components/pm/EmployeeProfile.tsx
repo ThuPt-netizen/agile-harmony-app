@@ -76,7 +76,7 @@ const tabMeta: Record<string, { title: string; subtitle: string }> = {
   mei: { title: "Thông tin mei", subtitle: "Thông tin mei của nhân sự theo dự án" },
 };
 
-export function EmployeeProfile() {
+export function EmployeeProfile({ onBack }: { onBack?: () => void }) {
   const [active, setActive] = useState("personal");
   const avatar = "https://api.dicebear.com/7.x/avataaars/svg?seed=PhamThiThu&backgroundColor=ffd5dc";
   const meta = tabMeta[active];
