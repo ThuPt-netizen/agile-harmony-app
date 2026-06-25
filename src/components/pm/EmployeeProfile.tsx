@@ -105,7 +105,7 @@ export function EmployeeProfile({ onBack }: { onBack?: () => void }) {
             </div>
           </div>
 
-          <nav className="bg-white rounded-2xl border border-gray-200 p-2 shadow-sm flex-1 min-h-0">
+          <nav className="bg-white rounded-2xl border border-gray-200 p-2 shadow-sm flex-1 min-h-0 overflow-y-auto">
             {navItems.map((it) => {
               const Icon = it.icon;
               const isActive = active === it.key;
