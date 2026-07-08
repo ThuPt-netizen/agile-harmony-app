@@ -220,6 +220,29 @@ export const departmentAllocation = [
   { name: "Khác", planned: 10, actual: 10 },
 ];
 
+export const departmentAllocationHistory: Record<string, typeof departmentAllocation> = {};
+
+const currentHistoryDate = new Date("2026-05-06");
+const historyMonths: string[] = [];
+for (let y = 2024; y <= 2026; y++) {
+  for (let m = 1; m <= 12; m++) {
+    const key = `${y}-${String(m).padStart(2, "0")}`;
+    historyMonths.push(key);
+    if (y === currentHistoryDate.getFullYear() && m > currentHistoryDate.getMonth() + 1) break;
+  }
+}
+
+historyMonths.forEach((key, idx) => {
+  const basePlanned = [40, 25, 15, 10, 10];
+  const baseActual = [38, 22, 18, 12, 10];
+  const drift = Math.sin(idx / 2) * 4;
+  departmentAllocationHistory[key] = basePlanned.map((planned, i) => ({
+    name: departmentAllocation[i].name,
+    planned: Math.max(5, Math.min(95, Math.round(planned + drift * (i % 2 === 0 ? 1 : -1)))),
+    actual: Math.max(5, Math.min(95, Math.round(baseActual[i] + drift * (i % 2 === 0 ? -1 : 1)))),
+  }));
+});
+
 export const allMembers = teamPool;
 
 export const statusMeta: Record<ProjectStatus, { label: string; color: string; dot: string }> = {

@@ -1,12 +1,15 @@
 import { motion } from "framer-motion";
-import { FolderKanban, Activity, CheckCircle2, AlertTriangle, Target, Zap } from "lucide-react";
+import { FolderKanban, Activity, CheckCircle2, AlertTriangle, Target, Zap, Calendar } from "lucide-react";
 import {
   Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis,
   PieChart, Pie, Cell, BarChart, Bar, Legend, RadialBarChart, RadialBar, PolarAngleAxis, Treemap, Sector
 } from "recharts";
 import { KpiCard } from "./KpiCard";
 import { ProjectCard } from "./ProjectCard";
-import { projects, companyTrend, departmentLoad, departmentAllocation, Project } from "@/lib/mockData";
+import { projects, companyTrend, departmentLoad, departmentAllocation, departmentAllocationHistory, Project } from "@/lib/mockData";
+import { useState } from "react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
 
 interface Props { onSelectProject: (p: Project) => void }
 
@@ -26,6 +29,20 @@ export function Dashboard({ onSelectProject }: Props) {
   const avgProgress = Math.round(projects.reduce((s, p) => s + p.progress, 0) / total);
   const totalBudget = projects.reduce((s, p) => s + p.budget, 0);
   const usedBudget = projects.reduce((s, p) => s + p.budgetUsed, 0);
+
+  const [selectedMonth, setSelectedMonth] = useState<string>("05");
+  const [selectedYear, setSelectedYear] = useState<string>("2026");
+  const allocationKey = `${selectedYear}-${selectedMonth}`;
+  const allocationData = departmentAllocationHistory[allocationKey] || departmentAllocation;
+
+  const months = [
+    { value: "01", label: "Tháng 1" }, { value: "02", label: "Tháng 2" }, { value: "03", label: "Tháng 3" },
+    { value: "04", label: "Tháng 4" }, { value: "05", label: "Tháng 5" }, { value: "06", label: "Tháng 6" },
+    { value: "07", label: "Tháng 7" }, { value: "08", label: "Tháng 8" }, { value: "09", label: "Tháng 9" },
+    { value: "10", label: "Tháng 10" }, { value: "11", label: "Tháng 11" }, { value: "12", label: "Tháng 12" },
+  ];
+  const years = ["2024", "2025", "2026"];
+
 
   return (
     <div className="px-6 lg:px-10 py-8 space-y-8 bg-slate-200">
@@ -129,10 +146,40 @@ export function Dashboard({ onSelectProject }: Props) {
         </div>
 
         <div className="rounded-xl border border-border bg-card p-6">
-          <h3 className="font-display text-lg font-semibold">Phân bổ theo phòng ban</h3>
-          <p className="text-xs text-muted-foreground mt-0.5 mb-4">Kế hoạch vs thực tế (%)</p>
-          <ResponsiveContainer width="100%" height={260}>
-            <BarChart data={departmentAllocation} margin={{ top: 5, right: 5, left: -20, bottom: 0 }} barGap={1} barCategoryGap="20%">
+          <div className="flex items-start justify-between mb-4">
+            <div>
+              <h3 className="font-display text-lg font-semibold">Phân bổ theo phòng ban</h3>
+              <p className="text-xs text-muted-foreground mt-0.5">Kế hoạch vs thực tế (%)</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <Select value={selectedMonth} onValueChange={setSelectedMonth}>
+                <SelectTrigger className="h-8 w-[110px] text-xs px-2">
+                  <Calendar className="h-3.5 w-3.5 mr-1 text-muted-foreground" />
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {months.map((m) => (
+                    <SelectItem key={m.value} value={m.value} className="text-xs">{m.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Select value={selectedYear} onValueChange={setSelectedYear}>
+                <SelectTrigger className="h-8 w-[90px] text-xs px-2">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {years.map((y) => (
+                    <SelectItem key={y} value={y} className="text-xs">{y}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <div className="text-[11px] text-muted-foreground mb-2">
+            Dữ liệu tháng {parseInt(selectedMonth, 10)}/{selectedYear}
+          </div>
+          <ResponsiveContainer width="100%" height={250}>
+            <BarChart data={allocationData} margin={{ top: 5, right: 5, left: -20, bottom: 0 }} barGap={1} barCategoryGap="20%">
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
               <XAxis dataKey="name" tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }} axisLine={false} tickLine={false} interval={0} />
               <YAxis tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} axisLine={false} tickLine={false} unit="%" />
