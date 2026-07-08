@@ -146,10 +146,40 @@ export function Dashboard({ onSelectProject }: Props) {
         </div>
 
         <div className="rounded-xl border border-border bg-card p-6">
-          <h3 className="font-display text-lg font-semibold">Phân bổ theo phòng ban</h3>
-          <p className="text-xs text-muted-foreground mt-0.5 mb-4">Kế hoạch vs thực tế (%)</p>
-          <ResponsiveContainer width="100%" height={260}>
-            <BarChart data={departmentAllocation} margin={{ top: 5, right: 5, left: -20, bottom: 0 }} barGap={1} barCategoryGap="20%">
+          <div className="flex items-start justify-between mb-4">
+            <div>
+              <h3 className="font-display text-lg font-semibold">Phân bổ theo phòng ban</h3>
+              <p className="text-xs text-muted-foreground mt-0.5">Kế hoạch vs thực tế (%)</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <Select value={selectedMonth} onValueChange={setSelectedMonth}>
+                <SelectTrigger className="h-8 w-[110px] text-xs px-2">
+                  <Calendar className="h-3.5 w-3.5 mr-1 text-muted-foreground" />
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {months.map((m) => (
+                    <SelectItem key={m.value} value={m.value} className="text-xs">{m.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Select value={selectedYear} onValueChange={setSelectedYear}>
+                <SelectTrigger className="h-8 w-[90px] text-xs px-2">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {years.map((y) => (
+                    <SelectItem key={y} value={y} className="text-xs">{y}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <div className="text-[11px] text-muted-foreground mb-2">
+            Dữ liệu tháng {parseInt(selectedMonth, 10)}/{selectedYear}
+          </div>
+          <ResponsiveContainer width="100%" height={250}>
+            <BarChart data={allocationData} margin={{ top: 5, right: 5, left: -20, bottom: 0 }} barGap={1} barCategoryGap="20%">
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
               <XAxis dataKey="name" tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }} axisLine={false} tickLine={false} interval={0} />
               <YAxis tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} axisLine={false} tickLine={false} unit="%" />
