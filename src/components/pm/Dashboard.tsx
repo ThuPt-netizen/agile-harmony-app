@@ -1,12 +1,15 @@
 import { motion } from "framer-motion";
-import { FolderKanban, Activity, CheckCircle2, AlertTriangle, Target, Zap } from "lucide-react";
+import { FolderKanban, Activity, CheckCircle2, AlertTriangle, Target, Zap, Calendar } from "lucide-react";
 import {
   Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis,
   PieChart, Pie, Cell, BarChart, Bar, Legend, RadialBarChart, RadialBar, PolarAngleAxis, Treemap, Sector
 } from "recharts";
 import { KpiCard } from "./KpiCard";
 import { ProjectCard } from "./ProjectCard";
-import { projects, companyTrend, departmentLoad, departmentAllocation, Project } from "@/lib/mockData";
+import { projects, companyTrend, departmentLoad, departmentAllocation, departmentAllocationHistory, Project } from "@/lib/mockData";
+import { useState } from "react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
 
 interface Props { onSelectProject: (p: Project) => void }
 
