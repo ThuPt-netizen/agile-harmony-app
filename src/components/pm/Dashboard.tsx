@@ -30,6 +30,20 @@ export function Dashboard({ onSelectProject }: Props) {
   const totalBudget = projects.reduce((s, p) => s + p.budget, 0);
   const usedBudget = projects.reduce((s, p) => s + p.budgetUsed, 0);
 
+  const [selectedMonth, setSelectedMonth] = useState<string>("05");
+  const [selectedYear, setSelectedYear] = useState<string>("2026");
+  const allocationKey = `${selectedYear}-${selectedMonth}`;
+  const allocationData = departmentAllocationHistory[allocationKey] || departmentAllocation;
+
+  const months = [
+    { value: "01", label: "Tháng 1" }, { value: "02", label: "Tháng 2" }, { value: "03", label: "Tháng 3" },
+    { value: "04", label: "Tháng 4" }, { value: "05", label: "Tháng 5" }, { value: "06", label: "Tháng 6" },
+    { value: "07", label: "Tháng 7" }, { value: "08", label: "Tháng 8" }, { value: "09", label: "Tháng 9" },
+    { value: "10", label: "Tháng 10" }, { value: "11", label: "Tháng 11" }, { value: "12", label: "Tháng 12" },
+  ];
+  const years = ["2024", "2025", "2026"];
+
+
   return (
     <div className="px-6 lg:px-10 py-8 space-y-8 bg-slate-200">
       {/* Hero strip */}
