@@ -84,7 +84,7 @@ const trend = (progressEnd: number, budgetEnd: number, resourceEnd: number) => {
 
 export const projects: Project[] = [
   {
-    id: "p1", code: "CG5", name: "Core gen 5", client: "​Hệ thống CORE- Công ty chứng khoán",
+    id: "p1", code: "CG5", name: "Core gen 5 & CTCK", client: "​Hệ thống CORE- Công ty chứng khoán",
     status: "active", priority: "critical", progress: 68,
     startDate: "2025-08-01", deadline: "2026-07-30",
     pm: "PM: Bùi Ngọc Anh", department: "Enterprise",
