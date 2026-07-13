@@ -9,6 +9,11 @@ export function ProjectCard({ project, onClick, index = 0 }: { project: Project;
   const daysLeft = Math.ceil((new Date(project.deadline).getTime() - Date.now()) / 86400000);
   const budgetPct = Math.round((project.budgetUsed / project.budget) * 100);
   const resourcePct = Math.round((project.resourceUsed / project.resourceTotal) * 100);
+  const startTime = new Date(project.startDate).getTime();
+  const endTime = new Date(project.deadline).getTime();
+  const totalDays = Math.max(1, Math.round((endTime - startTime) / 86400000));
+  const elapsed = Math.max(0, Math.min(totalDays, Math.round((Date.now() - startTime) / 86400000)));
+  const timePct = Math.round((elapsed / totalDays) * 100);
   const budgetTy = (project.budget / 1_000_000_000).toFixed(1);
 
   const barColor = (pct: number) =>
@@ -94,6 +99,22 @@ export function ProjectCard({ project, onClick, index = 0 }: { project: Project;
             animate={{ width: `${Math.min(100, resourcePct)}%` }}
             transition={{ duration: 0.8, delay: 0.3 + index * 0.04, ease: "easeOut" }}
             className={cn("h-full rounded-full", barColor(resourcePct))}
+          />
+        </div>
+      </div>
+
+      {/* Thời gian */}
+      <div className="mb-3">
+        <div className="flex items-baseline justify-between mb-1">
+          <span className="text-[11px] uppercase tracking-wider text-muted-foreground">Thời gian</span>
+          <span className={cn("font-mono text-xs font-semibold", timePct > 90 ? "text-destructive" : "")}>{timePct}%</span>
+        </div>
+        <div className="h-1.5 rounded-full bg-secondary overflow-hidden">
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: `${Math.min(100, timePct)}%` }}
+            transition={{ duration: 0.8, delay: 0.35 + index * 0.04, ease: "easeOut" }}
+            className={cn("h-full rounded-full", barColor(timePct))}
           />
         </div>
       </div>

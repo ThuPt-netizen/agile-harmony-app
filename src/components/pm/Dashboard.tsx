@@ -7,7 +7,7 @@ import {
 import { KpiCard } from "./KpiCard";
 import { ProjectCard } from "./ProjectCard";
 import { projects, companyTrend, departmentLoad, departmentAllocation, departmentAllocationHistory, statusMeta, Project } from "@/lib/mockData";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -37,6 +37,11 @@ export function Dashboard({ onSelectProject }: Props) {
   const [viewMode, setViewMode] = useState<"card" | "table">("card");
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [departmentFilter, setDepartmentFilter] = useState<string>("all");
+  const departmentOptions = useMemo(() => {
+    const values = Array.from(new Set(projects.map(p => p.department || ""))).sort();
+    return values.map(d => ({ value: d, label: d || "(Chưa có)" }));
+  }, []);
   const allocationKey = `${selectedYear}-${selectedMonth}`;
   const allocationData = departmentAllocationHistory[allocationKey] || departmentAllocation;
 
@@ -373,12 +378,25 @@ export function Dashboard({ onSelectProject }: Props) {
           </div>
           <div className="flex flex-wrap items-center gap-2 text-xs">
             {viewMode === "table" && (
-              <Input
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Tìm mã / tên dự án..."
-                className="h-8 w-56 text-xs"
-              />
+              <>
+                <Input
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Tìm mã / tên dự án..."
+                  className="h-8 w-56 text-xs"
+                />
+                <Select value={departmentFilter} onValueChange={setDepartmentFilter}>
+                  <SelectTrigger className="h-8 w-[150px] text-xs px-2">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all" className="text-xs">Tất cả phòng ban</SelectItem>
+                    {departmentOptions.map((d) => (
+                      <SelectItem key={d.value} value={d.value} className="text-xs">{d.label}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </>
             )}
             <Select value={statusFilter} onValueChange={setStatusFilter}>
               <SelectTrigger className="h-8 w-[140px] text-xs px-2">
@@ -418,7 +436,8 @@ export function Dashboard({ onSelectProject }: Props) {
             const matchStatus = statusFilter === "all" || p.status === statusFilter;
             const q = searchTerm.trim().toLowerCase();
             const matchSearch = !q || p.code.toLowerCase().includes(q) || p.name.toLowerCase().includes(q);
-            return matchStatus && matchSearch;
+            const matchDept = departmentFilter === "all" || (departmentFilter === "" ? !p.department : p.department === departmentFilter);
+            return matchStatus && matchSearch && matchDept;
           });
           if (viewMode === "card") {
             return (
@@ -445,6 +464,7 @@ export function Dashboard({ onSelectProject }: Props) {
                       <th className="text-right px-3 py-2.5 font-semibold">Tiến độ</th>
                       <th className="text-right px-3 py-2.5 font-semibold">Ngân sách</th>
                       <th className="text-right px-3 py-2.5 font-semibold">Nguồn lực</th>
+                      <th className="text-right px-3 py-2.5 font-semibold">Thời gian</th>
                       <th className="text-left px-3 py-2.5 font-semibold">Bắt đầu</th>
                       <th className="text-left px-3 py-2.5 font-semibold">Hạn</th>
                       <th className="px-3 py-2.5"></th>
@@ -455,6 +475,12 @@ export function Dashboard({ onSelectProject }: Props) {
                       const s = statusMeta[p.status];
                       const budgetPct = Math.round((p.budgetUsed / p.budget) * 100);
                       const resourcePct = Math.round((p.resourceUsed / p.resourceTotal) * 100);
+                      const now = Date.now();
+                      const startTime = new Date(p.startDate).getTime();
+                      const endTime = new Date(p.deadline).getTime();
+                      const totalDays = Math.max(1, Math.round((endTime - startTime) / 86400000));
+                      const elapsed = Math.max(0, Math.min(totalDays, Math.round((now - startTime) / 86400000)));
+                      const timePct = Math.round((elapsed / totalDays) * 100);
                       return (
                         <tr
                           key={p.id}
@@ -479,6 +505,7 @@ export function Dashboard({ onSelectProject }: Props) {
                           <td className="px-3 py-2 text-right font-mono font-semibold">{p.progress}%</td>
                           <td className={cn("px-3 py-2 text-right font-mono", budgetPct > 90 ? "text-destructive font-semibold" : "")}>{budgetPct}%</td>
                           <td className={cn("px-3 py-2 text-right font-mono", resourcePct > 90 ? "text-destructive font-semibold" : "")}>{resourcePct}%</td>
+                          <td className={cn("px-3 py-2 text-right font-mono", timePct > 90 ? "text-destructive font-semibold" : "")}>{timePct}%</td>
                           <td className="px-3 py-2 text-muted-foreground whitespace-nowrap">{p.startDate}</td>
                           <td className="px-3 py-2 text-muted-foreground whitespace-nowrap">{p.deadline}</td>
                           <td className="px-3 py-2">
@@ -488,7 +515,7 @@ export function Dashboard({ onSelectProject }: Props) {
                       );
                     })}
                     {filtered.length === 0 && (
-                      <tr><td colSpan={13} className="text-center text-muted-foreground py-8">Không có dự án phù hợp</td></tr>
+                      <tr><td colSpan={14} className="text-center text-muted-foreground py-8">Không có dự án phù hợp</td></tr>
                     )}
                   </tbody>
                 </table>
