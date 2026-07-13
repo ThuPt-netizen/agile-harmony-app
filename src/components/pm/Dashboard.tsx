@@ -378,12 +378,25 @@ export function Dashboard({ onSelectProject }: Props) {
           </div>
           <div className="flex flex-wrap items-center gap-2 text-xs">
             {viewMode === "table" && (
-              <Input
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Tìm mã / tên dự án..."
-                className="h-8 w-56 text-xs"
-              />
+              <>
+                <Input
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Tìm mã / tên dự án..."
+                  className="h-8 w-56 text-xs"
+                />
+                <Select value={departmentFilter} onValueChange={setDepartmentFilter}>
+                  <SelectTrigger className="h-8 w-[150px] text-xs px-2">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all" className="text-xs">Tất cả phòng ban</SelectItem>
+                    {departmentOptions.map((d) => (
+                      <SelectItem key={d.value} value={d.value} className="text-xs">{d.label}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </>
             )}
             <Select value={statusFilter} onValueChange={setStatusFilter}>
               <SelectTrigger className="h-8 w-[140px] text-xs px-2">
