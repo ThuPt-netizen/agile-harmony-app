@@ -7,7 +7,7 @@ import {
 import { KpiCard } from "./KpiCard";
 import { ProjectCard } from "./ProjectCard";
 import { projects, companyTrend, departmentLoad, departmentAllocation, departmentAllocationHistory, statusMeta, Project } from "@/lib/mockData";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -37,6 +37,11 @@ export function Dashboard({ onSelectProject }: Props) {
   const [viewMode, setViewMode] = useState<"card" | "table">("card");
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [departmentFilter, setDepartmentFilter] = useState<string>("all");
+  const departmentOptions = useMemo(() => {
+    const values = Array.from(new Set(projects.map(p => p.department || ""))).sort();
+    return values.map(d => ({ value: d, label: d || "(Chưa có)" }));
+  }, []);
   const allocationKey = `${selectedYear}-${selectedMonth}`;
   const allocationData = departmentAllocationHistory[allocationKey] || departmentAllocation;
 
