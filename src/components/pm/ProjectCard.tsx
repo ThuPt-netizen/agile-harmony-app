@@ -9,6 +9,11 @@ export function ProjectCard({ project, onClick, index = 0 }: { project: Project;
   const daysLeft = Math.ceil((new Date(project.deadline).getTime() - Date.now()) / 86400000);
   const budgetPct = Math.round((project.budgetUsed / project.budget) * 100);
   const resourcePct = Math.round((project.resourceUsed / project.resourceTotal) * 100);
+  const startTime = new Date(project.startDate).getTime();
+  const endTime = new Date(project.deadline).getTime();
+  const totalDays = Math.max(1, Math.round((endTime - startTime) / 86400000));
+  const elapsed = Math.max(0, Math.min(totalDays, Math.round((Date.now() - startTime) / 86400000)));
+  const timePct = Math.round((elapsed / totalDays) * 100);
   const budgetTy = (project.budget / 1_000_000_000).toFixed(1);
 
   const barColor = (pct: number) =>
