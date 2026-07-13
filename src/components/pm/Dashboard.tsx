@@ -515,7 +515,7 @@ export function Dashboard({ onSelectProject }: Props) {
                       );
                     })}
                     {filtered.length === 0 && (
-                      <tr><td colSpan={13} className="text-center text-muted-foreground py-8">Không có dự án phù hợp</td></tr>
+                      <tr><td colSpan={14} className="text-center text-muted-foreground py-8">Không có dự án phù hợp</td></tr>
                     )}
                   </tbody>
                 </table>
