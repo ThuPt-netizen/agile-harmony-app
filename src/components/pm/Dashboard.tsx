@@ -423,7 +423,8 @@ export function Dashboard({ onSelectProject }: Props) {
             const matchStatus = statusFilter === "all" || p.status === statusFilter;
             const q = searchTerm.trim().toLowerCase();
             const matchSearch = !q || p.code.toLowerCase().includes(q) || p.name.toLowerCase().includes(q);
-            return matchStatus && matchSearch;
+            const matchDept = departmentFilter === "all" || (departmentFilter === "" ? !p.department : p.department === departmentFilter);
+            return matchStatus && matchSearch && matchDept;
           });
           if (viewMode === "card") {
             return (
