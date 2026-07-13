@@ -1,14 +1,16 @@
 import { motion } from "framer-motion";
-import { FolderKanban, Activity, CheckCircle2, AlertTriangle, Target, Zap, Calendar } from "lucide-react";
+import { FolderKanban, Activity, CheckCircle2, AlertTriangle, Target, Zap, Calendar, LayoutGrid, List, ArrowUpRight } from "lucide-react";
 import {
   Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis,
   PieChart, Pie, Cell, BarChart, Bar, Legend, RadialBarChart, RadialBar, PolarAngleAxis, Treemap, Sector
 } from "recharts";
 import { KpiCard } from "./KpiCard";
 import { ProjectCard } from "./ProjectCard";
-import { projects, companyTrend, departmentLoad, departmentAllocation, departmentAllocationHistory, Project } from "@/lib/mockData";
+import { projects, companyTrend, departmentLoad, departmentAllocation, departmentAllocationHistory, statusMeta, Project } from "@/lib/mockData";
 import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
 
 interface Props { onSelectProject: (p: Project) => void }
@@ -32,6 +34,9 @@ export function Dashboard({ onSelectProject }: Props) {
 
   const [selectedMonth, setSelectedMonth] = useState<string>("05");
   const [selectedYear, setSelectedYear] = useState<string>("2026");
+  const [viewMode, setViewMode] = useState<"card" | "table">("card");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState<string>("all");
   const allocationKey = `${selectedYear}-${selectedMonth}`;
   const allocationData = departmentAllocationHistory[allocationKey] || departmentAllocation;
 
@@ -359,26 +364,141 @@ export function Dashboard({ onSelectProject }: Props) {
         </div>
       </section>
 
-      {/* Project grid */}
+      {/* Project grid / table */}
       <section>
-        <div className="flex items-end justify-between mb-5">
+        <div className="flex flex-wrap items-end justify-between gap-3 mb-5">
           <div>
             <h3 className="font-display text-2xl font-semibold tracking-tight">Danh mục dự án</h3>
             <p className="text-sm text-muted-foreground mt-1">Click để xem chi tiết và đánh giá hiệu suất</p>
           </div>
-          <div className="hidden md:flex items-center gap-1 text-xs">
-            {["Tất cả", "Đang chạy", "Quá hạn", "Hoàn thành"].map((t, i) => (
-              <button key={t} className={`px-3 py-1.5 rounded-md transition-colors ${i === 0 ? "bg-foreground text-background" : "text-muted-foreground hover:bg-secondary"}`}>
-                {t}
+          <div className="flex flex-wrap items-center gap-2 text-xs">
+            {viewMode === "table" && (
+              <Input
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Tìm mã / tên dự án..."
+                className="h-8 w-56 text-xs"
+              />
+            )}
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
+              <SelectTrigger className="h-8 w-[140px] text-xs px-2">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all" className="text-xs">Tất cả trạng thái</SelectItem>
+                <SelectItem value="active" className="text-xs">Đang chạy</SelectItem>
+                <SelectItem value="overdue" className="text-xs">Quá hạn</SelectItem>
+                <SelectItem value="done" className="text-xs">Hoàn thành</SelectItem>
+                <SelectItem value="planning" className="text-xs">Kế hoạch</SelectItem>
+                <SelectItem value="onhold" className="text-xs">Tạm dừng</SelectItem>
+              </SelectContent>
+            </Select>
+            <div className="inline-flex rounded-md border border-border overflow-hidden">
+              <button
+                onClick={() => setViewMode("card")}
+                className={cn("px-2.5 py-1.5 flex items-center gap-1.5 transition-colors",
+                  viewMode === "card" ? "bg-foreground text-background" : "text-muted-foreground hover:bg-secondary")}
+                title="Dạng thẻ"
+              >
+                <LayoutGrid className="h-3.5 w-3.5" /> Thẻ
               </button>
-            ))}
+              <button
+                onClick={() => setViewMode("table")}
+                className={cn("px-2.5 py-1.5 flex items-center gap-1.5 transition-colors border-l border-border",
+                  viewMode === "table" ? "bg-foreground text-background" : "text-muted-foreground hover:bg-secondary")}
+                title="Dạng bảng"
+              >
+                <List className="h-3.5 w-3.5" /> Bảng
+              </button>
+            </div>
           </div>
         </div>
-        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
-          {projects.map((p, i) => (
-            <ProjectCard key={p.id} project={p} index={i} onClick={() => onSelectProject(p)} />
-          ))}
-        </div>
+        {(() => {
+          const filtered = projects.filter(p => {
+            const matchStatus = statusFilter === "all" || p.status === statusFilter;
+            const q = searchTerm.trim().toLowerCase();
+            const matchSearch = !q || p.code.toLowerCase().includes(q) || p.name.toLowerCase().includes(q);
+            return matchStatus && matchSearch;
+          });
+          if (viewMode === "card") {
+            return (
+              <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
+                {filtered.map((p, i) => (
+                  <ProjectCard key={p.id} project={p} index={i} onClick={() => onSelectProject(p)} />
+                ))}
+              </div>
+            );
+          }
+          return (
+            <div className="rounded-xl border border-border bg-card overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs">
+                  <thead className="bg-secondary/60 text-muted-foreground uppercase tracking-wider text-[10px]">
+                    <tr>
+                      <th className="text-left px-3 py-2.5 font-semibold">STT</th>
+                      <th className="text-left px-3 py-2.5 font-semibold">Mã dự án</th>
+                      <th className="text-left px-3 py-2.5 font-semibold min-w-[220px]">Tên dự án</th>
+                      <th className="text-left px-3 py-2.5 font-semibold">Loại</th>
+                      <th className="text-left px-3 py-2.5 font-semibold">PM</th>
+                      <th className="text-left px-3 py-2.5 font-semibold">Phòng ban</th>
+                      <th className="text-left px-3 py-2.5 font-semibold">Trạng thái</th>
+                      <th className="text-right px-3 py-2.5 font-semibold">Tiến độ</th>
+                      <th className="text-right px-3 py-2.5 font-semibold">Ngân sách</th>
+                      <th className="text-right px-3 py-2.5 font-semibold">Nguồn lực</th>
+                      <th className="text-left px-3 py-2.5 font-semibold">Bắt đầu</th>
+                      <th className="text-left px-3 py-2.5 font-semibold">Hạn</th>
+                      <th className="px-3 py-2.5"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filtered.map((p, i) => {
+                      const s = statusMeta[p.status];
+                      const budgetPct = Math.round((p.budgetUsed / p.budget) * 100);
+                      const resourcePct = Math.round((p.resourceUsed / p.resourceTotal) * 100);
+                      return (
+                        <tr
+                          key={p.id}
+                          onClick={() => onSelectProject(p)}
+                          className="border-t border-border hover:bg-secondary/40 cursor-pointer transition-colors"
+                        >
+                          <td className="px-3 py-2 font-mono text-muted-foreground">{i + 1}</td>
+                          <td className="px-3 py-2 font-mono font-semibold">{p.code}</td>
+                          <td className="px-3 py-2">
+                            <div className="font-medium truncate max-w-[280px]">{p.name}</div>
+                            <div className="text-[10px] text-muted-foreground truncate max-w-[280px]">{p.client}</div>
+                          </td>
+                          <td className="px-3 py-2">{p.type}</td>
+                          <td className="px-3 py-2">{p.pm}</td>
+                          <td className="px-3 py-2 text-muted-foreground">{p.department}</td>
+                          <td className="px-3 py-2">
+                            <span className={cn("inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-medium border", s.color)}>
+                              <span className={cn("h-1.5 w-1.5 rounded-full", s.dot)} />
+                              {s.label}
+                            </span>
+                          </td>
+                          <td className="px-3 py-2 text-right font-mono font-semibold">{p.progress}%</td>
+                          <td className={cn("px-3 py-2 text-right font-mono", budgetPct > 90 ? "text-destructive font-semibold" : "")}>{budgetPct}%</td>
+                          <td className={cn("px-3 py-2 text-right font-mono", resourcePct > 90 ? "text-destructive font-semibold" : "")}>{resourcePct}%</td>
+                          <td className="px-3 py-2 text-muted-foreground whitespace-nowrap">{p.startDate}</td>
+                          <td className="px-3 py-2 text-muted-foreground whitespace-nowrap">{p.deadline}</td>
+                          <td className="px-3 py-2">
+                            <ArrowUpRight className="h-3.5 w-3.5 text-muted-foreground" />
+                          </td>
+                        </tr>
+                      );
+                    })}
+                    {filtered.length === 0 && (
+                      <tr><td colSpan={13} className="text-center text-muted-foreground py-8">Không có dự án phù hợp</td></tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+              <div className="px-4 py-2 text-[11px] text-muted-foreground border-t border-border bg-secondary/30">
+                Hiển thị {filtered.length} / {projects.length} dự án
+              </div>
+            </div>
+          );
+        })()}
       </section>
     </div>
   );
