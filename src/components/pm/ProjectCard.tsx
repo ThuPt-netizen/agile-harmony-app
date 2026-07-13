@@ -103,6 +103,22 @@ export function ProjectCard({ project, onClick, index = 0 }: { project: Project;
         </div>
       </div>
 
+      {/* Thời gian */}
+      <div className="mb-3">
+        <div className="flex items-baseline justify-between mb-1">
+          <span className="text-[11px] uppercase tracking-wider text-muted-foreground">Thời gian</span>
+          <span className={cn("font-mono text-xs font-semibold", timePct > 90 ? "text-destructive" : "")}>{timePct}%</span>
+        </div>
+        <div className="h-1.5 rounded-full bg-secondary overflow-hidden">
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: `${Math.min(100, timePct)}%` }}
+            transition={{ duration: 0.8, delay: 0.35 + index * 0.04, ease: "easeOut" }}
+            className={cn("h-full rounded-full", barColor(timePct))}
+          />
+        </div>
+      </div>
+
       <div className="grid grid-cols-3 gap-2 pt-3 border-t border-border">
         <div>
           <div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-0.5">Số ngày còn lại</div>
