@@ -464,6 +464,7 @@ export function Dashboard({ onSelectProject }: Props) {
                       <th className="text-right px-3 py-2.5 font-semibold">Tiến độ</th>
                       <th className="text-right px-3 py-2.5 font-semibold">Ngân sách</th>
                       <th className="text-right px-3 py-2.5 font-semibold">Nguồn lực</th>
+                      <th className="text-right px-3 py-2.5 font-semibold">Thời gian</th>
                       <th className="text-left px-3 py-2.5 font-semibold">Bắt đầu</th>
                       <th className="text-left px-3 py-2.5 font-semibold">Hạn</th>
                       <th className="px-3 py-2.5"></th>
