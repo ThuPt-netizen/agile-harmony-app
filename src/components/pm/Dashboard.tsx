@@ -475,6 +475,12 @@ export function Dashboard({ onSelectProject }: Props) {
                       const s = statusMeta[p.status];
                       const budgetPct = Math.round((p.budgetUsed / p.budget) * 100);
                       const resourcePct = Math.round((p.resourceUsed / p.resourceTotal) * 100);
+                      const now = Date.now();
+                      const startTime = new Date(p.startDate).getTime();
+                      const endTime = new Date(p.deadline).getTime();
+                      const totalDays = Math.max(1, Math.round((endTime - startTime) / 86400000));
+                      const elapsed = Math.max(0, Math.min(totalDays, Math.round((now - startTime) / 86400000)));
+                      const timePct = Math.round((elapsed / totalDays) * 100);
                       return (
                         <tr
                           key={p.id}
@@ -499,6 +505,7 @@ export function Dashboard({ onSelectProject }: Props) {
                           <td className="px-3 py-2 text-right font-mono font-semibold">{p.progress}%</td>
                           <td className={cn("px-3 py-2 text-right font-mono", budgetPct > 90 ? "text-destructive font-semibold" : "")}>{budgetPct}%</td>
                           <td className={cn("px-3 py-2 text-right font-mono", resourcePct > 90 ? "text-destructive font-semibold" : "")}>{resourcePct}%</td>
+                          <td className={cn("px-3 py-2 text-right font-mono", timePct > 90 ? "text-destructive font-semibold" : "")}>{timePct}%</td>
                           <td className="px-3 py-2 text-muted-foreground whitespace-nowrap">{p.startDate}</td>
                           <td className="px-3 py-2 text-muted-foreground whitespace-nowrap">{p.deadline}</td>
                           <td className="px-3 py-2">
