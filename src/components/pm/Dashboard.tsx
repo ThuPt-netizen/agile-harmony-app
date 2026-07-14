@@ -461,10 +461,10 @@ export function Dashboard({ onSelectProject }: Props) {
                       <th className="text-left px-3 py-2.5 font-semibold">PM</th>
                       <th className="text-left px-3 py-2.5 font-semibold">Phòng ban</th>
                       <th className="text-left px-3 py-2.5 font-semibold">Trạng thái</th>
-                      <th className="text-right px-3 py-2.5 font-semibold">Tiến độ</th>
-                      <th className="text-right px-3 py-2.5 font-semibold">Ngân sách</th>
-                      <th className="text-right px-3 py-2.5 font-semibold">Nguồn lực</th>
                       <th className="text-right px-3 py-2.5 font-semibold">Thời gian</th>
+                      <th className="text-right px-3 py-2.5 font-semibold">Khối lượng CV</th>
+                      <th className="text-right px-3 py-2.5 font-semibold">Nguồn lực</th>
+                      <th className="text-right px-3 py-2.5 font-semibold">Ngân sách</th>
                       <th className="text-left px-3 py-2.5 font-semibold">Bắt đầu</th>
                       <th className="text-left px-3 py-2.5 font-semibold">Hạn</th>
                       <th className="px-3 py-2.5"></th>
@@ -502,10 +502,10 @@ export function Dashboard({ onSelectProject }: Props) {
                               {s.label}
                             </span>
                           </td>
-                          <td className="px-3 py-2 text-right font-mono font-semibold">{p.progress}%</td>
-                          <td className={cn("px-3 py-2 text-right font-mono", budgetPct > 90 ? "text-destructive font-semibold" : "")}>{budgetPct}%</td>
-                          <td className={cn("px-3 py-2 text-right font-mono", resourcePct > 90 ? "text-destructive font-semibold" : "")}>{resourcePct}%</td>
                           <td className={cn("px-3 py-2 text-right font-mono", timePct > 90 ? "text-destructive font-semibold" : "")}>{timePct}%</td>
+                          <td className="px-3 py-2 text-right font-mono font-semibold">{p.progress}%</td>
+                          <td className={cn("px-3 py-2 text-right font-mono", resourcePct > 90 ? "text-destructive font-semibold" : "")}>{resourcePct}%</td>
+                          <td className={cn("px-3 py-2 text-right font-mono", budgetPct > 90 ? "text-destructive font-semibold" : "")}>{budgetPct}%</td>
                           <td className="px-3 py-2 text-muted-foreground whitespace-nowrap">{p.startDate}</td>
                           <td className="px-3 py-2 text-muted-foreground whitespace-nowrap">{p.deadline}</td>
                           <td className="px-3 py-2">
