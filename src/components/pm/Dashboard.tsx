@@ -502,10 +502,10 @@ export function Dashboard({ onSelectProject }: Props) {
                               {s.label}
                             </span>
                           </td>
-                          <td className="px-3 py-2 text-right font-mono font-semibold">{p.progress}%</td>
-                          <td className={cn("px-3 py-2 text-right font-mono", budgetPct > 90 ? "text-destructive font-semibold" : "")}>{budgetPct}%</td>
-                          <td className={cn("px-3 py-2 text-right font-mono", resourcePct > 90 ? "text-destructive font-semibold" : "")}>{resourcePct}%</td>
                           <td className={cn("px-3 py-2 text-right font-mono", timePct > 90 ? "text-destructive font-semibold" : "")}>{timePct}%</td>
+                          <td className="px-3 py-2 text-right font-mono font-semibold">{p.progress}%</td>
+                          <td className={cn("px-3 py-2 text-right font-mono", resourcePct > 90 ? "text-destructive font-semibold" : "")}>{resourcePct}%</td>
+                          <td className={cn("px-3 py-2 text-right font-mono", budgetPct > 90 ? "text-destructive font-semibold" : "")}>{budgetPct}%</td>
                           <td className="px-3 py-2 text-muted-foreground whitespace-nowrap">{p.startDate}</td>
                           <td className="px-3 py-2 text-muted-foreground whitespace-nowrap">{p.deadline}</td>
                           <td className="px-3 py-2">
