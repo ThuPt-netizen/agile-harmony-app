@@ -51,17 +51,33 @@ export function ProjectCard({ project, onClick, index = 0 }: { project: Project;
         <ArrowUpRight className="h-4 w-4 text-muted-foreground group-hover:text-accent group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
       </div>
 
-      {/* Tiến độ */}
+      {/* Thời gian */}
       <div className="mb-2.5">
         <div className="flex items-baseline justify-between mb-1">
-          <span className="text-[11px] uppercase tracking-wider text-muted-foreground">Tiến độ</span>
+          <span className="text-[11px] uppercase tracking-wider text-muted-foreground">Thời gian</span>
+          <span className={cn("font-mono text-xs font-semibold", timePct > 90 ? "text-destructive" : "")}>{timePct}%</span>
+        </div>
+        <div className="h-1.5 rounded-full bg-secondary overflow-hidden">
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: `${Math.min(100, timePct)}%` }}
+            transition={{ duration: 0.8, delay: 0.2 + index * 0.04, ease: "easeOut" }}
+            className={cn("h-full rounded-full", barColor(timePct))}
+          />
+        </div>
+      </div>
+
+      {/* Khối lượng CV */}
+      <div className="mb-2.5">
+        <div className="flex items-baseline justify-between mb-1">
+          <span className="text-[11px] uppercase tracking-wider text-muted-foreground">Khối lượng CV</span>
           <span className="font-mono text-sm font-semibold">{project.progress}%</span>
         </div>
         <div className="h-1.5 rounded-full bg-secondary overflow-hidden">
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${project.progress}%` }}
-            transition={{ duration: 0.8, delay: 0.2 + index * 0.04, ease: "easeOut" }}
+            transition={{ duration: 0.8, delay: 0.25 + index * 0.04, ease: "easeOut" }}
             className={cn(
               "h-full rounded-full",
               project.status === "overdue" ? "bg-destructive" :
@@ -71,24 +87,8 @@ export function ProjectCard({ project, onClick, index = 0 }: { project: Project;
         </div>
       </div>
 
-      {/* Ngân sách */}
-      <div className="mb-2.5">
-        <div className="flex items-baseline justify-between mb-1">
-          <span className="text-[11px] uppercase tracking-wider text-muted-foreground">Ngân sách</span>
-          <span className={cn("font-mono text-xs font-semibold", budgetPct > 90 ? "text-destructive" : "")}>{budgetPct}%</span>
-        </div>
-        <div className="h-1.5 rounded-full bg-secondary overflow-hidden">
-          <motion.div
-            initial={{ width: 0 }}
-            animate={{ width: `${Math.min(100, budgetPct)}%` }}
-            transition={{ duration: 0.8, delay: 0.25 + index * 0.04, ease: "easeOut" }}
-            className={cn("h-full rounded-full", barColor(budgetPct))}
-          />
-        </div>
-      </div>
-
       {/* Nguồn lực */}
-      <div className="mb-3">
+      <div className="mb-2.5">
         <div className="flex items-baseline justify-between mb-1">
           <span className="text-[11px] uppercase tracking-wider text-muted-foreground">Nguồn lực</span>
           <span className={cn("font-mono text-xs font-semibold", resourcePct > 90 ? "text-destructive" : "")}>{resourcePct}%</span>
@@ -103,18 +103,18 @@ export function ProjectCard({ project, onClick, index = 0 }: { project: Project;
         </div>
       </div>
 
-      {/* Thời gian */}
+      {/* Ngân sách */}
       <div className="mb-3">
         <div className="flex items-baseline justify-between mb-1">
-          <span className="text-[11px] uppercase tracking-wider text-muted-foreground">Thời gian</span>
-          <span className={cn("font-mono text-xs font-semibold", timePct > 90 ? "text-destructive" : "")}>{timePct}%</span>
+          <span className="text-[11px] uppercase tracking-wider text-muted-foreground">Ngân sách</span>
+          <span className={cn("font-mono text-xs font-semibold", budgetPct > 90 ? "text-destructive" : "")}>{budgetPct}%</span>
         </div>
         <div className="h-1.5 rounded-full bg-secondary overflow-hidden">
           <motion.div
             initial={{ width: 0 }}
-            animate={{ width: `${Math.min(100, timePct)}%` }}
+            animate={{ width: `${Math.min(100, budgetPct)}%` }}
             transition={{ duration: 0.8, delay: 0.35 + index * 0.04, ease: "easeOut" }}
-            className={cn("h-full rounded-full", barColor(timePct))}
+            className={cn("h-full rounded-full", barColor(budgetPct))}
           />
         </div>
       </div>
