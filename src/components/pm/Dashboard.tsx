@@ -39,8 +39,8 @@ export function Dashboard({ onSelectProject }: Props) {
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [departmentFilter, setDepartmentFilter] = useState<string>("all");
   const departmentOptions = useMemo(() => {
-    const values = Array.from(new Set(projects.map(p => p.department || ""))).sort();
-    return values.map(d => ({ value: d, label: d || "(Chưa có)" }));
+    const values = Array.from(new Set(projects.map(p => p.department || "__none__"))).sort();
+    return values.map(d => ({ value: d, label: d === "__none__" ? "(Chưa có)" : d }));
   }, []);
   const allocationKey = `${selectedYear}-${selectedMonth}`;
   const allocationData = departmentAllocationHistory[allocationKey] || departmentAllocation;
@@ -436,7 +436,7 @@ export function Dashboard({ onSelectProject }: Props) {
             const matchStatus = statusFilter === "all" || p.status === statusFilter;
             const q = searchTerm.trim().toLowerCase();
             const matchSearch = !q || p.code.toLowerCase().includes(q) || p.name.toLowerCase().includes(q);
-            const matchDept = departmentFilter === "all" || (departmentFilter === "" ? !p.department : p.department === departmentFilter);
+            const matchDept = departmentFilter === "all" || (departmentFilter === "__none__" ? !p.department : p.department === departmentFilter);
             return matchStatus && matchSearch && matchDept;
           });
           if (viewMode === "card") {
