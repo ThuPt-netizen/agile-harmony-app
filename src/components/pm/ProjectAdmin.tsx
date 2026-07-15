@@ -23,7 +23,7 @@ const sampleProjects: ProjectRow[] = [
 
 export function ProjectAdmin() {
   const [mode, setMode] = useState<Mode>("search");
-  const [activeTab, setActiveTab] = useState<"general" | "members" | "milestones">("general");
+  const [activeTab, setActiveTab] = useState<"general" | "replan" | "members" | "milestones">("general");
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
   // search filters
@@ -63,7 +63,12 @@ export function ProjectAdmin() {
 
   const tabs = mode === "search"
     ? [{ k: "general", l: "Thông tin chung" }]
-    : [{ k: "general", l: "Thông tin chung" }, { k: "members", l: "Nhân sự dự án" }, { k: "milestones", l: "Milestone dự án" }];
+    : [
+        { k: "general", l: "Thông tin chung" },
+        { k: "replan", l: "Replan" },
+        { k: "members", l: "Nhân sự dự án" },
+        { k: "milestones", l: "Milestone dự án" },
+      ];
 
   const readOnly = mode === "view";
 
@@ -170,6 +175,7 @@ export function ProjectAdmin() {
 
         <fieldset disabled={readOnly} className={cn("p-6", readOnly && "opacity-90")}>
           {activeTab === "general" && <GeneralTab mode={mode} />}
+          {activeTab === "replan" && <ReplanTab />}
           {activeTab === "members" && (
             <MembersTab form={mForm} setForm={setMForm} members={members} onAdd={addMember} onRemove={removeMember} />
           )}
@@ -243,47 +249,45 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 function GeneralTab({ mode }: { mode: Mode }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-      {/* Row 1 */}
-      <Field label="Ngày bắt đầu - Kế hoạch"><Input type="date" className="h-9" /></Field>
-      <Field label="Ngày bắt đầu - Thực tế"><Input type="date" className="h-9" /></Field>
       <Field label="Ngày mở dự án"><Input type="date" className="h-9" /></Field>
-
-      {/* Row 2 */}
-      <Field label="Ngày kết thúc - Kế hoạch"><Input type="date" className="h-9" /></Field>
-      <Field label="Ngày kết thúc - Thực tế"><Input type="date" className="h-9" /></Field>
       <Field label="Ngày đóng dự án"><Input type="date" className="h-9" /></Field>
-
-      {/* Row 3 */}
-      <Field label="Tiến độ - Kế hoạch (%)"><Input type="number" className="h-9" /></Field>
-      <Field label="Tiến độ - Thực tế (%)"><Input type="number" className="h-9" /></Field>
       <Field label="Trạng thái">
         <select className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm">
           <option value="">-- Chọn --</option>
           {statusList.map(s => <option key={s} value={s}>{s}</option>)}
         </select>
       </Field>
-
-      {/* Row 4 */}
-      <Field label="Ngân sách - Kế hoạch"><Input type="number" className="h-9" /></Field>
-      <Field label="Ngân sách - Thực tế"><Input type="number" className="h-9" /></Field>
-      {mode === "create" ? (
-        <Field label="Tổng số bug chưa xử lý"><Input type="number" className="h-9" /></Field>
-      ) : (
+      <div className="md:col-span-2 xl:col-span-3">
         <Field label="Diễn giải">
-          <textarea rows={1} className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm min-h-9" placeholder="Nhập diễn giải..." />
+          <textarea rows={2} className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm min-h-9" placeholder="Nhập diễn giải..." />
         </Field>
-      )}
+      </div>
+    </div>
+  );
+}
 
-      {/* Row 5 */}
+function ReplanTab() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+      <Field label="Ngày bắt đầu - Kế hoạch"><Input type="date" className="h-9" /></Field>
+      <Field label="Ngày bắt đầu - Thực tế"><Input type="date" className="h-9" /></Field>
+      <div className="hidden xl:block" />
+
+      <Field label="Ngày kết thúc - Kế hoạch"><Input type="date" className="h-9" /></Field>
+      <Field label="Ngày kết thúc - Thực tế"><Input type="date" className="h-9" /></Field>
+      <div className="hidden xl:block" />
+
+      <Field label="Tiến độ - Kế hoạch (%)"><Input type="number" className="h-9" /></Field>
+      <Field label="Tiến độ - Thực tế (%)"><Input type="number" className="h-9" /></Field>
+      <div className="hidden xl:block" />
+
       <Field label="Nguồn lực - Kế hoạch"><Input type="number" className="h-9" /></Field>
       <Field label="Nguồn lực - Thực tế"><Input type="number" className="h-9" /></Field>
-      {mode === "create" ? (
-        <Field label="Diễn giải">
-          <textarea rows={1} className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm min-h-9" placeholder="Nhập diễn giải..." />
-        </Field>
-      ) : (
-        <div />
-      )}
+      <div className="hidden xl:block" />
+
+      <Field label="Ngân sách - Kế hoạch"><Input type="number" className="h-9" /></Field>
+      <Field label="Ngân sách - Thực tế"><Input type="number" className="h-9" /></Field>
+      <Field label="Tổng số bug chưa xử lý"><Input type="number" className="h-9" /></Field>
     </div>
   );
 }
