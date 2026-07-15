@@ -23,7 +23,7 @@ const sampleProjects: ProjectRow[] = [
 
 export function ProjectAdmin() {
   const [mode, setMode] = useState<Mode>("search");
-  const [activeTab, setActiveTab] = useState<"general" | "members" | "milestones">("general");
+  const [activeTab, setActiveTab] = useState<"general" | "replan" | "members" | "milestones">("general");
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
   // search filters
@@ -63,7 +63,12 @@ export function ProjectAdmin() {
 
   const tabs = mode === "search"
     ? [{ k: "general", l: "Thông tin chung" }]
-    : [{ k: "general", l: "Thông tin chung" }, { k: "members", l: "Nhân sự dự án" }, { k: "milestones", l: "Milestone dự án" }];
+    : [
+        { k: "general", l: "Thông tin chung" },
+        { k: "replan", l: "Replan" },
+        { k: "members", l: "Nhân sự dự án" },
+        { k: "milestones", l: "Milestone dự án" },
+      ];
 
   const readOnly = mode === "view";
 
@@ -170,6 +175,7 @@ export function ProjectAdmin() {
 
         <fieldset disabled={readOnly} className={cn("p-6", readOnly && "opacity-90")}>
           {activeTab === "general" && <GeneralTab mode={mode} />}
+          {activeTab === "replan" && <ReplanTab />}
           {activeTab === "members" && (
             <MembersTab form={mForm} setForm={setMForm} members={members} onAdd={addMember} onRemove={removeMember} />
           )}
