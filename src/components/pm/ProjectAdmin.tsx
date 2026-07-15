@@ -267,27 +267,95 @@ function GeneralTab({ mode }: { mode: Mode }) {
 }
 
 function ReplanTab() {
+  const [rpMode, setRpMode] = useState<"update" | "replan">("update");
+  const planDisabled = rpMode === "update";
+  const actualDisabled = rpMode === "replan";
+
+  const history = [
+    { id: 1, code: "PRJ-001", name: "Hệ thống ERP nội bộ", type: "Phát triển", field: "Ngày kết thúc - KH", action: "Replan", oldVal: "2025-11-30", newVal: "2025-12-30", reason: "Bổ sung phạm vi phân hệ HR", date: "2025-10-05", user: "nguyen.van.a" },
+    { id: 2, code: "PRJ-001", name: "Hệ thống ERP nội bộ", type: "Phát triển", field: "Tiến độ - TT (%)", action: "Update", oldVal: "45", newVal: "60", reason: "Cập nhật tiến độ tuần 40", date: "2025-10-08", user: "tran.thi.b" },
+    { id: 3, code: "PRJ-002", name: "Bảo trì Cổng TT", type: "Bảo trì", field: "Ngân sách - KH", action: "Replan", oldVal: "500,000,000", newVal: "620,000,000", reason: "Điều chỉnh hợp đồng phụ lục 01", date: "2025-09-20", user: "le.van.c" },
+    { id: 4, code: "PRJ-002", name: "Bảo trì Cổng TT", type: "Bảo trì", field: "Nguồn lực - TT", action: "Update", oldVal: "3", newVal: "4", reason: "Bổ sung 1 nhân sự QA", date: "2025-10-01", user: "pham.d" },
+    { id: 5, code: "PRJ-003", name: "Nghiên cứu AI Agent", type: "Nghiên cứu", field: "Ngày bắt đầu - KH", action: "Replan", oldVal: "2025-05-15", newVal: "2025-06-01", reason: "Chờ phê duyệt PoC", date: "2025-05-10", user: "hoang.e" },
+  ];
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-      <Field label="Ngày bắt đầu - Kế hoạch"><Input type="date" className="h-9" /></Field>
-      <Field label="Ngày bắt đầu - Thực tế"><Input type="date" className="h-9" /></Field>
-      <div className="hidden xl:block" />
+    <div className="space-y-5">
+      <div className="flex items-center gap-2">
+        <span className="text-xs text-gray-600 mr-1">Chế độ:</span>
+        <button
+          onClick={() => setRpMode("update")}
+          className={cn(
+            "h-9 px-4 rounded-lg text-xs font-medium border transition-all shadow-sm",
+            rpMode === "update" ? "bg-[#FE9D58] text-white border-[#FE9D58]" : "bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
+          )}
+        >
+          Update (Thực tế)
+        </button>
+        <button
+          onClick={() => setRpMode("replan")}
+          className={cn(
+            "h-9 px-4 rounded-lg text-xs font-medium border transition-all shadow-sm",
+            rpMode === "replan" ? "bg-[#FE9D58] text-white border-[#FE9D58]" : "bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
+          )}
+        >
+          Replan (Kế hoạch)
+        </button>
+      </div>
 
-      <Field label="Ngày kết thúc - Kế hoạch"><Input type="date" className="h-9" /></Field>
-      <Field label="Ngày kết thúc - Thực tế"><Input type="date" className="h-9" /></Field>
-      <div className="hidden xl:block" />
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+        <Field label="Ngày bắt đầu - Kế hoạch"><Input type="date" className="h-9" disabled={planDisabled} /></Field>
+        <Field label="Ngày bắt đầu - Thực tế"><Input type="date" className="h-9" disabled={actualDisabled} /></Field>
+        <div className="hidden xl:block" />
 
-      <Field label="Tiến độ - Kế hoạch (%)"><Input type="number" className="h-9" /></Field>
-      <Field label="Tiến độ - Thực tế (%)"><Input type="number" className="h-9" /></Field>
-      <div className="hidden xl:block" />
+        <Field label="Ngày kết thúc - Kế hoạch"><Input type="date" className="h-9" disabled={planDisabled} /></Field>
+        <Field label="Ngày kết thúc - Thực tế"><Input type="date" className="h-9" disabled={actualDisabled} /></Field>
+        <div className="hidden xl:block" />
 
-      <Field label="Nguồn lực - Kế hoạch"><Input type="number" className="h-9" /></Field>
-      <Field label="Nguồn lực - Thực tế"><Input type="number" className="h-9" /></Field>
-      <div className="hidden xl:block" />
+        <Field label="Tiến độ - Kế hoạch (%)"><Input type="number" className="h-9" disabled={planDisabled} /></Field>
+        <Field label="Tiến độ - Thực tế (%)"><Input type="number" className="h-9" disabled={actualDisabled} /></Field>
+        <div className="hidden xl:block" />
 
-      <Field label="Ngân sách - Kế hoạch"><Input type="number" className="h-9" /></Field>
-      <Field label="Ngân sách - Thực tế"><Input type="number" className="h-9" /></Field>
-      <Field label="Tổng số bug chưa xử lý"><Input type="number" className="h-9" /></Field>
+        <Field label="Nguồn lực - Kế hoạch"><Input type="number" className="h-9" disabled={planDisabled} /></Field>
+        <Field label="Nguồn lực - Thực tế"><Input type="number" className="h-9" disabled={actualDisabled} /></Field>
+        <div className="hidden xl:block" />
+
+        <Field label="Ngân sách - Kế hoạch"><Input type="number" className="h-9" disabled={planDisabled} /></Field>
+        <Field label="Ngân sách - Thực tế"><Input type="number" className="h-9" disabled={actualDisabled} /></Field>
+        <Field label="Tổng số bug chưa xử lý"><Input type="number" className="h-9" /></Field>
+      </div>
+
+      <div className="pt-2">
+        <div className="flex items-center justify-between mb-3">
+          <h4 className="font-display text-sm font-semibold text-[#1F2937]">Lịch sử Replan / Update</h4>
+          <span className="text-xs text-muted-foreground">Danh sách các thông tin được thay đổi</span>
+        </div>
+        <DataGrid
+          headers={["STT", "Mã dự án", "Tên dự án", "Loại dự án", "Nội dung thay đổi", "Thao tác", "Giá trị cũ", "Giá trị mới", "Lý do", "Ngày thay đổi", "Người thay đổi"]}
+          rows={history}
+          renderRow={(r: any, i: number) => (
+            <>
+              <td className="px-4 py-2.5 text-sm">{i + 1}</td>
+              <td className="px-4 py-2.5 text-sm font-mono">{r.code}</td>
+              <td className="px-4 py-2.5 text-sm font-medium">{r.name}</td>
+              <td className="px-4 py-2.5 text-sm">{r.type}</td>
+              <td className="px-4 py-2.5 text-sm">{r.field}</td>
+              <td className="px-4 py-2.5 text-sm">
+                <span className={cn(
+                  "inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-medium border",
+                  r.action === "Replan" ? "bg-amber-50 text-amber-700 border-amber-200" : "bg-blue-50 text-blue-700 border-blue-200"
+                )}>{r.action}</span>
+              </td>
+              <td className="px-4 py-2.5 text-sm font-mono text-red-600">{r.oldVal}</td>
+              <td className="px-4 py-2.5 text-sm font-mono text-emerald-600">{r.newVal}</td>
+              <td className="px-4 py-2.5 text-sm text-muted-foreground max-w-[220px] truncate" title={r.reason}>{r.reason}</td>
+              <td className="px-4 py-2.5 text-sm font-mono">{r.date}</td>
+              <td className="px-4 py-2.5 text-sm">{r.user}</td>
+            </>
+          )}
+          emptyText="Chưa có lịch sử thay đổi."
+        />
+      </div>
     </div>
   );
 }
