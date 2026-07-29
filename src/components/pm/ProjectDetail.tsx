@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { ArrowLeft, Calendar, Users, Wallet, Clock, CheckCircle2, Circle, AlertCircle, Settings, LayoutGrid, Table as TableIcon } from "lucide-react";
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { Project, statusMeta, formatVND } from "@/lib/mockData";
@@ -168,52 +168,77 @@ export function ProjectDetail({ project, onBack, onAdmin }: { project: Project; 
           </LineChart>
         </ResponsiveContainer>
         ) : (
-          <div className="overflow-x-auto rounded-lg border border-border">
-            <table className="w-full text-xs">
-              <thead className="bg-secondary">
-                <tr className="text-left">
-                  <th className="px-3 py-2 font-medium text-muted-foreground border-b border-border sticky left-0 bg-secondary">Tháng</th>
-                  <th className="px-3 py-2 font-medium border-b border-border text-center" style={{ color: "#3b82f6" }} colSpan={2}>Tiến độ (%)</th>
-                  <th className="px-3 py-2 font-medium border-b border-border text-center" style={{ color: "#a855f7" }} colSpan={2}>Nguồn lực (%)</th>
-                  <th className="px-3 py-2 font-medium border-b border-border text-center" style={{ color: "#22a45d" }} colSpan={2}>Ngân sách (%)</th>
-                </tr>
-                <tr className="text-[10px] uppercase tracking-wider text-muted-foreground">
-                  <th className="px-3 py-1.5 font-normal border-b border-border sticky left-0 bg-secondary"></th>
-                  <th className="px-3 py-1.5 font-normal border-b border-border text-right">Thời gian</th>
-                  <th className="px-3 py-1.5 font-normal border-b border-border text-right">Khối lượng CV</th>
-                  <th className="px-3 py-1.5 font-normal border-b border-border text-right">Kế hoạch</th>
-                  <th className="px-3 py-1.5 font-normal border-b border-border text-right">Thực tế</th>
-                  <th className="px-3 py-1.5 font-normal border-b border-border text-right">Kế hoạch</th>
-                  <th className="px-3 py-1.5 font-normal border-b border-border text-right">Thực tế</th>
-                </tr>
-              </thead>
-              <tbody className="font-mono">
-                {project.trend.map((row: any, i: number) => {
-                  const diff = (a: number, b: number) => {
-                    if (a == null || b == null) return null;
-                    const d = b - a;
-                    return d;
-                  };
-                  const cell = (plan: number, actual: number) => {
-                    const d = diff(plan, actual);
-                    const cls = d == null ? "" : d < 0 ? "text-destructive" : d > 0 ? "text-success" : "text-muted-foreground";
-                    return <span className={cn("font-semibold", cls)}>{actual ?? "—"}</span>;
-                  };
-                  return (
-                    <tr key={i} className="hover:bg-secondary/50 border-b border-border last:border-0">
-                      <td className="px-3 py-2 sticky left-0 bg-card font-medium text-foreground border-r border-border">{row.week}</td>
-
-                      <td className="px-3 py-2 text-right text-muted-foreground">{row.planned ?? "—"}</td>
-                      <td className="px-3 py-2 text-right">{cell(row.planned, row.actual)}</td>
-                      <td className="px-3 py-2 text-right text-muted-foreground">{row.resourcePlanned ?? "—"}</td>
-                      <td className="px-3 py-2 text-right">{cell(row.resourcePlanned, row.resourceActual)}</td>
-                      <td className="px-3 py-2 text-right text-muted-foreground">{row.budgetPlanned ?? "—"}</td>
-                      <td className="px-3 py-2 text-right">{cell(row.budgetPlanned, row.budgetActual)}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+          <div className="rounded-lg border border-border overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-xs border-collapse">
+                <thead>
+                  <tr className="text-left">
+                    <th rowSpan={2} className="px-3 py-2.5 font-medium text-foreground border-b border-r border-border sticky left-0 bg-secondary z-10 min-w-[64px]">Tháng</th>
+                    <th className="px-2 py-2 font-semibold border-b border-r border-border text-center" style={{ color: "#3b82f6" }} colSpan={3}>Tiến độ (%)</th>
+                    <th className="px-2 py-2 font-semibold border-b border-r border-border text-center" style={{ color: "#a855f7" }} colSpan={3}>Nguồn lực (%)</th>
+                    <th className="px-2 py-2 font-semibold border-b border-border text-center" style={{ color: "#22a45d" }} colSpan={3}>Ngân sách (%)</th>
+                  </tr>
+                  <tr className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">Thời gian</th>
+                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">Khối lượng CV</th>
+                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">Chênh lệch</th>
+                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">Kế hoạch</th>
+                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">Thực tế</th>
+                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">Chênh lệch</th>
+                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">Kế hoạch</th>
+                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">Thực tế</th>
+                    <th className="px-2 py-1.5 font-medium border-b border-border bg-secondary text-right">Chênh lệch</th>
+                  </tr>
+                </thead>
+                <tbody className="font-mono">
+                  {project.trend.map((row: any, i: number) => {
+                    const groups = [
+                      { plan: row.planned, actual: row.actual, goodIfPositive: true, color: "#3b82f6" },
+                      { plan: row.resourcePlanned, actual: row.resourceActual, goodIfPositive: false, color: "#a855f7" },
+                      { plan: row.budgetPlanned, actual: row.budgetActual, goodIfPositive: false, color: "#22a45d" },
+                    ];
+                    return (
+                      <tr key={i} className={cn("border-b border-border last:border-0", i % 2 === 0 ? "bg-card" : "bg-secondary/30")}>
+                        <td className="px-3 py-2.5 sticky left-0 z-10 font-semibold text-foreground border-r border-border bg-card">{row.week}</td>
+                        {groups.map((g, gi) => {
+                          const d = g.plan == null || g.actual == null ? null : g.actual - g.plan;
+                          const abs = d == null ? 0 : Math.abs(d);
+                          const level = abs <= 3 ? 0 : abs <= 10 ? 1 : 2;
+                          const good = d == null ? true : g.goodIfPositive ? d >= 0 : d <= 0;
+                          const toneCls = good
+                            ? ["text-muted-foreground", "bg-success/10 text-success", "bg-success/25 text-success font-bold"]
+                            : ["text-muted-foreground", "bg-destructive/10 text-destructive", "bg-destructive/25 text-destructive font-bold"];
+                          const arrow = d == null ? "" : d > 0 ? "▲" : d < 0 ? "▼" : "•";
+                          const last = gi === groups.length - 1;
+                          return (
+                            <Fragment key={gi}>
+                              <td className="px-2.5 py-2 text-right text-muted-foreground border-b border-r border-border">{g.plan ?? "—"}</td>
+                              <td className="px-2.5 py-2 text-right border-b border-r border-border relative">
+                                <div className="absolute inset-y-1 left-1 rounded-sm" style={{ width: `calc(${g.actual ?? 0}% - 4px)`, backgroundColor: g.color, opacity: 0.16 }} />
+                                <span className="relative font-semibold text-foreground">{g.actual ?? "—"}</span>
+                              </td>
+                              <td className={cn("px-2.5 py-2 text-right border-b border-border", !last && "border-r", toneCls[level])}>
+                                {d == null ? (
+                                  <span className="text-muted-foreground">—</span>
+                                ) : (
+                                  <span>{arrow} {d > 0 ? `+${d}` : d}</span>
+                                )}
+                              </td>
+                            </Fragment>
+                          );
+                        })}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 px-4 py-2.5 bg-secondary/40 border-t border-border text-[10px] text-muted-foreground">
+              <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm bg-success/25" /> Thuận lợi</span>
+              <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm bg-destructive/25" /> Lệch nhiều / bất lợi</span>
+              <span className="flex items-center gap-1.5"><span className="inline-block h-2.5 w-4 rounded-sm" style={{ backgroundColor: "#3b82f6", opacity: 0.16 }} /> Thanh giá trị = độ lớn chỉ số</span>
+              <span className="ml-auto">▲ vượt KH · ▼ dưới KH · chênh lệch {">"}10% tô đậm</span>
+            </div>
           </div>
         )}
       </div>
