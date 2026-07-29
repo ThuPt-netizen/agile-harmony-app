@@ -202,6 +202,7 @@ export function ProjectDetail({ project, onBack, onAdmin }: { project: Project; 
                   return (
                     <tr key={i} className="hover:bg-secondary/50 border-b border-border last:border-0">
                       <td className="px-3 py-2 sticky left-0 bg-card font-medium text-foreground border-r border-border">{row.week}</td>
+
                       <td className="px-3 py-2 text-right text-muted-foreground">{row.planned ?? "—"}</td>
                       <td className="px-3 py-2 text-right">{cell(row.planned, row.actual)}</td>
                       <td className="px-3 py-2 text-right text-muted-foreground">{row.resourcePlanned ?? "—"}</td>
