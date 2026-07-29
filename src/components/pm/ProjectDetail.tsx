@@ -172,7 +172,7 @@ export function ProjectDetail({ project, onBack, onAdmin }: { project: Project; 
             <table className="w-full text-xs">
               <thead className="bg-secondary">
                 <tr className="text-left">
-                  <th className="px-3 py-2 font-medium text-muted-foreground border-b border-border sticky left-0 bg-secondary">Tuần</th>
+                  <th className="px-3 py-2 font-medium text-muted-foreground border-b border-border sticky left-0 bg-secondary">Tháng</th>
                   <th className="px-3 py-2 font-medium border-b border-border text-center" style={{ color: "#3b82f6" }} colSpan={2}>Tiến độ (%)</th>
                   <th className="px-3 py-2 font-medium border-b border-border text-center" style={{ color: "#a855f7" }} colSpan={2}>Nguồn lực (%)</th>
                   <th className="px-3 py-2 font-medium border-b border-border text-center" style={{ color: "#22a45d" }} colSpan={2}>Ngân sách (%)</th>
@@ -202,6 +202,7 @@ export function ProjectDetail({ project, onBack, onAdmin }: { project: Project; 
                   return (
                     <tr key={i} className="hover:bg-secondary/50 border-b border-border last:border-0">
                       <td className="px-3 py-2 sticky left-0 bg-card font-medium text-foreground border-r border-border">{row.week}</td>
+
                       <td className="px-3 py-2 text-right text-muted-foreground">{row.planned ?? "—"}</td>
                       <td className="px-3 py-2 text-right">{cell(row.planned, row.actual)}</td>
                       <td className="px-3 py-2 text-right text-muted-foreground">{row.resourcePlanned ?? "—"}</td>
