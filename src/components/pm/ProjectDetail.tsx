@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { ArrowLeft, Calendar, Users, Wallet, Clock, CheckCircle2, Circle, AlertCircle, Settings } from "lucide-react";
+import { ArrowLeft, Calendar, Users, Wallet, Clock, CheckCircle2, Circle, AlertCircle, Settings, LayoutGrid, Table as TableIcon } from "lucide-react";
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { Project, statusMeta, formatVND } from "@/lib/mockData";
 import { cn } from "@/lib/utils";
@@ -20,6 +20,7 @@ export function ProjectDetail({ project, onBack, onAdmin }: { project: Project; 
   const [showProgress, setShowProgress] = useState(true);
   const [showBudget, setShowBudget] = useState(true);
   const [showResource, setShowResource] = useState(true);
+  const [chartView, setChartView] = useState<"chart" | "table">("chart");
 
   const filterBtn = (active: boolean, label: string, color: string, onClick: () => void) => (
     <button
@@ -101,12 +102,37 @@ export function ProjectDetail({ project, onBack, onAdmin }: { project: Project; 
               So sánh Kế hoạch (đường đứt) và Thực tế (đường liền) theo 3 tiêu chí
             </p>
           </div>
-          <div className="flex items-center gap-2 flex-shrink-0">
-            {filterBtn(showProgress, "Tiến độ", "#3b82f6", () => setShowProgress(v => !v))}
-            {filterBtn(showBudget, "Ngân sách", "#22a45d", () => setShowBudget(v => !v))}
-            {filterBtn(showResource, "Nguồn lực", "#a855f7", () => setShowResource(v => !v))}
+          <div className="flex items-center gap-2 flex-shrink-0 flex-wrap justify-end">
+            {chartView === "chart" && (
+              <>
+                {filterBtn(showProgress, "Tiến độ", "#3b82f6", () => setShowProgress(v => !v))}
+                {filterBtn(showBudget, "Ngân sách", "#22a45d", () => setShowBudget(v => !v))}
+                {filterBtn(showResource, "Nguồn lực", "#a855f7", () => setShowResource(v => !v))}
+              </>
+            )}
+            <div className="inline-flex items-center rounded-lg border border-border bg-secondary p-0.5 ml-1">
+              <button
+                onClick={() => setChartView("chart")}
+                className={cn(
+                  "flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-medium transition-all",
+                  chartView === "chart" ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                <LayoutGrid className="h-3 w-3" /> Biểu đồ
+              </button>
+              <button
+                onClick={() => setChartView("table")}
+                className={cn(
+                  "flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-medium transition-all",
+                  chartView === "table" ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                <TableIcon className="h-3 w-3" /> Bảng
+              </button>
+            </div>
           </div>
         </div>
+        {chartView === "chart" ? (
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={project.trend} margin={{ top: 5, right: 12, left: -10, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
@@ -123,8 +149,8 @@ export function ProjectDetail({ project, onBack, onAdmin }: { project: Project; 
             <Legend wrapperStyle={{ fontSize: 11, paddingTop: 8 }} iconType="plainline" />
             {showProgress && (
               <>
-                <Line type="monotone" dataKey="planned" name="Tiến độ - Kế hoạch" stroke="hsl(217 91% 55%)" strokeDasharray="5 4" strokeWidth={2} dot={false} />
-                <Line type="monotone" dataKey="actual" name="Tiến độ - Thực tế" stroke="hsl(217 91% 55%)" strokeWidth={2.5} dot={false} />
+                <Line type="monotone" dataKey="planned" name="Tiến độ - Thời gian" stroke="hsl(217 91% 55%)" strokeDasharray="5 4" strokeWidth={2} dot={false} />
+                <Line type="monotone" dataKey="actual" name="Tiến độ - Khối lượng CV" stroke="hsl(217 91% 55%)" strokeWidth={2.5} dot={false} />
               </>
             )}
             {showBudget && (
@@ -141,6 +167,54 @@ export function ProjectDetail({ project, onBack, onAdmin }: { project: Project; 
             )}
           </LineChart>
         </ResponsiveContainer>
+        ) : (
+          <div className="overflow-x-auto rounded-lg border border-border">
+            <table className="w-full text-xs">
+              <thead className="bg-secondary">
+                <tr className="text-left">
+                  <th className="px-3 py-2 font-medium text-muted-foreground border-b border-border sticky left-0 bg-secondary">Tuần</th>
+                  <th className="px-3 py-2 font-medium border-b border-border text-center" style={{ color: "#3b82f6" }} colSpan={2}>Tiến độ (%)</th>
+                  <th className="px-3 py-2 font-medium border-b border-border text-center" style={{ color: "#a855f7" }} colSpan={2}>Nguồn lực (%)</th>
+                  <th className="px-3 py-2 font-medium border-b border-border text-center" style={{ color: "#22a45d" }} colSpan={2}>Ngân sách (%)</th>
+                </tr>
+                <tr className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                  <th className="px-3 py-1.5 font-normal border-b border-border sticky left-0 bg-secondary"></th>
+                  <th className="px-3 py-1.5 font-normal border-b border-border text-right">Thời gian</th>
+                  <th className="px-3 py-1.5 font-normal border-b border-border text-right">Khối lượng CV</th>
+                  <th className="px-3 py-1.5 font-normal border-b border-border text-right">Kế hoạch</th>
+                  <th className="px-3 py-1.5 font-normal border-b border-border text-right">Thực tế</th>
+                  <th className="px-3 py-1.5 font-normal border-b border-border text-right">Kế hoạch</th>
+                  <th className="px-3 py-1.5 font-normal border-b border-border text-right">Thực tế</th>
+                </tr>
+              </thead>
+              <tbody className="font-mono">
+                {project.trend.map((row: any, i: number) => {
+                  const diff = (a: number, b: number) => {
+                    if (a == null || b == null) return null;
+                    const d = b - a;
+                    return d;
+                  };
+                  const cell = (plan: number, actual: number) => {
+                    const d = diff(plan, actual);
+                    const cls = d == null ? "" : d < 0 ? "text-destructive" : d > 0 ? "text-success" : "text-muted-foreground";
+                    return <span className={cn("font-semibold", cls)}>{actual ?? "—"}</span>;
+                  };
+                  return (
+                    <tr key={i} className="hover:bg-secondary/50 border-b border-border last:border-0">
+                      <td className="px-3 py-2 sticky left-0 bg-card font-medium text-foreground border-r border-border">{row.week}</td>
+                      <td className="px-3 py-2 text-right text-muted-foreground">{row.planned ?? "—"}</td>
+                      <td className="px-3 py-2 text-right">{cell(row.planned, row.actual)}</td>
+                      <td className="px-3 py-2 text-right text-muted-foreground">{row.resourcePlanned ?? "—"}</td>
+                      <td className="px-3 py-2 text-right">{cell(row.resourcePlanned, row.resourceActual)}</td>
+                      <td className="px-3 py-2 text-right text-muted-foreground">{row.budgetPlanned ?? "—"}</td>
+                      <td className="px-3 py-2 text-right">{cell(row.budgetPlanned, row.budgetActual)}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
 
       {/* Members + Milestones */}
