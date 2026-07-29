@@ -172,7 +172,7 @@ export function ProjectDetail({ project, onBack, onAdmin }: { project: Project; 
             <table className="w-full text-xs">
               <thead className="bg-secondary">
                 <tr className="text-left">
-                  <th className="px-3 py-2 font-medium text-muted-foreground border-b border-border sticky left-0 bg-secondary">Tuần</th>
+                  <th className="px-3 py-2 font-medium text-muted-foreground border-b border-border sticky left-0 bg-secondary">Tháng</th>
                   <th className="px-3 py-2 font-medium border-b border-border text-center" style={{ color: "#3b82f6" }} colSpan={2}>Tiến độ (%)</th>
                   <th className="px-3 py-2 font-medium border-b border-border text-center" style={{ color: "#a855f7" }} colSpan={2}>Nguồn lực (%)</th>
                   <th className="px-3 py-2 font-medium border-b border-border text-center" style={{ color: "#22a45d" }} colSpan={2}>Ngân sách (%)</th>
