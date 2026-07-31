@@ -17,6 +17,15 @@ export function ProjectDetail({ project, onBack, onAdmin }: { project: Project; 
   const budgetPct = Math.round((project.budgetUsed / project.budget) * 100);
   const resourcePct = Math.round((project.resourceUsed / project.resourceTotal) * 100);
 
+  const sums = project.trend.reduce((acc, r: any) => {
+    acc.resKh += r.resourcePlanned != null ? (project.resourceTotal * r.resourcePlanned) / 100 : 0;
+    acc.resTt += r.resourceActual != null ? (project.resourceTotal * r.resourceActual) / 100 : 0;
+    acc.budKh += r.budgetPlanned != null ? (project.budget * r.budgetPlanned) / 100 : 0;
+    acc.budTt += r.budgetActual != null ? (project.budget * r.budgetActual) / 100 : 0;
+    return acc;
+  }, { resKh: 0, resTt: 0, budKh: 0, budTt: 0 });
+
+
   const [showProgress, setShowProgress] = useState(true);
   const [showBudget, setShowBudget] = useState(true);
   const [showResource, setShowResource] = useState(true);
@@ -182,16 +191,16 @@ export function ProjectDetail({ project, onBack, onAdmin }: { project: Project; 
                     <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">Thời gian</th>
                     <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">Khối lượng CV</th>
                     <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">Chênh lệch</th>
-                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">KH (%)</th>
-                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">TT (%)</th>
-                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">Chênh lệch</th>
                     <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">KH (MD)</th>
                     <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">TT (MD)</th>
                     <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">KH (%)</th>
                     <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">TT (%)</th>
                     <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">Chênh lệch</th>
                     <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">KH (VND)</th>
-                    <th className="px-2 py-1.5 font-medium border-b border-border bg-secondary text-right">TT (VND)</th>
+                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">TT (VND)</th>
+                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">KH (%)</th>
+                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">TT (%)</th>
+                    <th className="px-2 py-1.5 font-medium border-b border-border bg-secondary text-right">Chênh lệch</th>
                   </tr>
                 </thead>
                 <tbody className="font-mono">
@@ -224,6 +233,16 @@ export function ProjectDetail({ project, onBack, onAdmin }: { project: Project; 
                           const last = gi === groups.length - 1;
                           return (
                             <Fragment key={gi}>
+                              {g.total != null && (
+                                <>
+                                  <td className="px-2.5 py-2 text-right text-muted-foreground border-b border-r border-border">
+                                    {g.plan == null ? "—" : g.fmtAbs((g.total * g.plan) / 100)}
+                                  </td>
+                                  <td className="px-2.5 py-2 text-right font-semibold text-foreground border-b border-r border-border">
+                                    {g.actual == null ? "—" : g.fmtAbs((g.total * g.actual) / 100)}
+                                  </td>
+                                </>
+                              )}
                               <td className="px-2.5 py-2 text-right text-muted-foreground border-b border-r border-border">{g.plan ?? "—"}</td>
                               <td className="px-2.5 py-2 text-right border-b border-r border-border relative">
                                 <div className="absolute inset-y-1 left-1 rounded-sm" style={{ width: `calc(${g.actual ?? 0}% - 4px)`, backgroundColor: g.color, opacity: 0.16 }} />
@@ -236,23 +255,32 @@ export function ProjectDetail({ project, onBack, onAdmin }: { project: Project; 
                                   <span>{arrow} {d > 0 ? `+${d}` : d}</span>
                                 )}
                               </td>
-                              {g.total != null && (
-                                <>
-                                  <td className="px-2.5 py-2 text-right text-muted-foreground border-b border-r border-border">
-                                    {g.plan == null ? "—" : g.fmtAbs((g.total * g.plan) / 100)}
-                                  </td>
-                                  <td className={cn("px-2.5 py-2 text-right font-semibold text-foreground border-b border-border", !last && "border-r")}>
-                                    {g.actual == null ? "—" : g.fmtAbs((g.total * g.actual) / 100)}
-                                  </td>
-                                </>
-                              )}
                             </Fragment>
                           );
                         })}
                       </tr>
                     );
-                  })}
-                </tbody>
+                   })}
+                   <tr className="bg-secondary/60 border-t-2 border-border">
+                     <td className="px-3 py-2.5 sticky left-0 z-10 font-semibold text-foreground border-r border-border bg-secondary">Tổng</td>
+                     {/* Tiến độ: 3 empty */}
+                     <td className="px-2.5 py-2 border-b border-r border-border" />
+                     <td className="px-2.5 py-2 border-b border-r border-border" />
+                     <td className="px-2.5 py-2 border-b border-r border-border" />
+                     {/* Nguồn lực: KH(MD), TT(MD), KH%, TT%, Chênh lệch */}
+                     <td className="px-2.5 py-2 text-right font-semibold text-foreground border-b border-r border-border" style={{ color: "#a855f7" }}>{Math.round(sums.resKh).toLocaleString("vi-VN")}</td>
+                     <td className="px-2.5 py-2 text-right font-semibold text-foreground border-b border-r border-border" style={{ color: "#a855f7" }}>{Math.round(sums.resTt).toLocaleString("vi-VN")}</td>
+                     <td className="px-2.5 py-2 border-b border-r border-border" />
+                     <td className="px-2.5 py-2 border-b border-r border-border" />
+                     <td className="px-2.5 py-2 border-b border-r border-border" />
+                     {/* Ngân sách: KH(VND), TT(VND), KH%, TT%, Chênh lệch */}
+                     <td className="px-2.5 py-2 text-right font-semibold text-foreground border-b border-r border-border" style={{ color: "#0d9488" }}>{formatVND(Math.round(sums.budKh))}</td>
+                     <td className="px-2.5 py-2 text-right font-semibold text-foreground border-b border-r border-border" style={{ color: "#0d9488" }}>{formatVND(Math.round(sums.budTt))}</td>
+                     <td className="px-2.5 py-2 border-b border-r border-border" />
+                     <td className="px-2.5 py-2 border-b border-r border-border" />
+                     <td className="px-2.5 py-2 border-b border-border" />
+                   </tr>
+                 </tbody>
               </table>
             </div>
             <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 px-4 py-2.5 bg-secondary/40 border-t border-border text-[10px] text-muted-foreground">
