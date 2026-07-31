@@ -175,28 +175,40 @@ export function ProjectDetail({ project, onBack, onAdmin }: { project: Project; 
                   <tr className="text-left">
                     <th rowSpan={2} className="px-3 py-2.5 font-medium text-foreground border-b border-r border-border sticky left-0 bg-secondary z-10 min-w-[64px]">Tháng</th>
                     <th className="px-2 py-2 font-semibold border-b border-r border-border text-center" style={{ color: "#3b82f6" }} colSpan={3}>Tiến độ (%)</th>
-                    <th className="px-2 py-2 font-semibold border-b border-r border-border text-center" style={{ color: "#a855f7" }} colSpan={3}>Nguồn lực (%)</th>
-                    <th className="px-2 py-2 font-semibold border-b border-border text-center" style={{ color: "#0d9488" }} colSpan={3}>Ngân sách (%)</th>
+                    <th className="px-2 py-2 font-semibold border-b border-r border-border text-center" style={{ color: "#a855f7" }} colSpan={5}>Nguồn lực</th>
+                    <th className="px-2 py-2 font-semibold border-b border-border text-center" style={{ color: "#0d9488" }} colSpan={5}>Ngân sách</th>
                   </tr>
                   <tr className="text-[10px] uppercase tracking-wider text-muted-foreground">
                     <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">Thời gian</th>
                     <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">Khối lượng CV</th>
                     <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">Chênh lệch</th>
-                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">Kế hoạch</th>
-                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">Thực tế</th>
+                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">KH (%)</th>
+                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">TT (%)</th>
                     <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">Chênh lệch</th>
-                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">Kế hoạch</th>
-                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">Thực tế</th>
-                    <th className="px-2 py-1.5 font-medium border-b border-border bg-secondary text-right">Chênh lệch</th>
+                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">KH (MD)</th>
+                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">TT (MD)</th>
+                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">KH (%)</th>
+                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">TT (%)</th>
+                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">Chênh lệch</th>
+                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">KH (VND)</th>
+                    <th className="px-2 py-1.5 font-medium border-b border-border bg-secondary text-right">TT (VND)</th>
                   </tr>
                 </thead>
                 <tbody className="font-mono">
                   {project.trend.map((row: any, i: number) => {
                     const groups = [
                       { plan: row.planned, actual: row.actual, goodIfPositive: true, color: "#3b82f6" },
-                      { plan: row.resourcePlanned, actual: row.resourceActual, goodIfPositive: false, color: "#a855f7" },
-                      { plan: row.budgetPlanned, actual: row.budgetActual, goodIfPositive: false, color: "#0d9488" },
-                    ];
+                      {
+                        plan: row.resourcePlanned, actual: row.resourceActual, goodIfPositive: false, color: "#a855f7",
+                        total: project.resourceTotal,
+                        fmtAbs: (n: number) => Math.round(n).toLocaleString("vi-VN"),
+                      },
+                      {
+                        plan: row.budgetPlanned, actual: row.budgetActual, goodIfPositive: false, color: "#0d9488",
+                        total: project.budget,
+                        fmtAbs: (n: number) => formatVND(Math.round(n)),
+                      },
+                    ] as any[];
                     return (
                       <tr key={i} className={cn("border-b border-border last:border-0", i % 2 === 0 ? "bg-card" : "bg-secondary/30")}>
                         <td className="px-3 py-2.5 sticky left-0 z-10 font-semibold text-foreground border-r border-border bg-card">{row.week}</td>
@@ -217,13 +229,23 @@ export function ProjectDetail({ project, onBack, onAdmin }: { project: Project; 
                                 <div className="absolute inset-y-1 left-1 rounded-sm" style={{ width: `calc(${g.actual ?? 0}% - 4px)`, backgroundColor: g.color, opacity: 0.16 }} />
                                 <span className="relative font-semibold text-foreground">{g.actual ?? "—"}</span>
                               </td>
-                              <td className={cn("px-2.5 py-2 text-right border-b border-border", !last && "border-r", toneCls[level])}>
+                              <td className={cn("px-2.5 py-2 text-right border-b border-border", (!last || g.total) && "border-r", toneCls[level])}>
                                 {d == null ? (
                                   <span className="text-muted-foreground">—</span>
                                 ) : (
                                   <span>{arrow} {d > 0 ? `+${d}` : d}</span>
                                 )}
                               </td>
+                              {g.total != null && (
+                                <>
+                                  <td className="px-2.5 py-2 text-right text-muted-foreground border-b border-r border-border">
+                                    {g.plan == null ? "—" : g.fmtAbs((g.total * g.plan) / 100)}
+                                  </td>
+                                  <td className={cn("px-2.5 py-2 text-right font-semibold text-foreground border-b border-border", !last && "border-r")}>
+                                    {g.actual == null ? "—" : g.fmtAbs((g.total * g.actual) / 100)}
+                                  </td>
+                                </>
+                              )}
                             </Fragment>
                           );
                         })}
