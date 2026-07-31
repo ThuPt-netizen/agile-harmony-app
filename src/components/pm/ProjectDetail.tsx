@@ -195,7 +195,7 @@ export function ProjectDetail({ project, onBack, onAdmin }: { project: Project; 
                     const groups = [
                       { plan: row.planned, actual: row.actual, goodIfPositive: true, color: "#3b82f6" },
                       { plan: row.resourcePlanned, actual: row.resourceActual, goodIfPositive: false, color: "#a855f7" },
-                      { plan: row.budgetPlanned, actual: row.budgetActual, goodIfPositive: false, color: "#22a45d" },
+                      { plan: row.budgetPlanned, actual: row.budgetActual, goodIfPositive: false, color: "#0d9488" },
                     ];
                     return (
                       <tr key={i} className={cn("border-b border-border last:border-0", i % 2 === 0 ? "bg-card" : "bg-secondary/30")}>
