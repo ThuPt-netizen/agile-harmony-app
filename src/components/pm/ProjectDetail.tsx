@@ -17,6 +17,15 @@ export function ProjectDetail({ project, onBack, onAdmin }: { project: Project; 
   const budgetPct = Math.round((project.budgetUsed / project.budget) * 100);
   const resourcePct = Math.round((project.resourceUsed / project.resourceTotal) * 100);
 
+  const sums = project.trend.reduce((acc, r: any) => {
+    acc.resKh += r.resourcePlanned != null ? (project.resourceTotal * r.resourcePlanned) / 100 : 0;
+    acc.resTt += r.resourceActual != null ? (project.resourceTotal * r.resourceActual) / 100 : 0;
+    acc.budKh += r.budgetPlanned != null ? (project.budget * r.budgetPlanned) / 100 : 0;
+    acc.budTt += r.budgetActual != null ? (project.budget * r.budgetActual) / 100 : 0;
+    return acc;
+  }, { resKh: 0, resTt: 0, budKh: 0, budTt: 0 });
+
+
   const [showProgress, setShowProgress] = useState(true);
   const [showBudget, setShowBudget] = useState(true);
   const [showResource, setShowResource] = useState(true);
