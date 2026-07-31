@@ -260,8 +260,27 @@ export function ProjectDetail({ project, onBack, onAdmin }: { project: Project; 
                         })}
                       </tr>
                     );
-                  })}
-                </tbody>
+                   })}
+                   <tr className="bg-secondary/60 border-t-2 border-border">
+                     <td className="px-3 py-2.5 sticky left-0 z-10 font-semibold text-foreground border-r border-border bg-secondary">Tổng</td>
+                     {/* Tiến độ: 3 empty */}
+                     <td className="px-2.5 py-2 border-b border-r border-border" />
+                     <td className="px-2.5 py-2 border-b border-r border-border" />
+                     <td className="px-2.5 py-2 border-b border-r border-border" />
+                     {/* Nguồn lực: KH(MD), TT(MD), KH%, TT%, Chênh lệch */}
+                     <td className="px-2.5 py-2 text-right font-semibold text-foreground border-b border-r border-border" style={{ color: "#a855f7" }}>{Math.round(sums.resKh).toLocaleString("vi-VN")}</td>
+                     <td className="px-2.5 py-2 text-right font-semibold text-foreground border-b border-r border-border" style={{ color: "#a855f7" }}>{Math.round(sums.resTt).toLocaleString("vi-VN")}</td>
+                     <td className="px-2.5 py-2 border-b border-r border-border" />
+                     <td className="px-2.5 py-2 border-b border-r border-border" />
+                     <td className="px-2.5 py-2 border-b border-r border-border" />
+                     {/* Ngân sách: KH(VND), TT(VND), KH%, TT%, Chênh lệch */}
+                     <td className="px-2.5 py-2 text-right font-semibold text-foreground border-b border-r border-border" style={{ color: "#0d9488" }}>{formatVND(Math.round(sums.budKh))}</td>
+                     <td className="px-2.5 py-2 text-right font-semibold text-foreground border-b border-r border-border" style={{ color: "#0d9488" }}>{formatVND(Math.round(sums.budTt))}</td>
+                     <td className="px-2.5 py-2 border-b border-r border-border" />
+                     <td className="px-2.5 py-2 border-b border-r border-border" />
+                     <td className="px-2.5 py-2 border-b border-border" />
+                   </tr>
+                 </tbody>
               </table>
             </div>
             <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 px-4 py-2.5 bg-secondary/40 border-t border-border text-[10px] text-muted-foreground">
