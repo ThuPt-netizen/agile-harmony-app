@@ -155,8 +155,8 @@ export function ProjectDetail({ project, onBack, onAdmin }: { project: Project; 
             )}
             {showBudget && (
               <>
-                <Line type="monotone" dataKey="budgetPlanned" name="Ngân sách - Kế hoạch" stroke="hsl(152 60% 38%)" strokeDasharray="5 4" strokeWidth={2} dot={false} />
-                <Line type="monotone" dataKey="budgetActual" name="Ngân sách - Thực tế" stroke="hsl(152 60% 38%)" strokeWidth={2.5} dot={false} />
+                <Line type="monotone" dataKey="budgetPlanned" name="Ngân sách - Kế hoạch" stroke="hsl(174 65% 40%)" strokeDasharray="5 4" strokeWidth={2} dot={false} />
+                <Line type="monotone" dataKey="budgetActual" name="Ngân sách - Thực tế" stroke="hsl(174 65% 40%)" strokeWidth={2.5} dot={false} />
               </>
             )}
             {showResource && (
