@@ -191,16 +191,16 @@ export function ProjectDetail({ project, onBack, onAdmin }: { project: Project; 
                     <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">Thời gian</th>
                     <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">Khối lượng CV</th>
                     <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">Chênh lệch</th>
-                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">KH (%)</th>
-                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">TT (%)</th>
-                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">Chênh lệch</th>
                     <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">KH (MD)</th>
                     <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">TT (MD)</th>
                     <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">KH (%)</th>
                     <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">TT (%)</th>
                     <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">Chênh lệch</th>
                     <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">KH (VND)</th>
-                    <th className="px-2 py-1.5 font-medium border-b border-border bg-secondary text-right">TT (VND)</th>
+                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">TT (VND)</th>
+                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">KH (%)</th>
+                    <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">TT (%)</th>
+                    <th className="px-2 py-1.5 font-medium border-b border-border bg-secondary text-right">Chênh lệch</th>
                   </tr>
                 </thead>
                 <tbody className="font-mono">
