@@ -233,6 +233,16 @@ export function ProjectDetail({ project, onBack, onAdmin }: { project: Project; 
                           const last = gi === groups.length - 1;
                           return (
                             <Fragment key={gi}>
+                              {g.total != null && (
+                                <>
+                                  <td className="px-2.5 py-2 text-right text-muted-foreground border-b border-r border-border">
+                                    {g.plan == null ? "—" : g.fmtAbs((g.total * g.plan) / 100)}
+                                  </td>
+                                  <td className="px-2.5 py-2 text-right font-semibold text-foreground border-b border-r border-border">
+                                    {g.actual == null ? "—" : g.fmtAbs((g.total * g.actual) / 100)}
+                                  </td>
+                                </>
+                              )}
                               <td className="px-2.5 py-2 text-right text-muted-foreground border-b border-r border-border">{g.plan ?? "—"}</td>
                               <td className="px-2.5 py-2 text-right border-b border-r border-border relative">
                                 <div className="absolute inset-y-1 left-1 rounded-sm" style={{ width: `calc(${g.actual ?? 0}% - 4px)`, backgroundColor: g.color, opacity: 0.16 }} />
@@ -245,16 +255,6 @@ export function ProjectDetail({ project, onBack, onAdmin }: { project: Project; 
                                   <span>{arrow} {d > 0 ? `+${d}` : d}</span>
                                 )}
                               </td>
-                              {g.total != null && (
-                                <>
-                                  <td className="px-2.5 py-2 text-right text-muted-foreground border-b border-r border-border">
-                                    {g.plan == null ? "—" : g.fmtAbs((g.total * g.plan) / 100)}
-                                  </td>
-                                  <td className={cn("px-2.5 py-2 text-right font-semibold text-foreground border-b border-border", !last && "border-r")}>
-                                    {g.actual == null ? "—" : g.fmtAbs((g.total * g.actual) / 100)}
-                                  </td>
-                                </>
-                              )}
                             </Fragment>
                           );
                         })}
