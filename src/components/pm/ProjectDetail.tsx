@@ -106,7 +106,7 @@ export function ProjectDetail({ project, onBack, onAdmin }: { project: Project; 
             {chartView === "chart" && (
               <>
                 {filterBtn(showProgress, "Tiến độ", "#3b82f6", () => setShowProgress(v => !v))}
-                {filterBtn(showBudget, "Ngân sách", "#22a45d", () => setShowBudget(v => !v))}
+                {filterBtn(showBudget, "Ngân sách", "#0d9488", () => setShowBudget(v => !v))}
                 {filterBtn(showResource, "Nguồn lực", "#a855f7", () => setShowResource(v => !v))}
               </>
             )}
