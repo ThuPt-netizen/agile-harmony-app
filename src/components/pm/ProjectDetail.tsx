@@ -176,7 +176,7 @@ export function ProjectDetail({ project, onBack, onAdmin }: { project: Project; 
                     <th rowSpan={2} className="px-3 py-2.5 font-medium text-foreground border-b border-r border-border sticky left-0 bg-secondary z-10 min-w-[64px]">Tháng</th>
                     <th className="px-2 py-2 font-semibold border-b border-r border-border text-center" style={{ color: "#3b82f6" }} colSpan={3}>Tiến độ (%)</th>
                     <th className="px-2 py-2 font-semibold border-b border-r border-border text-center" style={{ color: "#a855f7" }} colSpan={3}>Nguồn lực (%)</th>
-                    <th className="px-2 py-2 font-semibold border-b border-border text-center" style={{ color: "#22a45d" }} colSpan={3}>Ngân sách (%)</th>
+                    <th className="px-2 py-2 font-semibold border-b border-border text-center" style={{ color: "#0d9488" }} colSpan={3}>Ngân sách (%)</th>
                   </tr>
                   <tr className="text-[10px] uppercase tracking-wider text-muted-foreground">
                     <th className="px-2 py-1.5 font-medium border-b border-r border-border bg-secondary text-right">Thời gian</th>
